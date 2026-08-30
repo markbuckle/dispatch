@@ -1,0 +1,5 @@
+Running dembrandt with args: https://resend.com --json-only --browser=chromium
+Saved 0 palette colors to .extract-design-system/. Fonts detected: domaine.
+Wrote C:\Users\Marks-Desktop\Coding\dispatch\design-system\tokens.json
+Wrote C:\Users\Marks-Desktop\Coding\dispatch\design-system\tokens.css
+Import design-system/tokens.css into your app entrypoint when you are ready to apply the starter tokens.
