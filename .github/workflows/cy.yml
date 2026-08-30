@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/setup@v1
+        with:
+          runtime: node@22
+          cache: true
+          install: false
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm lint
+
+      # tsc errors on an empty include set (TS18003). that's correct
+      # behavior on a repo with no .ts files yet, not a bug to work
+      # around. this guard skips typecheck until real source exists,
+      # then gets out of the way permanently.
+      - name: Typecheck
+        run: |
+          if git ls-files -- '*.ts' '*.tsx' | grep -q .; then
+            pnpm typecheck
+          else
+            echo "No TypeScript source files yet, skipping typecheck"
+          fi
+
+      - run: pnpm test
+
+      - run: pnpm build
