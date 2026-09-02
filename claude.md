@@ -10,6 +10,10 @@ for Resend applications. Read this file before making any change.
 - Comments: one line max, `//` only, explain why not what, never narrate
   structure (see Comments section for examples)
 - No `any`. No `as` casts to escape a type error, fix the type instead
+- Before touching UI, read `design/design-system/CLAUDE.md` first. Never
+  invent a colour, size, radius, or duration - if it isn't in
+  `design/design-system/tokens/tokens.css`, the token is missing, add it
+  there before using it
 - One change per pull request
 - Never commit directly to `main`
 - Say what you are about to change and why, then wait for confirmation,
@@ -60,6 +64,10 @@ These are deliberate and should not be revisited without discussion.
 ## Repo structure
 
 ```
+tsconfig.json     shared strict TypeScript config, everything extends it
+biome.json        lint and format rules for the whole repo
+design/
+  design-system/  tokens, foundations docs, logo, DECISIONS.md, PROVENANCE.md
 apps/
   web/      Next.js: landing, auth, dashboard
   api/      Hono: public REST API v1
@@ -68,8 +76,12 @@ packages/
   core/     send pipeline, key hashing, webhook signing
   compat/   compatibility checker engine, framework-free
   ui/       Radix + Tailwind components
-  config/   shared tsconfig, biome, tailwind preset
+  config/   tailwind preset, once apps/web exists
 ```
+
+tsconfig and biome config live at the repo root, not in packages/config.
+A single root config covers every package; only apps/web has its own
+tsconfig.json, because Next.js requires one in the app directory.
 
 New code goes in the existing package it belongs to. Ask before creating
 a new package.
@@ -139,7 +151,8 @@ screenshot for visual changes. Squash merge to `main`.
 ## Before finishing a task
 
 1. Run `pnpm biome check --write`
-2. Run `pnpm test` if `packages/core` or `packages/compat` changed
+2. Run `pnpm typecheck` if any `.ts` or `.tsx` file changed
+3. Run `pnpm test` if `packages/core` or `packages/compat` changed
 
 ## Do not
 
