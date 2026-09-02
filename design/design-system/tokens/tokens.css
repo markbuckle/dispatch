@@ -1,0 +1,266 @@
+/* Dispatch design tokens
+ * Dark is the default. Light mode via [data-theme="light"].
+ *
+ * The dark palette below is MEASURED from the authenticated product in dark mode,
+ * not inferred from Radix. See ../PROVENANCE.md.
+ *
+ * Tailwind v4: the @theme block registers every token as a utility.
+ * Import once in your entrypoint:  @import "./tokens.css";
+ */
+
+:root,
+[data-theme="dark"] {
+  /* Surfaces — four steps, canvas to hover */
+  --dispatch-canvas:  #08080A;
+  --dispatch-surface: #0E0E10;
+  --dispatch-subtle:  #131315;
+  --dispatch-hover:   #16161A;
+
+  /* Borders */
+  --dispatch-border-subtle:  #1F2023;
+  --dispatch-border-default: #26262A;
+  --dispatch-border-strong:  #3D3D43;
+
+  /* Text — muted is the contrast floor at 4.7:1 on canvas */
+  --dispatch-text-primary:     #EDEEF0;
+  --dispatch-text-secondary:   #B0B4BA;
+  --dispatch-text-tertiary:    #9A9DA3;
+  --dispatch-text-muted:       #777B84;
+  --dispatch-text-placeholder: #696E77;
+  --dispatch-text-inverse:     #08080A;
+
+  /* Accent — focus rings and the info state only. Not a brand colour. */
+  --dispatch-accent: #0090FF;
+
+  /* Semantics — solid fill, bright foreground. Measured off the product. */
+  --dispatch-success-bg:   #0B2E20;
+  --dispatch-success-fg:   #3ECF8E;
+  --dispatch-success-tint: rgba(62,207,142,0.07);
+  --dispatch-success-edge: rgba(62,207,142,0.22);
+
+  --dispatch-warning-bg:   #33270A;
+  --dispatch-warning-fg:   #FFCA16;
+  --dispatch-warning-tint: rgba(255,202,22,0.07);
+  --dispatch-warning-edge: rgba(255,202,22,0.22);
+
+  --dispatch-danger-bg:   #3A1618;
+  --dispatch-danger-fg:   #FF9592;
+  --dispatch-danger-tint: rgba(255,149,146,0.07);
+  --dispatch-danger-edge: rgba(255,149,146,0.24);
+
+  --dispatch-info-bg:   #0D2740;
+  --dispatch-info-fg:   #70B8FF;
+  --dispatch-info-tint: rgba(112,184,255,0.07);
+  --dispatch-info-edge: rgba(112,184,255,0.24);
+
+  --dispatch-neutral-bg: #1E1E22;
+  --dispatch-neutral-fg: #C0C4CA;
+  --dispatch-off-bg:     #1A1A1E;
+  --dispatch-off-fg:     #8C9096;
+
+  /* Elevation — edges, not shadows */
+  --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
+  --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
+  --dispatch-focus:   0 0 0 2px var(--dispatch-canvas), 0 0 0 4px var(--dispatch-accent);
+}
+
+[data-theme="light"] {
+  --dispatch-canvas:  #FFFFFF;
+  --dispatch-surface: #FCFCFD;
+  --dispatch-subtle:  #F0F0F3;
+  --dispatch-hover:   #E8E8EC;
+
+  --dispatch-border-subtle:  #E8E8EC;
+  --dispatch-border-default: #D9D9E0;
+  --dispatch-border-strong:  #B9BBC6;
+
+  --dispatch-text-primary:     #1C2024;
+  --dispatch-text-secondary:   #60646C;
+  --dispatch-text-tertiary:    #6E7278;
+  --dispatch-text-muted:       #80838D;
+  --dispatch-text-placeholder: #8B8D98;
+  --dispatch-text-inverse:     #FFFFFF;
+
+  --dispatch-accent: #0D74CE;
+
+  --dispatch-success-bg: #E6F6EB; --dispatch-success-fg: #218358;
+  --dispatch-success-tint: rgba(33,131,88,0.06); --dispatch-success-edge: rgba(33,131,88,0.22);
+  --dispatch-warning-bg: #FFF7C2; --dispatch-warning-fg: #AB6400;
+  --dispatch-warning-tint: rgba(171,100,0,0.06); --dispatch-warning-edge: rgba(171,100,0,0.22);
+  --dispatch-danger-bg: #FFE5E5; --dispatch-danger-fg: #CE2C31;
+  --dispatch-danger-tint: rgba(206,44,49,0.06); --dispatch-danger-edge: rgba(206,44,49,0.22);
+  --dispatch-info-bg: #E1F0FF; --dispatch-info-fg: #0D74CE;
+  --dispatch-info-tint: rgba(13,116,206,0.06); --dispatch-info-edge: rgba(13,116,206,0.22);
+  --dispatch-neutral-bg: #F0F0F3; --dispatch-neutral-fg: #60646C;
+  --dispatch-off-bg: #F9F9FB; --dispatch-off-fg: #80838D;
+
+  --dispatch-ring:    inset 0 1px 0 rgba(0,0,0,0.02);
+  --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+/* ── Tailwind v4 theme ───────────────────────────────────────────── */
+
+@theme {
+  --color-canvas:  var(--dispatch-canvas);
+  --color-surface: var(--dispatch-surface);
+  --color-subtle:  var(--dispatch-subtle);
+  --color-hover:   var(--dispatch-hover);
+
+  --color-border-subtle:  var(--dispatch-border-subtle);
+  --color-border-default: var(--dispatch-border-default);
+  --color-border-strong:  var(--dispatch-border-strong);
+  
+
+  --color-text-primary:     var(--dispatch-text-primary);
+  --color-text-secondary:   var(--dispatch-text-secondary);
+  --color-text-tertiary:    var(--dispatch-text-tertiary);
+  --color-text-muted:       var(--dispatch-text-muted);
+  --color-text-placeholder: var(--dispatch-text-placeholder);
+  --color-text-inverse:     var(--dispatch-text-inverse);
+
+  --color-accent: var(--dispatch-accent);
+
+  --color-success-bg: var(--dispatch-success-bg);
+  --color-success-fg: var(--dispatch-success-fg);
+  --color-success-tint: var(--dispatch-success-tint);
+  --color-success-edge: var(--dispatch-success-edge);
+  --color-warning-bg: var(--dispatch-warning-bg);
+  --color-warning-fg: var(--dispatch-warning-fg);
+  --color-warning-tint: var(--dispatch-warning-tint);
+  --color-warning-edge: var(--dispatch-warning-edge);
+  --color-danger-bg: var(--dispatch-danger-bg);
+  --color-danger-fg: var(--dispatch-danger-fg);
+  --color-danger-tint: var(--dispatch-danger-tint);
+  --color-danger-edge: var(--dispatch-danger-edge);
+  --color-info-bg: var(--dispatch-info-bg);
+  --color-info-fg: var(--dispatch-info-fg);
+  --color-info-tint: var(--dispatch-info-tint);
+  --color-info-edge: var(--dispatch-info-edge);
+  --color-neutral-bg: var(--dispatch-neutral-bg);
+  --color-neutral-fg: var(--dispatch-neutral-fg);
+  --color-off-bg: var(--dispatch-off-bg);
+  --color-off-fg: var(--dispatch-off-fg);
+
+  --font-display: Geist, Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "Commit Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif:   "Instrument Serif", ui-serif, Georgia, serif;
+
+  --text-display-xl: 76px; --text-display-xl--line-height: 1.00; --text-display-xl--letter-spacing: -0.02em;  --text-display-xl--font-weight: 500;
+  --text-display-l:  56px; --text-display-l--line-height:  1.05; --text-display-l--letter-spacing:  -0.03em;  --text-display-l--font-weight:  500;
+  --text-display-m:  36px; --text-display-m--line-height:  1.10; --text-display-m--letter-spacing:  -0.025em; --text-display-m--font-weight:  500;
+  --text-display-s:  28px; --text-display-s--line-height:  1.15; --text-display-s--letter-spacing:  -0.02em;  --text-display-s--font-weight:  500;
+  --text-h1: 36px; --text-h1--line-height: 1.15; --text-h1--letter-spacing: -0.032em; --text-h1--font-weight: 600;
+  --text-h2: 24px; --text-h2--line-height: 1.25; --text-h2--letter-spacing: -0.02em;  --text-h2--font-weight: 600;
+  --text-h3: 20px; --text-h3--line-height: 1.30; --text-h3--letter-spacing: -0.015em; --text-h3--font-weight: 600;
+  --text-h4: 16px; --text-h4--line-height: 1.40; --text-h4--letter-spacing: -0.005em; --text-h4--font-weight: 600;
+  --text-body:  16px;   --text-body--line-height:  1.50;
+  --text-meta:  15px;   --text-meta--line-height:  1.50;
+  --text-mono:  13.5px; --text-mono--line-height:  1.50;
+  --text-micro:    11px;   --text-micro--line-height: 1.20; --text-micro--letter-spacing: 0.02em; --text-micro--font-weight: 500;
+  --text-pill:     14.5px; --text-pill--line-height: 1.30; --text-pill--font-weight: 500;
+  --text-caption:  12px; --text-caption--line-height:  1.35; --text-caption--letter-spacing:  0.02em; --text-caption--font-weight: 500;
+  --text-overline: 12px; --text-overline--line-height: 1.35; --text-overline--letter-spacing: 0.06em; --text-overline--font-weight: 500;
+
+  --spacing: 4px;
+
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-chip: 9px;
+  --radius-md:   11px;
+  --radius-lg:   12px;
+
+  /* Named heights — components reference these by name, so they must exist here. */
+  --height-control:     42px;  /* buttons, tabs, segmented, icon buttons */
+  --height-control-lg:  44px;  /* inputs, selects, nav items */
+  --height-control-sm:  34px;  /* small and copy buttons */
+  --height-row:         60px;  /* table body row */
+  --height-header-row:  48px;  /* table header row */
+  --height-pill:        28px;  /* status pills, chips */
+  --height-top-bar:     60px;
+  --height-nav-item:    44px;
+
+  --shadow-ring:    var(--dispatch-ring);
+  --shadow-overlay: var(--dispatch-overlay);
+  --shadow-focus:   var(--dispatch-focus);
+
+  --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --breakpoint-sm:  480px;
+  --breakpoint-md:  600px;
+  --breakpoint-lg:  767px;
+  --breakpoint-xl:  1024px;
+  --breakpoint-2xl: 1280px;
+
+  --container-marketing: 1200px;
+  --container-reading:   680px;
+  --container-dialog:    520px;
+}
+
+/* ── Fonts ───────────────────────────────────────────────────────── */
+
+/* Custom Commit Mono build: weight 450, ss03, cv03/05/07/10.
+   See ../assets/fonts/custom-settings.json for the exact customiser output. */
+@font-face {
+  font-family: "Commit Mono";
+  src: url("../assets/fonts/CommitMono-dispatch.woff2") format("woff2-variations");
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+/* ── Base ────────────────────────────────────────────────────────── */
+
+html { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }
+
+body {
+  background: var(--dispatch-canvas);
+  color: var(--dispatch-text-primary);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .font-mono {
+  font-family: "Commit Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 450;
+  font-feature-settings: "ss03", "cv03", "cv05", "cv07", "cv10";
+}
+
+a { color: var(--dispatch-info-fg); text-decoration: none; }
+a:hover { color: var(--dispatch-text-primary); }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--dispatch-focus);
+}
+
+/* Scrollbars must be told they're dark, or the native track paints light. */
+* { scrollbar-color: var(--dispatch-border-default) var(--dispatch-surface); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--dispatch-surface); }
+::-webkit-scrollbar-thumb {
+  background: var(--dispatch-border-default);
+  border-radius: 9999px;
+  border: 2px solid var(--dispatch-surface);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--dispatch-border-strong); }
+::-webkit-scrollbar-corner { background: var(--dispatch-surface); }
+
+/* Motion: 120ms for anything small, 200ms for anything with surface area. */
+.dispatch-transition { transition: color 120ms cubic-bezier(0,0,0.2,1), background-color 120ms cubic-bezier(0,0,0.2,1), border-color 120ms cubic-bezier(0,0,0.2,1), box-shadow 120ms cubic-bezier(0,0,0.2,1); }
+.dispatch-transition-overlay { transition: opacity 200ms cubic-bezier(0.4,0,0.2,1), transform 200ms cubic-bezier(0.4,0,0.2,1); }
+
+@keyframes dispatch-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.5 } }
+@keyframes dispatch-spin { to { transform: rotate(360deg) } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

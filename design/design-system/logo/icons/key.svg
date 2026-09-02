@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="API keys">
+  <circle cx="10" cy="10" r="5.5"></circle>
+  <path d="M14 14 L26 26" stroke-linecap="butt"></path>
+  <path d="M20 20 L17 23"></path>
+  <path d="M23 23 L20 26"></path>
+</svg>

@@ -22,12 +22,13 @@ jobs:
       - run: pnpm lint
 
       # tsc errors on an empty include set (TS18003). that's correct
-      # behavior on a repo with no .ts files yet, not a bug to work
-      # around. this guard skips typecheck until real source exists,
-      # then gets out of the way permanently.
+      # behavior when apps/ and packages/ have no .ts files yet, not a
+      # bug to work around. scoped to match tsconfig.json's own include
+      # list exactly - design/design-system's .tsx files don't count,
+      # they're excluded from typecheck the same as they are from lint.
       - name: Typecheck
         run: |
-          if git ls-files -- '*.ts' '*.tsx' | grep -q .; then
+          if git ls-files -- 'apps/**/*.ts' 'apps/**/*.tsx' 'packages/**/*.ts' 'packages/**/*.tsx' | grep -q .; then
             pnpm typecheck
           else
             echo "No TypeScript source files yet, skipping typecheck"
