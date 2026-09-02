@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
+    "lib": ["ES2022", "DOM"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "preserve",
@@ -19,43 +16,16 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@dispatch/db": [
-        "./packages/db/src"
-      ],
-      "@dispatch/db/*": [
-        "./packages/db/src/*"
-      ],
-      "@dispatch/core": [
-        "./packages/core/src"
-      ],
-      "@dispatch/core/*": [
-        "./packages/core/src/*"
-      ],
-      "@dispatch/compat": [
-        "./packages/compat/src"
-      ],
-      "@dispatch/compat/*": [
-        "./packages/compat/src/*"
-      ],
-      "@dispatch/ui": [
-        "./packages/ui/src"
-      ],
-      "@dispatch/ui/*": [
-        "./packages/ui/src/*"
-      ]
+      "@dispatch/db": ["./packages/db/src"],
+      "@dispatch/db/*": ["./packages/db/src/*"],
+      "@dispatch/core": ["./packages/core/src"],
+      "@dispatch/core/*": ["./packages/core/src/*"],
+      "@dispatch/compat": ["./packages/compat/src"],
+      "@dispatch/compat/*": ["./packages/compat/src/*"],
+      "@dispatch/ui": ["./packages/ui/src"],
+      "@dispatch/ui/*": ["./packages/ui/src/*"]
     }
   },
-  "include": [
-    "apps/**/*.ts",
-    "apps/**/*.tsx",
-    "packages/**/*.ts",
-    "packages/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/node_modules",
-    "**/dist",
-    "**/.next",
-    "**/.turbo"
-  ]
+  "include": ["apps/**/*.ts", "apps/**/*.tsx", "packages/**/*.ts", "packages/**/*.tsx"],
+  "exclude": ["node_modules", "**/node_modules", "**/dist", "**/.next", "**/.turbo"]
 }
