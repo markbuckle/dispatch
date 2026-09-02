@@ -1,0 +1,215 @@
+/* @theme dispatch
+ *
+ * Marp theme for Dispatch decks. 1920x1080, dark, minimum 24px type.
+ *   marp deck.md --theme design-system/assets/templates/marp-theme.css -o deck.pdf
+ *
+ * Classes: section · statement · number · two-up · full-bleed
+ */
+
+@import 'default';
+
+:root {
+  --canvas: #08080A;
+  --surface: #111113;
+  --border-subtle: #212225;
+  --border-default: #2E3135;
+  --text-primary: #EDEEF0;
+  --text-secondary: #B0B4BA;
+  --text-muted: #777B84;
+  --success: #3DD68C;
+  --warning: #FFCA16;
+  --danger: #FF9592;
+  --info: #70B8FF;
+}
+
+section {
+  width: 1920px;
+  height: 1080px;
+  padding: 80px 96px 96px;
+  background: var(--canvas);
+  color: var(--text-primary);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 32px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+h1 {
+  font-family: Geist, Inter, sans-serif;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -1.4px;
+  color: var(--text-primary);
+  margin: 0 0 40px;
+}
+
+h2 {
+  font-family: Geist, Inter, sans-serif;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -1.1px;
+  margin: 0 0 32px;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.32px;
+  margin: 0 0 20px;
+}
+
+p { margin: 0 0 24px; max-width: 1400px; text-wrap: pretty; }
+strong { font-weight: 600; color: var(--text-primary); }
+em { font-style: normal; color: var(--text-secondary); }
+
+ul, ol { margin: 0; padding-left: 32px; }
+li { margin-bottom: 32px; line-height: 1.4; }
+li::marker { color: var(--text-muted); }
+
+a { color: var(--info); text-decoration: none; }
+
+code {
+  font-family: 'Commit Mono', 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.92em;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2px 8px;
+  color: var(--text-primary);
+}
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 32px;
+  font-size: 28px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+pre code { background: none; border: none; padding: 0; font-size: inherit; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 28px;
+}
+th {
+  text-align: left;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+  color: var(--text-muted);
+  padding: 12px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-default);
+}
+td {
+  padding: 16px 20px;
+  height: 48px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-variant-numeric: tabular-nums;
+}
+tr:last-child td { border-bottom: none; }
+
+blockquote {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  line-height: 1.25;
+  color: var(--text-primary);
+  border: none;
+  margin: 0;
+  padding: 0;
+  max-width: 1400px;
+}
+
+img { border-radius: 8px; }
+
+/* Slide number */
+section::after {
+  position: absolute;
+  right: 96px;
+  bottom: 56px;
+  font-family: 'Commit Mono', monospace;
+  font-size: 24px;
+  color: var(--text-muted);
+  content: attr(data-marpit-pagination);
+}
+
+/* ── Slide classes ─────────────────────────────────────────────── */
+
+/* Section break — the one permitted background change */
+section.section {
+  background: var(--surface);
+  justify-content: center;
+}
+section.section h1 {
+  font-size: 72px;
+  letter-spacing: -2.16px;
+  margin: 0;
+}
+
+/* One sentence, centred, nothing else */
+section.statement {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+section.statement h1 {
+  font-size: 64px;
+  letter-spacing: -1.92px;
+  max-width: 1500px;
+  margin: 0;
+}
+
+/* One big figure */
+section.number {
+  justify-content: center;
+  align-items: flex-start;
+}
+section.number h1 {
+  font-size: 200px;
+  line-height: 1;
+  letter-spacing: -6px;
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 24px;
+}
+section.number p {
+  font-size: 40px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Two columns */
+section.two-up { display: block; }
+section.two-up > h1 { margin-bottom: 48px; }
+section.two-up > :not(h1) {
+  column-count: 2;
+  column-gap: 48px;
+}
+
+section.full-bleed { padding: 0; }
+section.full-bleed img {
+  width: 1920px;
+  height: 1080px;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Title slide */
+section.title { justify-content: center; }
+section.title h1 {
+  font-size: 96px;
+  letter-spacing: -2.88px;
+  margin: 0 0 24px;
+}
+section.title p {
+  font-size: 40px;
+  color: var(--text-secondary);
+}
+section.title::after { content: ''; }

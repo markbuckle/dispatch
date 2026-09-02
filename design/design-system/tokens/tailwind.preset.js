@@ -1,0 +1,74 @@
+/** Dispatch — Tailwind v3 preset.
+ *  On v4, prefer the @theme block in tokens.css. This exists for v3 codebases.
+ *  Values mirror tokens.json exactly.
+ */
+module.exports = {
+  darkMode: ['class', '[data-theme="dark"]'],
+  theme: {
+    extend: {
+      colors: {
+        canvas: 'var(--dispatch-canvas)',
+        surface: 'var(--dispatch-surface)',
+        subtle: 'var(--dispatch-subtle)',
+        hover: 'var(--dispatch-hover)',
+        border: {
+          subtle: 'var(--dispatch-border-subtle)',
+          DEFAULT: 'var(--dispatch-border-default)',
+          strong: 'var(--dispatch-border-strong)',
+        },
+        text: {
+          primary: 'var(--dispatch-text-primary)',
+          secondary: 'var(--dispatch-text-secondary)',
+          tertiary: 'var(--dispatch-text-tertiary)',
+          muted: 'var(--dispatch-text-muted)',
+          placeholder: 'var(--dispatch-text-placeholder)',
+          inverse: 'var(--dispatch-text-inverse)',
+        },
+        accent: 'var(--dispatch-accent)',
+        success: { bg: 'var(--dispatch-success-bg)', fg: 'var(--dispatch-success-fg)', tint: 'var(--dispatch-success-tint)', edge: 'var(--dispatch-success-edge)' },
+        warning: { bg: 'var(--dispatch-warning-bg)', fg: 'var(--dispatch-warning-fg)', tint: 'var(--dispatch-warning-tint)', edge: 'var(--dispatch-warning-edge)' },
+        danger:  { bg: 'var(--dispatch-danger-bg)',  fg: 'var(--dispatch-danger-fg)',  tint: 'var(--dispatch-danger-tint)',  edge: 'var(--dispatch-danger-edge)' },
+        info:    { bg: 'var(--dispatch-info-bg)',    fg: 'var(--dispatch-info-fg)',    tint: 'var(--dispatch-info-tint)',    edge: 'var(--dispatch-info-edge)' },
+        neutral: { bg: 'var(--dispatch-neutral-bg)', fg: 'var(--dispatch-neutral-fg)' },
+        off:     { bg: 'var(--dispatch-off-bg)',     fg: 'var(--dispatch-off-fg)' },
+      },
+      fontFamily: {
+        display: ['Geist', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['Commit Mono', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        serif: ['Instrument Serif', 'ui-serif', 'Georgia', 'serif'],
+      },
+      fontSize: {
+        'display-xl': ['76px', { lineHeight: '1.00', letterSpacing: '-0.02em',  fontWeight: '500' }],
+        'display-l':  ['56px', { lineHeight: '1.05', letterSpacing: '-0.03em',  fontWeight: '500' }],
+        'display-m':  ['36px', { lineHeight: '1.10', letterSpacing: '-0.025em', fontWeight: '500' }],
+        'display-s':  ['28px', { lineHeight: '1.15', letterSpacing: '-0.02em',  fontWeight: '500' }],
+        h1: ['36px', { lineHeight: '1.15', letterSpacing: '-0.032em', fontWeight: '600' }],
+        h2: ['24px', { lineHeight: '1.25', letterSpacing: '-0.02em',  fontWeight: '600' }],
+        h3: ['20px', { lineHeight: '1.30', letterSpacing: '-0.015em', fontWeight: '600' }],
+        h4: ['16px', { lineHeight: '1.40', letterSpacing: '-0.005em', fontWeight: '600' }],
+        body: ['16px', { lineHeight: '1.50' }],
+        meta: ['15px', { lineHeight: '1.50' }],
+        mono: ['13.5px', { lineHeight: '1.50' }],
+        micro:    ['11px', { lineHeight: '1.20', letterSpacing: '0.02em', fontWeight: '500' }],
+        pill:     ['14.5px', { lineHeight: '1.30', fontWeight: '500' }],
+        caption:  ['12px', { lineHeight: '1.35', letterSpacing: '0.02em', fontWeight: '500' }],
+        overline: ['12px', { lineHeight: '1.35', letterSpacing: '0.06em', fontWeight: '500' }],
+      },
+      spacing: { 0:'0', 1:'4px', 2:'8px', 3:'12px', 4:'16px', 5:'20px', 6:'24px', 7:'28px', 8:'32px', 10:'40px', 12:'48px', 16:'64px', 20:'80px', 24:'96px', 32:'128px' },
+      borderRadius: { none:'0', xs:'4px', sm:'8px', chip:'9px', md:'11px', lg:'12px', full:'9999px' },
+      height: { control: '42px', 'control-lg': '44px', 'control-sm': '34px', row: '60px', 'header-row': '48px', topbar: '60px', 'nav-item': '44px', pill: '28px' },
+      width: { sidebar: '252px' },
+      boxShadow: {
+        none: 'none',
+        ring: 'var(--dispatch-ring)',
+        overlay: 'var(--dispatch-overlay)',
+        focus: 'var(--dispatch-focus)',
+      },
+      transitionDuration: { fast: '120ms', overlay: '200ms', slow: '300ms' },
+      transitionTimingFunction: { out: 'cubic-bezier(0,0,0.2,1)', standard: 'cubic-bezier(0.4,0,0.2,1)' },
+      maxWidth: { marketing: '1200px', reading: '680px', dialog: '520px' },
+      screens: { sm: '480px', md: '600px', lg: '767px', xl: '1024px', '2xl': '1280px' },
+    },
+  },
+};
