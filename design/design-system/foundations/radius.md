@@ -8,15 +8,18 @@ Modest, but not tight. Nothing bubbly, nothing severe.
 | `xs` | 4px | Checkbox, a chip nested inside a 9px parent |
 | `sm` | **8px** | Status pills, event chips, `kbd` badges, inline code |
 | `chip` | **9px** | Small buttons, copy buttons, avatar squares |
-| `md` | **11px** | Buttons, inputs, selects, tabs, sidebar nav items, icon buttons, leading tiles |
-| `lg` | **10px** | Cards, tables, panels, alert banners |
-| `xl` | 12px | Dialogs, popovers, dropdown menus, sheets |
+| `md` | **11px** | Inputs, selects, tabs, sidebar nav items, icon buttons, leading tiles |
+| `lg` | **12px** | Cards, tables, panels, alert banners, dialogs, popovers, the header call to action |
+| `2xl` | **16px** | The marketing hero call to action. Nothing else. |
 | `full` | 9999px | Avatars, status dots, the spinner, the switch track. Nothing else. |
 
-## The two rules
+**This table was out of sync with `tokens/tokens.css` and has been corrected to match it.** It previously listed `sm` 7, `md` 9, `lg` 10 and a separate `xl` 12, none of which were the values the build actually shipped. `tokens.css` is the source of truth; `tokens.json` and `tailwind.preset.js` now mirror it.
 
-1. **Product controls are 9px.** Buttons, inputs, selects, nav items. Containers go one step up to 10px.
-2. **Full-pill is for avatars and dots.** Not buttons, not status pills, not tabs, not tags.
+## The three rules
+
+1. **Product controls are 9px.** Buttons, inputs, selects, nav items. Containers go one step up to 12px.
+2. **Full-pill is for avatars and dots.** Not buttons, not status pills, not tabs, not tags. Resend rounds its buttons to a pill; we do not, and that is deliberate.
+3. **Marketing calls to action are rounder than product controls.** 16px in the hero, 12px in the header. The hero button is physically larger, so it carries the rounder corner without looking bubbly; the same 16px on a 36px header button does not.
 
 ## Nesting
 

@@ -39,6 +39,7 @@ module.exports = {
         serif: ['Instrument Serif', 'ui-serif', 'Georgia', 'serif'],
       },
       fontSize: {
+        'display-2xl':['116px',{ lineHeight: '1.00', letterSpacing: '-0.02em',  fontWeight: '400' }],
         'display-xl': ['76px', { lineHeight: '1.00', letterSpacing: '-0.02em',  fontWeight: '500' }],
         'display-l':  ['56px', { lineHeight: '1.05', letterSpacing: '-0.03em',  fontWeight: '500' }],
         'display-m':  ['36px', { lineHeight: '1.10', letterSpacing: '-0.025em', fontWeight: '500' }],
@@ -56,8 +57,8 @@ module.exports = {
         overline: ['12px', { lineHeight: '1.35', letterSpacing: '0.06em', fontWeight: '500' }],
       },
       spacing: { 0:'0', 1:'4px', 2:'8px', 3:'12px', 4:'16px', 5:'20px', 6:'24px', 7:'28px', 8:'32px', 10:'40px', 12:'48px', 16:'64px', 20:'80px', 24:'96px', 32:'128px' },
-      borderRadius: { none:'0', xs:'4px', sm:'8px', chip:'9px', md:'11px', lg:'12px', full:'9999px' },
-      height: { control: '42px', 'control-lg': '44px', 'control-sm': '34px', row: '60px', 'header-row': '48px', topbar: '60px', 'nav-item': '44px', pill: '28px' },
+      borderRadius: { none:'0', xs:'4px', sm:'8px', chip:'9px', md:'11px', lg:'12px', '2xl':'16px', full:'9999px' },
+      height: { control: '42px', 'control-lg': '44px', 'control-sm': '34px', row: '60px', 'header-row': '48px', 'top-bar': '60px', 'nav-marketing': '64px', 'nav-item': '44px', pill: '28px' },
       width: { sidebar: '252px' },
       boxShadow: {
         none: 'none',

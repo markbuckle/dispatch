@@ -146,6 +146,7 @@
   --font-mono:    "Commit Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-serif:   "Instrument Serif", ui-serif, Georgia, serif;
 
+  --text-display-2xl: 116px; --text-display-2xl--line-height: 1.00; --text-display-2xl--letter-spacing: -0.02em; --text-display-2xl--font-weight: 400;
   --text-display-xl: 76px; --text-display-xl--line-height: 1.00; --text-display-xl--letter-spacing: -0.02em;  --text-display-xl--font-weight: 500;
   --text-display-l:  56px; --text-display-l--line-height:  1.05; --text-display-l--letter-spacing:  -0.03em;  --text-display-l--font-weight:  500;
   --text-display-m:  36px; --text-display-m--line-height:  1.10; --text-display-m--letter-spacing:  -0.025em; --text-display-m--font-weight:  500;
@@ -169,6 +170,7 @@
   --radius-chip: 9px;
   --radius-md:   11px;
   --radius-lg:   12px;
+  --radius-2xl:  16px;
 
   /* Named heights — components reference these by name, so they must exist here. */
   --height-control:     42px;  /* buttons, tabs, segmented, icon buttons */
@@ -179,6 +181,7 @@
   --height-pill:        28px;  /* status pills, chips */
   --height-top-bar:     60px;
   --height-nav-item:    44px;
+  --height-nav-marketing: 64px; /* marketing header, taller than the product top bar */
 
   --shadow-ring:    var(--dispatch-ring);
   --shadow-overlay: var(--dispatch-overlay);
@@ -252,6 +255,53 @@ a:hover { color: var(--dispatch-text-primary); }
 /* Motion: 120ms for anything small, 200ms for anything with surface area. */
 .dispatch-transition { transition: color 120ms cubic-bezier(0,0,0.2,1), background-color 120ms cubic-bezier(0,0,0.2,1), border-color 120ms cubic-bezier(0,0,0.2,1), box-shadow 120ms cubic-bezier(0,0,0.2,1); }
 .dispatch-transition-overlay { transition: opacity 200ms cubic-bezier(0.4,0,0.2,1), transform 200ms cubic-bezier(0.4,0,0.2,1); }
+
+/* Marketing devices. Product surfaces stay flat - see foundations/color.md. */
+
+/* Section rule: faint hairline across the full width, peaking at centre.
+   Sits on a full-bleed element, not inside the 1200px container. */
+.dispatch-rule {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--dispatch-border-subtle) 6%,
+    var(--dispatch-border-subtle) 34%,
+    var(--dispatch-text-muted) 50%,
+    var(--dispatch-border-subtle) 66%,
+    var(--dispatch-border-subtle) 94%,
+    transparent 100%
+  );
+}
+
+/* Pairs with .dispatch-rule directly above it. Needs its own height; 160px is the landing value. */
+.dispatch-glow {
+  background: radial-gradient(ellipse 55% 100% at 50% 0%, var(--dispatch-hover), transparent 70%);
+  pointer-events: none;
+}
+
+/* Display titles only. Keep the element a real heading - the text stays readable to a screen reader. */
+.dispatch-display-gradient {
+  background: linear-gradient(
+    to bottom,
+    var(--dispatch-text-primary) 45%,
+    var(--dispatch-text-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Marketing call to action. Radius and padding stay per instance. */
+.dispatch-cta {
+  border: 2px solid var(--dispatch-border-default);
+  background: var(--dispatch-hover);
+  color: var(--dispatch-text-primary);
+}
+.dispatch-cta:hover {
+  border-color: var(--dispatch-text-primary);
+  background: var(--dispatch-text-primary);
+  color: var(--dispatch-text-inverse);
+}
 
 @keyframes dispatch-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.5 } }
 @keyframes dispatch-spin { to { transform: rotate(360deg) } }

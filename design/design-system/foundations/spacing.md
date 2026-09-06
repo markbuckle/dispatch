@@ -68,7 +68,8 @@ Measured off the product in dark mode. These are the numbers, not approximations
 | Element | Padding | Height |
 |---|---|---|
 | Button, product | `0 16px` | **42px** |
-| Button, marketing | `0 20px` | 44px |
+| Button, marketing hero | `16px 16px` | **44px**, from padding not a fixed height |
+| Button, marketing header | `12px 8px` | **36px**, from padding not a fixed height |
 | Button, small | `0 13px` | 34px |
 | Icon button | — | 42px square |
 | Input, select | `0 16px` | **44px** |
@@ -77,7 +78,8 @@ Measured off the product in dark mode. These are the numbers, not approximations
 | Table header cell | `0 20px` | **48px** |
 | Sidebar nav item | `0 12px` | **44px** |
 | Workspace switcher | `0 10px` | 46px |
-| Top bar | `0 30px` | **60px** |
+| Top bar, product | `0 30px` | **60px** |
+| Header, marketing | `0 20px` mobile / `0 32px` desktop | **64px** |
 | Dense table row (records, issues) | `0 20px` | 52px |
 | Card | `20px` | — |
 | Card, compact | `16px 18px` | — |

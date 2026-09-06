@@ -5,33 +5,40 @@ Two modes, and they don't mix: **marketing** (air, display type, 96px sections) 
 ## Marketing page structure
 
 ```
-Nav                48px tall, sticky, canvas bg, 1px bottom hairline on scroll
+Nav                64px tall, sticky, canvas bg, .dispatch-rule on scroll
 Hero               128px top / 96px bottom padding
 Proof              customer logos or one number band, 64px
 Feature sections   96px apart, alternating layout, max 4
 Code sample        one, real, copyable
 Pricing preview    or a link to /pricing
 Final CTA          96px band, one action
-Footer             64px top padding, 4 columns
+Footer             .dispatch-rule + .dispatch-glow, then 64px top padding
 ```
 
 Max 4 feature sections. If there's a fifth, it belongs on its own page.
 
 ## Nav
 
-- 48px tall, `canvas` background, no border until scrolled — then `border-subtle` at the bottom.
+- **64px tall** (`--height-nav-marketing`), `canvas` background, sticky.
+- **No rule until scrolled.** At `scrollY === 0` the bottom rule is at `opacity: 0`; past that it fades to `opacity: 1` over 200ms. Use `.dispatch-rule` on a full-bleed 1px element, not a `border-bottom`, so it spans the viewport rather than the container.
 - Left: horizontal lockup at 132px.
-- Centre or left-adjacent: Product, Docs, Pricing, Changelog, Blog. `body` size, `text-secondary`, `text-primary` on hover.
-- Right: "Sign in" as a ghost button, "Get an API key" as primary at 40px.
+- Centre or left-adjacent: Product, Docs, Pricing, Changelog, Blog. `body` size, `text-secondary`, `text-primary` on hover. Nav links drop below the `md` breakpoint before the auth actions do.
+- Right: "Log in" as a ghost, "Sign up" as `.dispatch-cta` at 12px radius, `12px 8px` padding.
 - Mobile: full-screen overlay, not a slide-out drawer. `canvas` background, 20px gutters.
+
+The scroll state is the only thing on the header that needs the client. Keep it in its own small client component so the header itself stays a server component.
 
 ## Hero
 
-- `display-l` at 56px, one line if possible, two maximum. Sentence case.
-- Subcopy `body-lg` `text-secondary`, max 2 lines, max 680px.
-- Two buttons: primary "Get an API key", ghost "Read the docs".
+- **`display-2xl` at 116px in Instrument Serif with `.dispatch-display-gradient`**, one line if possible, two maximum. Sentence case. See `foundations/typography.md`.
+- Subcopy `body` `text-secondary`, max 2 lines, max 680px. 24px below the title.
+- Two buttons, 40px below the subcopy, 12px apart:
+  - Primary "Get an API key": `.dispatch-cta`, `radius-2xl` (16px), `16px 16px` padding.
+  - Secondary "Read the docs": ghost, no fill and no border, `text-secondary` to `text-primary` on hover. It must not carry a border, or the two read as equal weight and neither is primary.
 - Below: a real code sample or a tight crop of the log table. **Not a hero image, not an illustration, not a floating dashboard mockup at an angle.**
 - **No animation above the fold.**
+
+**Neither button is a light fill at rest.** The primary sits dark and inverts to `#EDEEF0` on hover. Weight and border carry the hierarchy instead of fill, which keeps the palette free to mean something.
 
 ## Feature sections
 
@@ -59,7 +66,11 @@ Every section: `overline` (12px, uppercase, `text-muted`) → 12px → `display-
 
 ## Footer
 
-Four columns: Product · Developers · Company · Legal. `caption` headers in `text-muted`, `body` links in `text-secondary`. Lockup bottom-left, status-page link with a live `success-fg` dot, copyright in `caption` `text-muted`.
+Opens with a full-bleed `.dispatch-glow` at 160px, then `.dispatch-rule` on top of it. **Glow first in the DOM, rule second** - reversed, the glow eats the middle of the line. Both sit outside the 1200px container.
+
+**Four columns** for a full site: Product · Developers · Company · Legal. `caption` headers in `text-muted`, `body` links in `text-secondary`. Lockup bottom-left, status-page link with a live `success-fg` dot, copyright in `caption` `text-muted`.
+
+**One row** is the right call while the site is small: mark at 20px, three links, the status dot, copyright pushed right. Move to four columns when there is more than one page per column to put in them.
 
 ## Product screens
 
