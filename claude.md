@@ -76,7 +76,8 @@ packages/
   core/     send pipeline, key hashing, webhook signing
   compat/   compatibility checker engine, framework-free
   ui/       Radix + Tailwind components
-  config/   tailwind preset, once apps/web exists
+  config/   currently unused - tailwind v4 configures via tokens.css's
+            @theme block directly, not a JS preset
 ```
 
 tsconfig and biome config live at the repo root, not in packages/config.

@@ -57,7 +57,9 @@ packages/db                  Drizzle schema, migrations
 packages/core                send pipeline, key hashing, webhooks
 packages/compat              compatibility checker, framework-free
 packages/ui                  Radix + Tailwind components
-packages/config               tailwind preset, once apps/web exists
+packages/config              currently unused - tailwind v4 configures
+                             via tokens.css's @theme block directly,
+                             not a JS preset
 ```
 
 ## Opening and merging a PR
