@@ -15,6 +15,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
     "paths": {
       "@dispatch/db": ["./packages/db/src"],
       "@dispatch/db/*": ["./packages/db/src/*"],
