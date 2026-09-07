@@ -3,11 +3,14 @@ function requireEnv(name: string, value: string | undefined): string {
   return value;
 }
 
-export const supabaseUrl = requireEnv(
-  'NEXT_PUBLIC_SUPABASE_URL',
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-);
-export const supabaseAnonKey = requireEnv(
-  'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-);
+// Next imports route/middleware modules to collect build metadata without
+// invoking them, so this must run lazily or a build with no env vars set fails
+export function getSupabaseEnv() {
+  return {
+    url: requireEnv('NEXT_PUBLIC_SUPABASE_URL', process.env.NEXT_PUBLIC_SUPABASE_URL),
+    anonKey: requireEnv(
+      'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    ),
+  };
+}
