@@ -16,7 +16,7 @@ export function HeaderBorder() {
   return (
     <span
       aria-hidden="true"
-      className={`dispatch-transition-overlay absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-border-default to-transparent ${
+      className={`dispatch-rule dispatch-transition-overlay absolute inset-x-0 bottom-0 h-px ${
         isScrolled ? 'opacity-100' : 'opacity-0'
       }`}
     />

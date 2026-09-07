@@ -46,11 +46,14 @@ export default function Home() {
       </a>
 
       <header className="sticky top-0 z-10 bg-canvas">
-        <nav className="mx-auto flex h-16 max-w-marketing items-center px-5 lg:px-8">
+        <nav className="relative mx-auto flex h-16 max-w-marketing items-center px-5 lg:px-8">
           <a href="/" aria-label="Dispatch home">
             <Lockup />
           </a>
-          <a href="#features" className={`ml-8 hidden md:block ${navLink}`}>
+          <a
+            href="#features"
+            className={`-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 hidden md:block ${navLink}`}
+          >
             Features
           </a>
           <div className="ml-auto flex items-center gap-2">

@@ -282,7 +282,7 @@ a:hover { color: var(--dispatch-text-primary); }
 /* Display titles only. Keep the element a real heading - the text stays readable to a screen reader. */
 .dispatch-display-gradient {
   background: linear-gradient(
-    to bottom,
+    to bottom in oklab,
     var(--dispatch-text-primary) 45%,
     var(--dispatch-text-secondary) 100%
   );
