@@ -78,7 +78,24 @@ The "never encode meaning in colour alone" requirement is satisfied by the word 
 
 **Yes:** status pills, the leading status tile, log levels, validation messages, the focus ring, chart series, diff highlighting in the compatibility checker.
 
-**No:** headings, buttons (except danger), nav icons, links inside the product chrome, section backgrounds, the logo, hover fills, ordinary card borders, empty states, illustration of any kind.
+**No:** headings, buttons (except danger), nav icons, links inside the product chrome, section backgrounds, the logo, hover fills, ordinary card borders, empty states, illustration of any kind. The one exception is the marketing rule and glow below, which are neutral, not hue.
+
+## Gradients, on marketing only
+
+Three sanctioned gradients, all defined as classes in `tokens/tokens.css` so nobody hand-rolls stops. Every stop is a token. **None of them appear in the product.**
+
+| Class | What it is | Stops |
+|---|---|---|
+| `.dispatch-display-gradient` | The hero title | `text-primary` to 45%, then to `text-secondary` at 100%, top to bottom |
+| `.dispatch-rule` | Section rule, replaces a flat 1px border | transparent, `border-subtle` 6-34%, `text-muted` at 50%, `border-subtle` 66-94%, transparent |
+| `.dispatch-glow` | Sits under a rule | radial ellipse 55% x 100% from 50% 0%, `hover` to transparent at 70% |
+
+Notes that will bite:
+
+1. **The rule is full-bleed, the content is not.** Put the rule on an element that spans the viewport, not inside the 1200px container, or it stops short of the edges.
+2. **The glow paints first.** If the glow element comes after the rule in the DOM it covers the middle of the line, and because the glow is most opaque at its centre you get a rule that looks bright at both ends and dead in the middle. Glow first, rule second.
+3. **The rule peaks at `text-muted`.** That is a text-ramp token doing edge duty, because the border ramp stops at `border-strong` `#3D3D43`, which is too dark to read as a highlight against `canvas`. If the border ramp ever gains a brighter step, the rule should move to it.
+4. **The stops are percentages of the element.** The lit section scales with viewport width and does not track the content column.
 
 ## Never encode meaning in colour alone
 
