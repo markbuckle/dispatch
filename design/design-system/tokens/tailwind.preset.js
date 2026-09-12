@@ -1,4 +1,4 @@
-/** Dispatch — Tailwind v3 preset.
+/** Dispatch - Tailwind v3 preset.
  *  On v4, prefer the @theme block in tokens.css. This exists for v3 codebases.
  *  Values mirror tokens.json exactly.
  */

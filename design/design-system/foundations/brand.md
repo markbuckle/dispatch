@@ -2,7 +2,7 @@
 
 ## Mission
 
-Make email infrastructure something a developer can see into. Every message, every bounce, every DNS record, every client that breaks your HTML — visible, named, and debuggable.
+Make email infrastructure something a developer can see into. Every message, every bounce, every DNS record, every client that breaks your HTML - visible, named, and debuggable.
 
 ## Vision
 
@@ -10,13 +10,13 @@ That "we don't know why that email didn't arrive" stops being a sentence anyone 
 
 ## Why Dispatch exists
 
-Email is the least interesting part of shipping a product and the most likely to fail quietly. A password reset that never lands doesn't throw an error — it produces a support ticket three days later. The incumbents solved sending and left observability as an upsell.
+Email is the least interesting part of shipping a product and the most likely to fail quietly. A password reset that never lands doesn't throw an error - it produces a support ticket three days later. The incumbents solved sending and left observability as an upsell.
 
 Dispatch treats the send as the easy half. The product is the part after: where did it go, what happened to it, and which of your twenty target clients is going to mangle the markup.
 
 ## Positioning statement
 
-For developers shipping products that depend on email, Dispatch is an email API with delivery observability built into the primary surface rather than buried in a log export — so that when something fails, the answer is on screen instead of in a support queue.
+For developers shipping products that depend on email, Dispatch is an email API with delivery observability built into the primary surface rather than buried in a log export - so that when something fails, the answer is on screen instead of in a support queue.
 
 ## Target audience
 

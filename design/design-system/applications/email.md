@@ -1,6 +1,6 @@
 # Email
 
-Dispatch sends email for a living. Ours has to be exemplary — and it has to survive the clients our own compatibility checker flags.
+Dispatch sends email for a living. Ours has to be exemplary - and it has to survive the clients our own compatibility checker flags.
 
 ## Constraints, non-negotiable
 
@@ -13,13 +13,13 @@ Dispatch sends email for a living. Ours has to be exemplary — and it has to su
 - **Plain-text part always.** Not optional.
 - **No background-image on a container.** VML fallback isn't worth the complexity.
 - **No SVG.** PNG at 2×.
-- Total under 100KB where possible — Gmail clips at 102KB.
+- Total under 100KB where possible - Gmail clips at 102KB.
 
 ## Dark mode
 
 Most clients now respect `prefers-color-scheme`, but Outlook desktop inverts colours unpredictably. So:
 
-**Build transactional email light**, with dark-mode overrides layered on. Inverse of the rest of the system, and the one place that's correct — an inverted transactional email in a light inbox reads as a phishing attempt.
+**Build transactional email light**, with dark-mode overrides layered on. Inverse of the rest of the system, and the one place that's correct - an inverted transactional email in a light inbox reads as a phishing attempt.
 
 ```html
 <meta name="color-scheme" content="light dark">
@@ -70,13 +70,13 @@ Light-mode palette: `#FFFFFF` body, `#FCFCFD` surface, `#1C2024` text, `#60646C`
 
 - 32px padding all sides, 24px on mobile.
 - One primary action. A second is a text link, not a button.
-- Buttons as a table cell with `bgcolor` + padding, never a styled `<a>` alone — Outlook ignores padding on inline elements.
+- Buttons as a table cell with `bgcolor` + padding, never a styled `<a>` alone - Outlook ignores padding on inline elements.
 - Subject line under 50 characters, no emoji, no "Re:" trickery.
 - Preheader text: 90 characters, hidden div, actually useful. Never "View this email in your browser".
 
 ## Marketing email
 
-Same constraints, warmer voice. First person singular is allowed — it should read like one engineer writing to another.
+Same constraints, warmer voice. First person singular is allowed - it should read like one engineer writing to another.
 
 - No hero image. Lead with a sentence.
 - Max 3 sections.

@@ -143,7 +143,7 @@ section::after {
 
 /* ── Slide classes ─────────────────────────────────────────────── */
 
-/* Section break — the one permitted background change */
+/* Section break - the one permitted background change */
 section.section {
   background: var(--surface);
   justify-content: center;

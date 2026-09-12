@@ -6,9 +6,9 @@ That last sentence is the whole system. If you are reaching for a colour and it 
 
 ## Provenance
 
-The dark palette below is **measured** from the authenticated product in dark mode. Earlier drafts of this file inferred it from Radix Slate; those values were close in structure but wrong in detail — the real product runs a **near-neutral, slightly warm-black ramp**, not Radix's cool-tinted Slate. The measured values replaced the inferred ones. Light mode is still inferred.
+The dark palette below is **measured** from the authenticated product in dark mode. Earlier drafts of this file inferred it from Radix Slate; those values were close in structure but wrong in detail - the real product runs a **near-neutral, slightly warm-black ramp**, not Radix's cool-tinted Slate. The measured values replaced the inferred ones. Light mode is still inferred.
 
-## No brand hue — a deliberate departure
+## No brand hue - a deliberate departure
 
 Most systems have a primary brand colour. Dispatch doesn't. Reasons:
 
@@ -18,18 +18,18 @@ Most systems have a primary brand colour. Dispatch doesn't. Reasons:
 
 Blue `#0090FF` is the **focus ring** and the **info state**. It is not a brand colour. Never use it as a hero fill, a gradient stop, an icon tint, or a decorative accent.
 
-## Surfaces — five steps
+## Surfaces - five steps
 
 | Token | Value | Role |
 |---|---|---|
-| `canvas` | `#08080A` | Page floor **and the sidebar** — they are the same colour, separated by a hairline |
+| `canvas` | `#08080A` | Page floor **and the sidebar** - they are the same colour, separated by a hairline |
 | `surface` | `#0E0E10` | Cards, panels, timeline containers |
 | `subtle` | `#131315` | Table headers, leading tiles, code-block chrome |
 | `hover` | `#16161A` | Hover state, and the active nav item |
 
 Note how little separates them: 6 points of lightness across four steps. Depth here is carried by **borders**, not by surface contrast. Trying to read the hierarchy from fills alone will produce a flat-looking screen.
 
-## Borders — four steps
+## Borders - four steps
 
 | Token | Value | Role |
 |---|---|---|
@@ -37,9 +37,9 @@ Note how little separates them: 6 points of lightness across four steps. Depth h
 | `border-default` | `#26262A` | Inputs, buttons, avatars, chips |
 | `border-strong` | `#3D3D43` | Hovered control edge, dotted underlines |
 
-Three border steps, not four. An earlier draft carried a `#17171A` step below `border-subtle`; in practice it was indistinguishable from the surface it sat on and every use of it collapsed into `#1F2023`. Control fills likewise collapsed from a separate `#101012` into `surface` — a fourth surface step that nothing needed.
+Three border steps, not four. An earlier draft carried a `#17171A` step below `border-subtle`; in practice it was indistinguishable from the surface it sat on and every use of it collapsed into `#1F2023`. Control fills likewise collapsed from a separate `#101012` into `surface` - a fourth surface step that nothing needed.
 
-## Text — five steps, with a hard floor
+## Text - five steps, with a hard floor
 
 | Token | Value | Contrast on `canvas` | Role |
 |---|---|---|---|
@@ -47,13 +47,13 @@ Three border steps, not four. An earlier draft carried a `#17171A` step below `b
 | `text-secondary` | `#B0B4BA` | 8.9:1 | Body copy, table cells |
 | `text-tertiary` | `#9A9DA3` | 6.6:1 | Table headers, inactive nav items |
 | `text-muted` | `#777B84` | **4.7:1** | Timestamps, footnotes, placeholders |
-| `text-placeholder` | `#696E77` | 3.9:1 | **Non-text only** — line numbers, disabled glyphs, row action dots |
+| `text-placeholder` | `#696E77` | 3.9:1 | **Non-text only** - line numbers, disabled glyphs, row action dots |
 
-**`text-muted` at `#777B84` is the floor for anything a user has to read.** It clears 4.5:1 with almost nothing to spare. A tempting darker grey like `#6E7278` measures 4.14:1 on canvas and 3.99:1 on `surface` — both fail, and both look better in isolation, which is exactly the trap. Do not introduce a step between `muted` and `placeholder` for text.
+**`text-muted` at `#777B84` is the floor for anything a user has to read.** It clears 4.5:1 with almost nothing to spare. A tempting darker grey like `#6E7278` measures 4.14:1 on canvas and 3.99:1 on `surface` - both fail, and both look better in isolation, which is exactly the trap. Do not introduce a step between `muted` and `placeholder` for text.
 
-**Text is never pure `#FFFFFF`.** `#EDEEF0` is an off-white eggshell. Pure white on near-black produces halation — the text appears to vibrate at small sizes.
+**Text is never pure `#FFFFFF`.** `#EDEEF0` is an off-white eggshell. Pure white on near-black produces halation - the text appears to vibrate at small sizes.
 
-## Semantics — solid fill, bright foreground
+## Semantics - solid fill, bright foreground
 
 Four tokens per meaning: a **solid** background, a bright foreground, plus a 7% **tint** and a 22–24% **edge** for the leading tile that pairs with a pill in a table row.
 
@@ -66,13 +66,13 @@ Four tokens per meaning: a **solid** background, a bright foreground, plus a 7% 
 | neutral · sent, suppressed | `#1E1E22` | `#C0C4CA` | 9.1:1 |
 | off · canceled | `#1A1A1E` | `#8C9096` | 4.8:1 |
 
-**Solid, not translucent.** An earlier draft used a 10% alpha wash with a 1px border. The measured product uses an opaque deep fill with no border, and it's the better call — twelve translucent pills in a column pick up whatever is behind them and the row starts to look striped.
+**Solid, not translucent.** An earlier draft used a 10% alpha wash with a 1px border. The measured product uses an opaque deep fill with no border, and it's the better call - twelve translucent pills in a column pick up whatever is behind them and the row starts to look striped.
 
 ## No dot
 
 Status pills carry **the word only**. No leading dot.
 
-The "never encode meaning in colour alone" requirement is satisfied by the word — `Delivered` and `Bounced` are unambiguous to a reader with any colour vision. The dot was belt-and-braces, and at twelve rows deep it read as noise. **The word is mandatory**; never abbreviate, never truncate, never replace a pill with a bare coloured dot or an icon.
+The "never encode meaning in colour alone" requirement is satisfied by the word - `Delivered` and `Bounced` are unambiguous to a reader with any colour vision. The dot was belt-and-braces, and at twelve rows deep it read as noise. **The word is mandatory**; never abbreviate, never truncate, never replace a pill with a bare coloured dot or an icon.
 
 ## Where colour goes
 

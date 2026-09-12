@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { cn } from './cn';
 
-/** Fixed vocabulary — see foundations/vocabulary.md. Do not paraphrase these labels. */
+/** Fixed vocabulary - see foundations/vocabulary.md. Do not paraphrase these labels. */
 export type Status =
   | 'Queued' | 'Sent' | 'Delivered' | 'Bounced' | 'Deferred'
   | 'Complained' | 'Suppressed' | 'Opened' | 'Clicked' | 'Canceled' | 'Failed';
 
 /**
- * Solid fill, bright foreground, no dot — measured off the product in dark mode.
+ * Solid fill, bright foreground, no dot - measured off the product in dark mode.
  * The WORD carries the meaning, which is what satisfies the "never colour alone"
  * rule; the dot was belt-and-braces and read as noise at twelve rows deep.
  * Never render this with the label hidden or abbreviated.
@@ -42,7 +42,7 @@ export function StatusPill({ status, className }: { status: Status; className?: 
 }
 
 /**
- * Tinted 34px leading tile that pairs with a pill in a table row — the status
+ * Tinted 34px leading tile that pairs with a pill in a table row - the status
  * colour at 7% behind a monoline glyph, so the row reads at a glance.
  */
 export function StatusTile({ status, children }: { status: Status; children: React.ReactNode }) {

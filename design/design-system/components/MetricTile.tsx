@@ -3,7 +3,7 @@ import { cn } from './cn';
 
 /**
  * Overline label, tabular value, delta. The delta is the only place colour
- * appears — and only when the direction actually carries meaning.
+ * appears - and only when the direction actually carries meaning.
  */
 export function MetricTile({
   label,

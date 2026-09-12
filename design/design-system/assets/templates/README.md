@@ -23,7 +23,7 @@ Delivery observability for developers
 
 ---
 <!-- _class: section -->
-# 01 — The problem
+# 01 - The problem
 
 ---
 <!-- _class: number -->
@@ -35,7 +35,7 @@ See `../../applications/presentations.md` for the slide-type system.
 
 ## OG images
 
-Edit the two text nodes in `og-image.svg`, then **outline the text before rasterising** — a machine without Geist installed silently substitutes a system sans and the tracking collapses.
+Edit the two text nodes in `og-image.svg`, then **outline the text before rasterising** - a machine without Geist installed silently substitutes a system sans and the tracking collapses.
 
 ```bash
 # with resvg, after outlining
@@ -46,5 +46,5 @@ Headline: max 2 lines. Blog posts use the post title at `display-m` with no subc
 
 ## Patterns
 
-`../patterns/grid.svg` — 32px dot grid, max 40% opacity, never behind body copy.
-`../patterns/hairline.svg` — 1200px section rule, fades at both ends.
+`../patterns/grid.svg` - 32px dot grid, max 40% opacity, never behind body copy.
+`../patterns/hairline.svg` - 1200px section rule, fades at both ends.

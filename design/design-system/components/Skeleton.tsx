@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn } from './cn';
 
-/** Opacity pulse only — never a shimmer sweep or a gradient. */
+/** Opacity pulse only - never a shimmer sweep or a gradient. */
 export function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div

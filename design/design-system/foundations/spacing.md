@@ -25,13 +25,13 @@ Extracted counts back this up: 24px was the most-used value on both marketing pa
 
 ## Two densities
 
-**Product** — 8px between controls, 12px cell padding, 20px card padding, 24px between blocks. The user is scanning; every 4px you add is a row they can't see.
+**Product** - 8px between controls, 12px cell padding, 20px card padding, 24px between blocks. The user is scanning; every 4px you add is a row they can't see.
 
-**Marketing** — 24px within a block, 96px between sections, 128px around the hero. Here the air is the point.
+**Marketing** - 24px within a block, 96px between sections, 128px around the hero. Here the air is the point.
 
 Never mix the two on one surface. A dashboard with 96px section gaps looks broken; a landing page with 8px gaps looks like a spreadsheet.
 
-## Section rhythm — marketing
+## Section rhythm - marketing
 
 ```
 overline           12px caption, text-muted
@@ -71,7 +71,7 @@ Measured off the product in dark mode. These are the numbers, not approximations
 | Button, marketing hero | `16px 16px` | **44px**, from padding not a fixed height |
 | Button, marketing header | `12px 8px` | **36px**, from padding not a fixed height |
 | Button, small | `0 13px` | 34px |
-| Icon button | — | 42px square |
+| Icon button | - | 42px square |
 | Input, select | `0 16px` | **44px** |
 | Textarea | `12px 16px` | auto, min 80px |
 | Table cell | `0 20px` | row **60px** |
@@ -81,18 +81,18 @@ Measured off the product in dark mode. These are the numbers, not approximations
 | Top bar, product | `0 30px` | **60px** |
 | Header, marketing | `0 20px` mobile / `0 32px` desktop | **64px** |
 | Dense table row (records, issues) | `0 20px` | 52px |
-| Card | `20px` | — |
-| Card, compact | `16px 18px` | — |
-| Dialog | `20px`, header/footer `15px 20px` | — |
+| Card | `20px` | - |
+| Card, compact | `16px 18px` | - |
+| Dialog | `20px`, header/footer `15px 20px` | - |
 | Status pill | `0 10px` | **26px** |
-| Leading status tile | — | 34px square |
+| Leading status tile | - | 34px square |
 | Sidebar nav item | `0 12px` | **40px** |
 | Workspace switcher | `0 8px` | 42px |
 | Dropdown item | `0 12px` | 34px |
 | Tab | `0 16px` | 38px |
-| Toast | `14px 16px` | — |
+| Toast | `14px 16px` | - |
 | Status pill | `0 11px` | **28px** |
-| Tooltip | `7px 10px` | — |
+| Tooltip | `7px 10px` | - |
 
 ### Frame geometry
 
@@ -103,15 +103,15 @@ Measured off the product in dark mode. These are the numbers, not approximations
 | Page gutter | 28px |
 | Page title to content | 24px |
 
-The product is **airier than the marketing pages implied.** An earlier draft of this file built product density off the pricing page — 32px controls, 40px rows, 24px gutters. The real product runs 38–40px controls and 56px rows. Dense still, but not cramped.
+The product is **airier than the marketing pages implied.** An earlier draft of this file built product density off the pricing page - 32px controls, 40px rows, 24px gutters. The real product runs 38–40px controls and 56px rows. Dense still, but not cramped.
 
 ## One known drift
 
-The built product screens set their page-level section gap to **26px**, which is not on the 4px grid and is not a token. It is build drift, not a system value — the correct token is `6` (24px). Anything new uses 24px; the screens should be corrected to match rather than the scale widened to accommodate them.
+The built product screens set their page-level section gap to **26px**, which is not on the 4px grid and is not a token. It is build drift, not a system value - the correct token is `6` (24px). Anything new uses 24px; the screens should be corrected to match rather than the scale widened to accommodate them.
 
 ## Four rules
 
-1. **Group with space before you group with a line.** A hairline is a last resort for when spacing alone leaves the grouping ambiguous. The reference's own tables prove this works — one 1px bottom border per row and nothing else.
+1. **Group with space before you group with a line.** A hairline is a last resort for when spacing alone leaves the grouping ambiguous. The reference's own tables prove this works - one 1px bottom border per row and nothing else.
 2. **Vertical rhythm beats horizontal symmetry.** Consistent vertical steps matter more than perfectly centred columns.
 3. **Related things get 8px; unrelated things get 24px.** If you can't decide which, the hierarchy isn't resolved yet.
 4. **Never a value off the scale.** No 15px, no 18px, no 30px. If something needs 18px, it needs 16 or 20.

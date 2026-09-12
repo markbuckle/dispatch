@@ -10,7 +10,7 @@
 
 :root,
 [data-theme="dark"] {
-  /* Surfaces — four steps, canvas to hover */
+  /* Surfaces - four steps, canvas to hover */
   --dispatch-canvas:  #08080A;
   --dispatch-surface: #0E0E10;
   --dispatch-subtle:  #131315;
@@ -21,7 +21,7 @@
   --dispatch-border-default: #26262A;
   --dispatch-border-strong:  #3D3D43;
 
-  /* Text — muted is the contrast floor at 4.7:1 on canvas */
+  /* Text - muted is the contrast floor at 4.7:1 on canvas */
   --dispatch-text-primary:     #EDEEF0;
   --dispatch-text-secondary:   #B0B4BA;
   --dispatch-text-tertiary:    #9A9DA3;
@@ -29,10 +29,10 @@
   --dispatch-text-placeholder: #696E77;
   --dispatch-text-inverse:     #08080A;
 
-  /* Accent — focus rings and the info state only. Not a brand colour. */
+  /* Accent - focus rings and the info state only. Not a brand colour. */
   --dispatch-accent: #0090FF;
 
-  /* Semantics — solid fill, bright foreground. Measured off the product. */
+  /* Semantics - solid fill, bright foreground. Measured off the product. */
   --dispatch-success-bg:   #0B2E20;
   --dispatch-success-fg:   #3ECF8E;
   --dispatch-success-tint: rgba(62,207,142,0.07);
@@ -58,7 +58,7 @@
   --dispatch-off-bg:     #1A1A1E;
   --dispatch-off-fg:     #8C9096;
 
-  /* Elevation — edges, not shadows */
+  /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
   --dispatch-focus:   0 0 0 2px var(--dispatch-canvas), 0 0 0 4px var(--dispatch-accent);
@@ -172,7 +172,7 @@
   --radius-lg:   12px;
   --radius-2xl:  16px;
 
-  /* Named heights — components reference these by name, so they must exist here. */
+  /* Named heights - components reference these by name, so they must exist here. */
   --height-control:     42px;  /* buttons, tabs, segmented, icon buttons */
   --height-control-lg:  44px;  /* inputs, selects, nav items */
   --height-control-sm:  34px;  /* small and copy buttons */

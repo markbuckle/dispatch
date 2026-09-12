@@ -15,11 +15,11 @@
 
 | Level | Recipe |
 |---|---|
-| **0 — flat** | On `canvas` `#08080A`. `border-subtle` hairline if it needs a boundary at all. |
-| **1 — card** | `surface` `#0E0E10` bg, `border-default` `#1F2023`, `shadow-ring`. The border stepping up is what does the lifting — the fills are only 6 points apart. |
-| **2 — overlay** | `raised` `#131315` bg, `border-strong` `#26262A`, `shadow-overlay`. Reserved for things that float above the page. |
+| **0 - flat** | On `canvas` `#08080A`. `border-subtle` hairline if it needs a boundary at all. |
+| **1 - card** | `surface` `#0E0E10` bg, `border-default` `#1F2023`, `shadow-ring`. The border stepping up is what does the lifting - the fills are only 6 points apart. |
+| **2 - overlay** | `raised` `#131315` bg, `border-strong` `#26262A`, `shadow-overlay`. Reserved for things that float above the page. |
 
-Because the five surface fills sit within 6 points of lightness of each other, **the border is doing nearly all the work.** If a card looks flat, step the border up — don't reach for a lighter fill or a shadow.
+Because the five surface fills sit within 6 points of lightness of each other, **the border is doing nearly all the work.** If a card looks flat, step the border up - don't reach for a lighter fill or a shadow.
 
 There is no level 3.
 
@@ -40,6 +40,6 @@ Extracted: the most common `box-shadow` across the reference is
 0 0 0 1px rgba(24, 25, 28, 0.88)
 ```
 
-— sixty occurrences, and it's a **1px ring, not a shadow**. Only ten elements on the page carried a real drop shadow (`0 1px 3px rgba(0,0,0,.1)`), and one carried an inset white highlight. On the authenticated product pages the box-shadow census came back **empty**.
+- sixty occurrences, and it's a **1px ring, not a shadow**. Only ten elements on the page carried a real drop shadow (`0 1px 3px rgba(0,0,0,.1)`), and one carried an inset white highlight. On the authenticated product pages the box-shadow census came back **empty**.
 
 Depth in this category is an edge. Build it that way.

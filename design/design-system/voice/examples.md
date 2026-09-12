@@ -1,4 +1,4 @@
-# Voice — do and don't
+# Voice - do and don't
 
 Every pair below is the same message written twice.
 

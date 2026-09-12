@@ -1,6 +1,6 @@
 # Presentations
 
-1920 × 1080. Dark. **Minimum text size 24px** — and that's a floor, not a target.
+1920 × 1080. Dark. **Minimum text size 24px** - and that's a floor, not a target.
 
 ## Slide types
 
@@ -31,7 +31,7 @@
 | Caption / source | 24px |
 | Big number | 200px |
 
-Geist for anything 48px and up, Inter below that. Nothing under 24px, ever — including footnotes and sources.
+Geist for anything 48px and up, Inter below that. Nothing under 24px, ever - including footnotes and sources.
 
 ## Layout
 
@@ -49,7 +49,7 @@ Colour appears only in: chart series, status pills in a screenshot, one number t
 
 ## Charts
 
-- One message per chart. The title is the conclusion: "Bounce rate fell 3.3 points after DMARC" — not "Bounce rate over time".
+- One message per chart. The title is the conclusion: "Bounce rate fell 3.3 points after DMARC" - not "Bounce rate over time".
 - Series colours from the semantic set, in order: `info-fg`, `success-fg`, `warning-fg`, `danger-fg`. Beyond four series, reconsider the chart.
 - No gridlines unless reading exact values matters. Then `border-subtle` only, horizontal only.
 - Label data points directly. No legends where a direct label fits.
@@ -76,7 +76,7 @@ Delivery observability for developers
 
 ---
 <!-- _class: section -->
-# 01 — The problem
+# 01 - The problem
 
 ---
 ## 71% of marketing email breaks in Outlook 2016

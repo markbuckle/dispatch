@@ -1,4 +1,4 @@
-# Dispatch — Design System
+# Dispatch - Design System
 
 **Email API for developers.** Dark-mode first. Every token maps to Radix Colors and Tailwind v4.
 
@@ -39,8 +39,8 @@ design-system/
 |---|---|
 | A dashboard screen | `CLAUDE.md` → `tokens/tokens.css` → `foundations/color.md` → `components/` |
 | A landing page | `applications/web.md` → `voice/homepage-copy.md` |
-| Anything with the logo | `logo/usage.md` — read the construction notes before redrawing |
-| Changing a token | `DECISIONS.md` first — several values look wrong in isolation and are deliberate |
+| Anything with the logo | `logo/usage.md` - read the construction notes before redrawing |
+| Changing a token | `DECISIONS.md` first - several values look wrong in isolation and are deliberate |
 | Copy of any kind | `foundations/voice.md` → `foundations/vocabulary.md` → `voice/examples.md` |
 | A deck | `applications/presentations.md` (Marp theme included) |
 | A transactional email | `applications/email.md` |
@@ -48,7 +48,7 @@ design-system/
 ## The system in eight lines
 
 1. **Dark first.** `#08080A` canvas, `#111113` surfaces. Light mode is a mirror, not the default.
-2. **Monochrome base.** Colour appears only to carry meaning — status, log level, validation. There is no brand accent.
+2. **Monochrome base.** Colour appears only to carry meaning - status, log level, validation. There is no brand accent.
 3. **Borders, not shadows.** Depth on dark reads through edge contrast. `box-shadow` is for overlays only.
 4. **Weight over colour.** The primary action is a light fill on near-black. Emphasis comes from weight and contrast.
 5. **Space over dividers.** Group with spacing first; add a hairline only when spacing alone is ambiguous.
@@ -58,4 +58,4 @@ design-system/
 
 ## Density is the point
 
-The user is technical, impatient, and reading a table of delivery statuses at 11pm. When a decision is between "more air" and "more rows visible", pick more rows. Whitespace is not a virtue here — legibility is.
+The user is technical, impatient, and reading a table of delivery statuses at 11pm. When a decision is between "more air" and "more rows visible", pick more rows. Whitespace is not a virtue here - legibility is.

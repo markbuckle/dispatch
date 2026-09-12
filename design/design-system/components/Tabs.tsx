@@ -31,7 +31,7 @@ export function TabsContent({ className, ...props }: RTabs.TabsContentProps) {
   return <RTabs.Content className={cn('outline-none', className)} {...props} />;
 }
 
-/** Segmented control — for switching a view, not navigating. */
+/** Segmented control - for switching a view, not navigating. */
 export function Segmented({
   options,
   value,

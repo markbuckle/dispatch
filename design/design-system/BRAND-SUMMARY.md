@@ -1,4 +1,4 @@
-# Dispatch — brand summary
+# Dispatch - brand summary
 
 ## What it is
 
@@ -10,7 +10,7 @@ Email infrastructure is the least interesting part of shipping a product and the
 
 ## The name
 
-To dispatch is to send something off promptly and with purpose — an order, a message, a package put in motion. Not "deliver" (passive, arrival-focused). Not "send" (generic). Dispatch carries intent and speed.
+To dispatch is to send something off promptly and with purpose - an order, a message, a package put in motion. Not "deliver" (passive, arrival-focused). Not "send" (generic). Dispatch carries intent and speed.
 
 ## Positioning
 
@@ -52,7 +52,7 @@ Alts:
 | | |
 |---|---|
 | Canvas | `#08080A` near-black. Dark first, always. |
-| Surfaces | `#111113` / `#18191B` — Radix Slate dark |
+| Surfaces | `#111113` / `#18191B` - Radix Slate dark |
 | Text | `#EDEEF0` off-white eggshell. Never pure `#FFF`. |
 | Colour | Four semantics only: green delivered, amber queued, red bounced, blue info. No brand hue. |
 | Type | Geist display · Inter UI · Commit Mono code · Instrument Serif, sparingly |
@@ -63,7 +63,7 @@ Alts:
 
 ## Voice in a paragraph
 
-Dispatch talks like a good colleague explaining a system: second person, short sentences, the specific noun rather than the abstract one. It says "your DKIM record is missing" rather than "a configuration issue was detected". It never sells inside the product, and outside the product it sells by being precise — a number, a client name, a status code. When there is nothing specific to say, it says less.
+Dispatch talks like a good colleague explaining a system: second person, short sentences, the specific noun rather than the abstract one. It says "your DKIM record is missing" rather than "a configuration issue was detected". It never sells inside the product, and outside the product it sells by being precise - a number, a client name, a status code. When there is nothing specific to say, it says less.
 
 ## What someone should feel in five seconds
 

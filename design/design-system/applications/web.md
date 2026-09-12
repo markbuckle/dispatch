@@ -44,9 +44,9 @@ The scroll state is the only thing on the header that needs the client. Keep it 
 
 Alternate between three layouts so the page has rhythm:
 
-1. **Split** — copy left (max 480px), product screenshot right, 48px gap.
-2. **Stacked centred** — overline, `display-m`, one line of body, then a full-width table or code block.
-3. **Three-up cards** — `h3` + two lines each, 24px gap, `radius-lg` (12px) is the ceiling.
+1. **Split** - copy left (max 480px), product screenshot right, 48px gap.
+2. **Stacked centred** - overline, `display-m`, one line of body, then a full-width table or code block.
+3. **Three-up cards** - `h3` + two lines each, 24px gap, `radius-lg` (12px) is the ceiling.
 
 Every section: `overline` (12px, uppercase, `text-muted`) → 12px → `display-m` → 16px → `body-lg` → 40px → content.
 
@@ -55,12 +55,12 @@ Every section: `overline` (12px, uppercase, `text-muted`) → 12px → `display-
 - Numbers at `display-s`, tabular.
 - Three tiers maximum. If enterprise needs a fourth, it's a row below, not a card.
 - **Show the number.** "Contact sales" where a price should be is the single most distrusted pattern with this audience.
-- Comparison table: `border-subtle` cell dividers, 40px rows, checkmarks as Lucide `Check` at 16px in `text-primary` — not green.
+- Comparison table: `border-subtle` cell dividers, 40px rows, checkmarks as Lucide `Check` at 16px in `text-primary` - not green.
 
 ## Docs
 
 - Three columns: 240px nav, fluid content at max 680px, 200px on-page TOC.
-- `body` 16px for prose here, not 14px — docs are read, not scanned.
+- `body` 16px for prose here, not 14px - docs are read, not scanned.
 - Code blocks with a language tab bar and a copy button.
 - Every endpoint: method + path in mono, then params table, then a real request and response.
 
@@ -101,7 +101,7 @@ Opens with a full-bleed `.dispatch-glow` at 160px, then `.dispatch-rule` on top 
 
 - Focus ring on everything interactive. Never `outline: none` without `focus-visible:shadow-focus`.
 - Skip-to-content link, first in the DOM.
-- 44px minimum touch target on mobile, even where the visual control is 32px — pad the hit area.
+- 44px minimum touch target on mobile, even where the visual control is 32px - pad the hit area.
 - One `h1` per page, heading levels never skipped.
 - `prefers-reduced-motion` honoured globally.
 - Status communicated by word, never colour alone.

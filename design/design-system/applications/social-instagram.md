@@ -1,6 +1,6 @@
 # Instagram
 
-**Low priority.** Dispatch's audience isn't here in significant numbers. Use it for recruiting, engineering culture, and conference presence — not lead generation.
+**Low priority.** Dispatch's audience isn't here in significant numbers. Use it for recruiting, engineering culture, and conference presence - not lead generation.
 
 If a request comes in for Instagram lead-gen content, push back: the same effort on LinkedIn or in the docs returns more.
 
@@ -38,20 +38,20 @@ Type-led, always. The brand has no illustration system and Instagram is not the 
 
 1. **A number, set large.** One statistic, nothing else.
 2. **A code screenshot.** Real, short, syntax-highlighted, 20px mono minimum.
-3. **A single UI crop.** One status pill, one table row, one DNS record — at real scale.
+3. **A single UI crop.** One status pill, one table row, one DNS record - at real scale.
 4. **Team photography.** Careers and culture. Real people, available light, no stock.
 5. **Conference presence.** The booth, the talk, the whiteboard.
 
 ## Stories
 
 - 1080 × 1920, keep everything inside a 1080 × 1420 safe area.
-- One idea per story frame. `display-s` maximum size — story text at 40px+ is shouting.
+- One idea per story frame. `display-s` maximum size - story text at 40px+ is shouting.
 - Link sticker bottom-centre, above the safe-area line.
 - No countdown stickers, no polls-as-engagement-bait, no "swipe up" (the sticker does that).
 
 ## Captions
 
-Same voice as everywhere. First line carries the whole message — Instagram truncates hard.
+Same voice as everywhere. First line carries the whole message - Instagram truncates hard.
 
 - ✅ "Twenty-three email clients. Four of them still don't support flexbox. The checker tells you which line breaks where."
 - ❌ "✨ Email marketing has never been easier! Swipe to learn more 👉"

@@ -3,7 +3,7 @@ import * as RCheckbox from '@radix-ui/react-checkbox';
 import { Check, Minus } from 'lucide-react';
 import { cn } from './cn';
 
-/** 16px box, 4px radius — one step down from the 6px controls it sits beside. */
+/** 16px box, 4px radius - one step down from the 6px controls it sits beside. */
 export function Checkbox({
   label,
   description,

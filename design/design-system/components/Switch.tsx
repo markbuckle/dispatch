@@ -3,7 +3,7 @@ import * as RSwitch from '@radix-ui/react-switch';
 import { cn } from './cn';
 
 /**
- * The one place full-pill radius is allowed outside avatars — a switch that
+ * The one place full-pill radius is allowed outside avatars - a switch that
  * isn't a track-and-thumb reads as a checkbox.
  */
 export function Switch({

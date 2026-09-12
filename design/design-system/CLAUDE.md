@@ -1,13 +1,13 @@
-# CLAUDE.md — read this before generating anything for Dispatch
+# CLAUDE.md - read this before generating anything for Dispatch
 
 Dispatch is an **email API for developers**. The audience is technical, impatient, and often debugging. Every surface should feel like a slick well-made tool just like Resend (https://resend.com/home)
 
 ## 1. Load order
 
 1. This file.
-2. `tokens/tokens.css` — the actual values, **measured from the product in dark mode**. Never invent a colour, size, radius, or duration that isn't here. If you need one, add it here first.
-3. `BRAND-SUMMARY.md` — one-page positioning.
-4. `foundations/color.md` + `foundations/typography.md` — the two that constrain every layout.
+2. `tokens/tokens.css` - the actual values, **measured from the product in dark mode**. Never invent a colour, size, radius, or duration that isn't here. If you need one, add it here first.
+3. `BRAND-SUMMARY.md` - one-page positioning.
+4. `foundations/color.md` + `foundations/typography.md` - the two that constrain every layout.
 5. The relevant `applications/*.md` for the surface you're building.
 6. `foundations/voice.md` + `foundations/vocabulary.md` before writing a single word of copy.
 7. `components/` for React starters.
@@ -15,12 +15,12 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 
 ## 2. Non-negotiables, in Dispatch terms
 
-1. **No brand accent colour.** The base is monochrome. Blue `#0090FF` is the focus ring and the info state — it is not a brand colour and must never appear as decoration, a gradient, or a hero fill.
+1. **No brand accent colour.** The base is monochrome. Blue `#0090FF` is the focus ring and the info state - it is not a brand colour and must never appear as decoration, a gradient, or a hero fill.
 2. **One UI typeface: Inter.** Geist for product display and the wordmark. Commit Mono for anything a developer would copy. Instrument Serif is the marketing hero face, once per page at `display-2xl`, or not at all.
 3. **Dark is the canvas.** `#08080A`. Light mode exists as a mirrored token set for users who ask; never design light-first.
 4. **Sentence case everywhere.** No Title Case. ALL CAPS only in a ≤3-word overline at 12px with +0.06em tracking.
 5. **No hype vocabulary.** Banned: revolutionary, game-changing, 10x, cutting-edge, supercharge, unleash, leverage, transform, synergy, seamless, robust, blazing-fast, AI-powered as a bare adjective.
-6. **Second person, short sentences.** Name the developer's world — request, payload, webhook, bounce, DKIM record, status code — not ours (platform, solution, ecosystem).
+6. **Second person, short sentences.** Name the developer's world - request, payload, webhook, bounce, DKIM record, status code - not ours (platform, solution, ecosystem).
 7. **Gradients and glows are allowed on marketing surfaces, in three specific forms.** The display-title gradient, the section rule, and the section glow, all defined as classes in `tokens/tokens.css` (`.dispatch-display-gradient`, `.dispatch-rule`, `.dispatch-glow`). Use those classes rather than hand-rolling stops, and take every colour from a token. **Product surfaces stay flat** - a dashboard gets borders, not gradients. Still banned everywhere: glassmorphism, 3D, neumorphism, and illustration.
 8. **Borders over shadows.** `box-shadow` is permitted on dropdowns, dialogs and toasts. Nowhere else. The five surface fills sit within 6 points of each other, so the border carries the hierarchy.
 
@@ -61,12 +61,12 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 | deck, slides, presentation, all-hands | `applications/presentations.md` |
 | transactional email, receipt, verification | `applications/email.md` |
 | LinkedIn post, carousel | `applications/social-linkedin.md` |
-| Instagram | `applications/social-instagram.md` (rarely relevant — this is a dev tool) |
+| Instagram | `applications/social-instagram.md` (rarely relevant - this is a dev tool) |
 | ad, paid, sponsored | `applications/ads.md` |
 | diagram, chart, comparison | `applications/infographics.md` |
 | logo, favicon, app icon | `logo/usage.md` |
 
-## 5. Quality bar — ask before delivering
+## 5. Quality bar - ask before delivering
 
 1. Did I use a value that isn't in `tokens/tokens.css`? If yes, remove it or justify it.
 2. Is there any colour on screen that isn't carrying meaning? If yes, delete it.

@@ -2,7 +2,7 @@
 
 ## Words we use
 
-**About us:** built, ships, handles, retries, verifies, surfaces, logs, exposes, returns. We are "Dispatch" or "we" — never "the platform", never "the Dispatch team" in product copy.
+**About us:** built, ships, handles, retries, verifies, surfaces, logs, exposes, returns. We are "Dispatch" or "we" - never "the platform", never "the Dispatch team" in product copy.
 
 **About the user:** you, your domain, your send, your endpoint, your template, your key, your workspace.
 
@@ -64,7 +64,7 @@ Test: could a competitor put their logo on this headline? If yes, rewrite it.
 
 **Fails:** "The modern email platform." · "Email, reimagined." · "Delivery you can trust." · "Supercharge your email."
 
-## Status vocabulary — fixed
+## Status vocabulary - fixed
 
 These strings appear in the product and must not be paraphrased.
 
@@ -82,4 +82,4 @@ These strings appear in the product and must not be paraphrased.
 | Cancelled before sending | `Canceled` | disabled |
 | Send failed inside Dispatch | `Failed` | danger |
 
-Note: `Canceled`, one L — US spelling, consistent with the API.
+Note: `Canceled`, one L - US spelling, consistent with the API.

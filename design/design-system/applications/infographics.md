@@ -1,6 +1,6 @@
 # Infographics and diagrams
 
-Diagrams are drawn with the system's own primitives — surfaces, hairlines, monoline icons, mono labels. **There is no separate illustration style**, and inventing one is the failure mode here.
+Diagrams are drawn with the system's own primitives - surfaces, hairlines, monoline icons, mono labels. **There is no separate illustration style**, and inventing one is the failure mode here.
 
 ## Canvas sizes
 
@@ -28,7 +28,7 @@ Diagrams are drawn with the system's own primitives — surfaces, hairlines, mon
 
 Connectors reuse the logo's vocabulary deliberately: a node, a taut line, a sharp point. The diagrams and the mark are the same drawing system.
 
-## Flow diagram — the canonical one
+## Flow diagram - the canonical one
 
 ```
   POST /emails          Queue              Send            Delivered
@@ -51,13 +51,13 @@ Left to right for a process. Top to bottom for a hierarchy. Never radial, never 
 | Line | A value over time |
 | Bar | Comparing categories |
 | Horizontal bar | Comparing categories with long labels |
-| Stacked bar | Composition over time — max 4 segments |
+| Stacked bar | Composition over time - max 4 segments |
 | Sparkline | A trend inside a table row or metric tile |
 | Table | **Usually the right answer.** If there are fewer than 8 data points, a table beats a chart. |
 
 **Never:** pie, doughnut, radar, gauge, treemap, word cloud, 3D anything, dual-axis.
 
-Series colours in order: `info-fg #70B8FF`, `success-fg #3DD68C`, `warning-fg #FFCA16`, `danger-fg #FF9592`. A single-series chart uses `text-secondary`, not a colour — one series needs no colour coding.
+Series colours in order: `info-fg #70B8FF`, `success-fg #3DD68C`, `warning-fg #FFCA16`, `danger-fg #FF9592`. A single-series chart uses `text-secondary`, not a colour - one series needs no colour coding.
 
 - Gridlines: horizontal only, `border-subtle`, and only if exact values matter.
 - Axis labels: `caption` `text-muted`, tabular.
@@ -72,7 +72,7 @@ The most-used graphic in this brand, and the most persuasive for this audience.
 - `Th` in `caption` `text-muted`, 32px tall.
 - 40px rows, `border-subtle` dividers.
 - Dispatch's column gets `subtle` bg. **Not a coloured highlight, not a "recommended" badge.**
-- Checkmarks: Lucide `Check` 16px in `text-primary`. Absences: an en dash in `text-muted`. **Never a green tick and a red cross** — it reads as a sales asset.
+- Checkmarks: Lucide `Check` 16px in `text-primary`. Absences: an en dash in `text-muted`. **Never a green tick and a red cross** - it reads as a sales asset.
 - Every claim about a competitor must be verifiable and dated. Put the date in a footnote.
 
 ## Titles

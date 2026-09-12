@@ -1,6 +1,6 @@
 # Motion
 
-Fast and functional. Motion exists to show a relationship — where a thing came from, what it belongs to — and nothing else.
+Fast and functional. Motion exists to show a relationship - where a thing came from, what it belongs to - and nothing else.
 
 ## Duration tokens
 
@@ -16,7 +16,7 @@ Two tokens do 95% of the work. **Pick by the surface area of the thing that's mo
 
 Extracted from the authenticated product: **200ms on 28 elements**, 150ms on 3, 300ms on 2, easing `cubic-bezier(.4,0,.2,1)`, with Radix overlays at `.2s ease-in-out`. The brief asked for 120–180ms ease-out.
 
-Both are right about different things. Small state changes need to land under ~150ms to feel instant — a 200ms hover on a table row you're scanning at speed reads as lag. But a large surface moving in 120ms doesn't have enough frames to parse and reads as a glitch rather than a movement. So: 120ms for colour and small state, 200ms for anything with real area.
+Both are right about different things. Small state changes need to land under ~150ms to feel instant - a 200ms hover on a table row you're scanning at speed reads as lag. But a large surface moving in 120ms doesn't have enough frames to parse and reads as a glitch rather than a movement. So: 120ms for colour and small state, 200ms for anything with real area.
 
 The practical benefit is that Radix Primitives keep their default 200ms, so nobody has to override the library to hit the spec.
 
@@ -42,11 +42,11 @@ The practical benefit is that Radix Primitives keep their default 200ms, so nobo
 ## We do not do
 
 - Bounce, spring, overshoot, elastic, or any easing that goes past its endpoint
-- Scale or translate on button hover — the reference does `scaleX(1.1)` and `scale(1.05)`; we rejected both
+- Scale or translate on button hover - the reference does `scaleX(1.1)` and `scale(1.05)`; we rejected both
 - Parallax, of any kind
 - Scroll-jacking or scroll-driven pinning
 - Looping hero video or animated backgrounds
-- Entrance animations that delay reading — no fade-up on body copy, no staggered paragraph reveals
+- Entrance animations that delay reading - no fade-up on body copy, no staggered paragraph reveals
 - Typewriter effects, text shimmer, gradient sweeps
 - Confetti, celebration, or any animation on success
 - Animating the logo mark
@@ -57,8 +57,8 @@ The practical benefit is that Radix Primitives keep their default 200ms, so nobo
 
 The landing page may use exactly two:
 
-1. **Scroll reveal** — `opacity 0→1` + `translateY(8px)→0`, 200ms, triggered once at 20% visibility. Never on the hero, never on anything above the fold.
-2. **Quiet marquee** for a customer logo band — constant linear speed, no easing, pauses on hover.
+1. **Scroll reveal** - `opacity 0→1` + `translateY(8px)→0`, 200ms, triggered once at 20% visibility. Never on the hero, never on anything above the fold.
+2. **Quiet marquee** for a customer logo band - constant linear speed, no easing, pauses on hover.
 
 Not permitted anywhere: spotlight-follow-cursor, magic border, tilt-on-hover, number count-up on scroll.
 
@@ -77,4 +77,4 @@ Non-negotiable. Already in `tokens.css`:
 }
 ```
 
-Nothing in the product depends on motion to be understood — the skeleton pulse and the spinner are the only animated affordances, and both have a static readable state.
+Nothing in the product depends on motion to be understood - the skeleton pulse and the spinner are the only animated affordances, and both have a static readable state.

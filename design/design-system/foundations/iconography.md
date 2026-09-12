@@ -4,7 +4,7 @@ Monoline. One continuous logic, shared with the logo mark.
 
 ## The rule
 
-Icons are drawn on a **32-unit grid** with a **2.25 stroke**, round caps, mitred joins where a point is intended. No fills. No two-tone. No filled-and-outlined pairs for active states — an active nav item changes its *colour and background*, not its icon.
+Icons are drawn on a **32-unit grid** with a **2.25 stroke**, round caps, mitred joins where a point is intended. No fills. No two-tone. No filled-and-outlined pairs for active states - an active nav item changes its *colour and background*, not its icon.
 
 | Property | Value |
 |---|---|
@@ -31,7 +31,7 @@ Icons are drawn on a **32-unit grid** with a **2.25 stroke**, round caps, mitred
 | Metric tile | 16px |
 | Marketing feature | 24px |
 
-18px is the default in product chrome — extracted: the reference renders its nav icons at 18px.
+18px is the default in product chrome - extracted: the reference renders its nav icons at 18px.
 
 ## The nav set
 
@@ -45,7 +45,7 @@ Nine glyphs, in sidebar order. Each is drawn from the same vocabulary: a contain
 | Globe | Circle, one vertical ellipse, one horizontal chord. Three strokes, no more. |
 | List | Three horizontal strokes, each with a 3-unit leading dot. |
 | Key | Circle plus a shaft with two teeth. Teeth are perpendicular, not angled. |
-| Webhook | Two nodes joined by an angled line — the mark's node vocabulary, doubled. |
+| Webhook | Two nodes joined by an angled line - the mark's node vocabulary, doubled. |
 | Gear | Circle plus six radial ticks. **Not** a toothed cog outline. |
 | Avatar | Circle plus a shoulder arc. Open at the bottom. |
 
@@ -60,7 +60,7 @@ All nine are drawn: `../logo/icons/`. Each uses `stroke="currentColor"` so it in
 
 ## The library question
 
-Dispatch draws its own nine nav glyphs so they share the logo's line. For everything else — chevrons, close, plus, search, external-link, copy, filter, calendar, sort arrows — use **Lucide**, set to `strokeWidth={2.25}` and `absoluteStrokeWidth`. Lucide's default 2 is slightly light next to the custom set.
+Dispatch draws its own nine nav glyphs so they share the logo's line. For everything else - chevrons, close, plus, search, external-link, copy, filter, calendar, sort arrows - use **Lucide**, set to `strokeWidth={2.25}` and `absoluteStrokeWidth`. Lucide's default 2 is slightly light next to the custom set.
 
 Do not mix a second library. Do not use Heroicons, Feather, Phosphor, or Material alongside Lucide.
 
@@ -75,7 +75,7 @@ Do not mix a second library. Do not use Heroicons, Feather, Phosphor, or Materia
 
 ## Divergence from the reference
 
-Extracted: the reference's nav icons are **filled paths, no stroke, on a 400 × 400 viewBox, rendered at 18px**. Dispatch's monoline direction is a genuine departure specified by the brief — it's what ties the icon set to the mark. Only the 18px render size carries over.
+Extracted: the reference's nav icons are **filled paths, no stroke, on a 400 × 400 viewBox, rendered at 18px**. Dispatch's monoline direction is a genuine departure specified by the brief - it's what ties the icon set to the mark. Only the 18px render size carries over.
 
 ## Custom-icon fallback order
 
@@ -83,4 +83,4 @@ Extracted: the reference's nav icons are **filled paths, no stroke, on a 400 × 
 2. Lucide at 2.25 stroke.
 3. Compose from two Dispatch primitives (a container plus a gesture).
 4. Use a word instead.
-5. Draw a new one — and add it to this file with its construction note.
+5. Draw a new one - and add it to this file with its construction note.

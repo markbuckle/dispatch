@@ -1,6 +1,6 @@
 # Voice
 
-Dispatch sounds like a good colleague explaining a system — someone who knows it deeply, respects your time, and doesn't perform.
+Dispatch sounds like a good colleague explaining a system - someone who knows it deeply, respects your time, and doesn't perform.
 
 ## Seven rules
 
@@ -58,7 +58,7 @@ If a surface instead produces *"what does this actually do?"* or *"who is this f
 - **Percentages:** digit + %. "99.2%".
 - **Time:** relative in tables ("2m", "11m", "1h", "6d"), absolute on hover and in detail views (ISO 8601, UTC).
 - **Code, keys, IDs, headers, paths, status codes:** always in mono. Never in quotes.
-- **Product nouns are lowercase** in prose: "create an api key", "add a domain" — except at the start of a sentence.
+- **Product nouns are lowercase** in prose: "create an api key", "add a domain" - except at the start of a sentence.
 - **"Email" is a mass noun.** "Send email", "email volume". "Emails" only when counting discrete messages: "42 emails delivered".
 - **Never "simply", "just", "obviously", "of course".** They tell the reader that their confusion is their fault.
 - **No "please".** "Enter your domain" not "Please enter your domain."
@@ -66,6 +66,6 @@ If a surface instead produces *"what does this actually do?"* or *"who is this f
 
 ## When there's nothing specific to say
 
-Say less. A section with one true sentence beats a section with four hedged ones. If a feature genuinely has no distinguishing mechanism, describe what it does in the plainest possible terms and move on — don't reach for adjectives to fill the space.
+Say less. A section with one true sentence beats a section with four hedged ones. If a feature genuinely has no distinguishing mechanism, describe what it does in the plainest possible terms and move on - don't reach for adjectives to fill the space.
 
 And if you find yourself writing a paragraph to justify a feature's existence, the feature might be the problem, not the copy.

@@ -26,7 +26,7 @@ Sponsorships in developer newsletters and podcasts, conference programmes, Stack
 
 That's it. Three elements. Everything else is subtraction.
 
-## Medium rectangle — 300 × 250
+## Medium rectangle - 300 × 250
 
 ```
 canvas #08080A, 24px padding, 1px border-subtle
@@ -43,11 +43,11 @@ canvas #08080A, 24px padding, 1px border-subtle
 └────────────────────────────┘
 ```
 
-## Newsletter sponsor — 600 × 200 or text-only
+## Newsletter sponsor - 600 × 200 or text-only
 
 Text-only usually outperforms an image in developer newsletters. Format:
 
-> **Dispatch — email that arrives.** Transactional and marketing email over one HTTP endpoint, with the full delivery timeline for every send: queue, retries, the receiving server's actual response. p50 under 200ms, 3,000 emails a month free. **dispatch.com**
+> **Dispatch - email that arrives.** Transactional and marketing email over one HTTP endpoint, with the full delivery timeline for every send: queue, retries, the receiving server's actual response. p50 under 200ms, 3,000 emails a month free. **dispatch.com**
 
 Under 50 words. One bold lead-in, one specific mechanism, one number, one link.
 
@@ -82,12 +82,12 @@ Under 50 words. One bold lead-in, one specific mechanism, one number, one link.
 - Mark always present, never larger than 24px in a banner.
 - No animation in display ads. A static ad in this category reads as more trustworthy, and animated ads get blocked anyway.
 - **No stock photography, no illustration, no gradient, no product screenshot** (unreadable at these sizes).
-- Legible at 50% scale — check it.
+- Legible at 50% scale - check it.
 
 ## Podcast read
 
 Written for the host to read aloud, in their voice, 30 seconds:
 
-> This episode is sponsored by Dispatch. Dispatch is an email API — you POST to one endpoint and it sends. The difference is what happens after: you get the whole delivery timeline for every message. Not just "we accepted your request", but what the receiving server actually said, every retry, and whether it landed. There's also a compatibility checker that tests your HTML against 23 email clients before you send, so you find out Outlook breaks your layout from us and not from a customer. First 3,000 emails a month are free, no card. dispatch.com.
+> This episode is sponsored by Dispatch. Dispatch is an email API - you POST to one endpoint and it sends. The difference is what happens after: you get the whole delivery timeline for every message. Not just "we accepted your request", but what the receiving server actually said, every retry, and whether it landed. There's also a compatibility checker that tests your HTML against 23 email clients before you send, so you find out Outlook breaks your layout from us and not from a customer. First 3,000 emails a month are free, no card. dispatch.com.
 
 Rules: no script the host has to perform, no superlatives, one number, one URL, under 100 words.

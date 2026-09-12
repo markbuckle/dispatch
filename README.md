@@ -100,7 +100,7 @@ finished with.** If it was already squash-merged, its commits will
 still show as unmerged, and a fresh PR from it may drag in old,
 already-landed changes by mistake. Delete it and branch fresh instead.
 
-`main` has GitHub branch protection requiring a PR — direct pushes to
+`main` has GitHub branch protection requiring a PR - direct pushes to
 `main` fail for everyone, from any tool. Claude Code also has its own
 `.claude/hooks/block-main-commit.sh`, but that only applies when Claude
 Code itself runs the git command, not manual terminal use. Branch

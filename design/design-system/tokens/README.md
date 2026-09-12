@@ -26,7 +26,7 @@ Dark is the default on `:root`. Light mode is an override:
 <html data-theme="light">
 ```
 
-Never invert by hand. Never hardcode a hex in a component — if you need a value that isn't here, the system is missing a token, so add it here first.
+Never invert by hand. Never hardcode a hex in a component - if you need a value that isn't here, the system is missing a token, so add it here first.
 
 ## Naming
 
@@ -36,8 +36,8 @@ This mirrors what the reference codebase already ships (`border-subtle`, `text-p
 
 ## A caution on the dark values
 
-Every dark hex here is **Radix Slate applied by inference** — the authenticated dashboard was captured in light mode. Geometry, radius, motion and spacing are measured; the dark surface colours are not. See `../PROVENANCE.md`.
+Every dark hex here is **Radix Slate applied by inference** - the authenticated dashboard was captured in light mode. Geometry, radius, motion and spacing are measured; the dark surface colours are not. See `../PROVENANCE.md`.
 
 ## Fonts
 
-`Commit Mono` is free (SIL OFL) but not on Google Fonts — download from commitmono.com and self-host, or the stack falls through to Geist Mono. Geist, Inter and Instrument Serif are all on Google Fonts.
+`Commit Mono` is free (SIL OFL) but not on Google Fonts - download from commitmono.com and self-host, or the stack falls through to Geist Mono. Geist, Inter and Instrument Serif are all on Google Fonts.

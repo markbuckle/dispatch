@@ -47,7 +47,7 @@ export function Select({
         </RSelect.Trigger>
 
         <RSelect.Portal>
-          {/* Level 2 elevation. 200ms standard easing — Radix's own default, so no override needed. */}
+          {/* Level 2 elevation. 200ms standard easing - Radix's own default, so no override needed. */}
           <RSelect.Content
             position="popper"
             sideOffset={4}
