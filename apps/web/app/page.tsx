@@ -1,4 +1,5 @@
 import { HeaderBorder } from './header-border';
+import { Lockup, Mark } from './logo';
 
 const request = `curl -X POST https://api.dispatch.dev/v1/emails \\
   -H "Authorization: Bearer $DISPATCH_API_KEY" \\
@@ -177,74 +178,5 @@ export default function Home() {
         </div>
       </footer>
     </>
-  );
-}
-
-// The lockup scales as one drawing, so the stroke stays at the authored 2.25
-function Lockup() {
-  return (
-    <svg
-      viewBox="0 0 196 32"
-      className="h-auto w-33 text-text-primary"
-      fill="none"
-      role="img"
-      aria-label="Dispatch"
-    >
-      <circle
-        cx="6.5"
-        cy="16"
-        r="3.25"
-        stroke="currentColor"
-        strokeWidth="2.25"
-        strokeLinecap="round"
-      />
-      <path d="M11 16 H25.5" stroke="currentColor" strokeWidth="2.25" />
-      <path
-        d="M19.5 10.5 L25.5 16 L19.5 21.5"
-        stroke="currentColor"
-        strokeWidth="2.25"
-        strokeLinejoin="miter"
-      />
-      <text
-        x="43"
-        y="23"
-        fill="currentColor"
-        fontSize="26"
-        fontWeight="500"
-        letterSpacing="-0.78"
-        style={{ fontFamily: 'var(--font-display)' }}
-      >
-        Dispatch
-      </text>
-    </svg>
-  );
-}
-
-// The stroke thickens as the mark shrinks: 2.5 at 20px
-function Mark() {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      className="size-5 text-text-primary"
-      fill="none"
-      role="img"
-      aria-label="Dispatch"
-    >
-      <circle
-        cx="6.5"
-        cy="16"
-        r="3.25"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <path d="M11 16 H25.5" stroke="currentColor" strokeWidth="2.5" />
-      <path
-        d="M19.5 10.5 L25.5 16 L19.5 21.5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinejoin="miter"
-      />
-    </svg>
   );
 }

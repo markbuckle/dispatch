@@ -53,6 +53,12 @@ These are deliberate and should not be revisited without discussion.
 - **Transport interface**, not a direct SES call. `ConsoleTransport` for
   tests and local dev, `SesTransport` for production. Both implement the
   same interface so the send pipeline and its tests never touch AWS.
+- **Resend bridges auth email until the send pipeline exists.** Supabase's
+  default SMTP is rate-limited and marked not-for-production; SES isn't
+  wired up until Phase 6. Resend is the real, working provider used
+  deliberately in the meantime - swap for Dispatch's own SesTransport once
+  it exists, matching the project's own send pipeline instead of a
+  competitor's, on purpose rather than by accident.
 - **Webhooks are hand-rolled**, not Svix. HMAC signing and retry with
   backoff are implemented in `packages/core`. This is intentional, not a
   gap to fill with a vendor.

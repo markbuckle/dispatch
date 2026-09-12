@@ -10,8 +10,8 @@ applications. See `CLAUDE.md` for engineering rules and
 |---|---|---|
 | 0 | Repo, Turborepo, Biome, TS strict, CLAUDE.md, PR template, CI | done |
 | 1 | Design system in Claude Design, tokens, logo | done |
-| 2 | Landing page: header, hero, footer | next |
-| 3 | Supabase auth, signup and login pages, session middleware | |
+| 2 | Landing page: header, hero, footer | in progress |
+| 3 | Supabase auth, signup and login pages, session middleware | in progress |
 | 4 | Dashboard shell: sidebar, search, routing, empty states | |
 | 5 | API keys: generation, hashing, one-time reveal, rate limiting | |
 | 6 | Domains: SES identity, DKIM records, verification polling | |
@@ -44,6 +44,9 @@ Key decisions:
   Inngest sends. Never call SES synchronously from a route handler.
 - **Transport interface.** `ConsoleTransport` for tests/dev,
   `SesTransport` for production.
+- **Resend bridges auth email until the send pipeline exists.** Supabase's
+  default SMTP is rate-limited and not for production. Swap for
+  `SesTransport` once Phase 6 lands.
 - **Webhooks are hand-rolled** in `packages/core`, not Svix.
 - **`packages/compat` has no React or Next dependency.**
 - **Large features ship behind a PostHog flag**, several small PRs.
