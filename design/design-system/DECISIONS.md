@@ -98,3 +98,7 @@ Recorded in `PROVENANCE.md`, repeated here because it is the most likely source 
 - **Light mode** is inferred from Radix Slate light. Never measured.
 - **Input, checkbox, radio and select** specifications were designed from the brief; the sampled pages carried no form fields.
 - **Motion** has a measured product baseline but the split above is a judgment call, not an observation.
+
+## 10. Open items
+
+- **The auth background gradient from §6 has no token.** That entry documents the exception; nobody ever added the actual class or token to `tokens/tokens.css`, so there was nothing to build against. `/login` and `/signup` (`apps/web/app/login`, `apps/web/app/signup`) shipped flat - `canvas` background, borders carrying hierarchy - rather than inventing a recipe. Measure the real gradient and add it to `tokens.css` as a fourth `.dispatch-*` class, then apply it here.
