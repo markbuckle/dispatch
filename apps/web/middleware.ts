@@ -24,9 +24,36 @@ export async function middleware(request: NextRequest) {
   });
 
   // Refreshes the auth token; do not remove, and do not run logic between this call and returning response
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { pathname } = request.nextUrl;
+  const isAuthOnlyRoute = pathname === '/login' || pathname === '/signup';
+
+  if (!user && pathname.startsWith('/dashboard')) {
+    return redirectWithRefreshedCookies('/login', request, response);
+  }
+
+  if (user && isAuthOnlyRoute) {
+    return redirectWithRefreshedCookies('/dashboard', request, response);
+  }
 
   return response;
+}
+
+// NextResponse.redirect creates a new response, so the session cookies the
+// call above just refreshed have to be copied over or the refresh is lost
+function redirectWithRefreshedCookies(
+  path: string,
+  request: NextRequest,
+  refreshedResponse: NextResponse,
+) {
+  const redirectResponse = NextResponse.redirect(new URL(path, request.url));
+  for (const cookie of refreshedResponse.cookies.getAll()) {
+    redirectResponse.cookies.set(cookie);
+  }
+  return redirectResponse;
 }
 
 export const config = {
