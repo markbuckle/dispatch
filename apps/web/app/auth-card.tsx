@@ -55,7 +55,7 @@ export function AuthCard({ mode }: { mode: Mode }) {
         setNotice('Check your email to confirm your account.');
         setSubmitting(false);
       } else {
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       }
     } else {
       const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
@@ -63,7 +63,7 @@ export function AuthCard({ mode }: { mode: Mode }) {
         setError(signInError.message);
         setSubmitting(false);
       } else {
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       }
     }
   }

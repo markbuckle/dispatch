@@ -10,9 +10,9 @@ applications. See `CLAUDE.md` for engineering rules and
 |---|---|---|
 | 0 | Repo, Turborepo, Biome, TS strict, CLAUDE.md, PR template, CI | done |
 | 1 | Design system in Claude Design, tokens, logo | done |
-| 2 | Landing page: header, hero, footer | in progress |
-| 3 | Supabase auth, signup and login pages, session middleware | in progress |
-| 4 | Dashboard shell: sidebar, search, routing, empty states | |
+| 2 | Landing page: header, hero, footer | done |
+| 3 | Supabase auth, signup and login pages, session middleware | done |
+| 4 | Dashboard shell: sidebar, search, routing, empty states | done |
 | 5 | API keys: generation, hashing, one-time reveal, rate limiting | |
 | 6 | Domains: SES identity, DKIM records, verification polling | |
 | 7 | Send pipeline + Emails list and detail | |
