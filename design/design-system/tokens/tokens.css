@@ -183,6 +183,9 @@
   --height-nav-item:    44px;
   --height-nav-marketing: 64px; /* marketing header, taller than the product top bar */
 
+  /* Named widths - mirrors size.sidebar in tokens.json, registered here so w-sidebar exists */
+  --width-sidebar: 252px;
+
   --shadow-ring:    var(--dispatch-ring);
   --shadow-overlay: var(--dispatch-overlay);
   --shadow-focus:   var(--dispatch-focus);
