@@ -59,6 +59,12 @@ These are deliberate and should not be revisited without discussion.
   deliberately in the meantime - swap for Dispatch's own SesTransport once
   it exists, matching the project's own send pipeline instead of a
   competitor's, on purpose rather than by accident.
+- **Key format borrows Stripe's live/test segment** Resend
+  keys are `re_` plus a random secret, with nothing marking the
+  environment. Dispatch issues `dispatch_live_...` and `dispatch_test_...`
+  because Dispatch sends real email, and an accidental live send during
+  testing is the specific risk the segment prevents. It is part of the
+  hashed string, so a test key can never verify against a live key's hash.
 - **Webhooks are hand-rolled**, not Svix. HMAC signing and retry with
   backoff are implemented in `packages/core`. This is intentional, not a
   gap to fill with a vendor.

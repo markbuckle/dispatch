@@ -47,6 +47,10 @@ Key decisions:
 - **Resend bridges auth email until the send pipeline exists.** Supabase's
   default SMTP is rate-limited and not for production. Swap for
   `SesTransport` once Phase 6 lands.
+- **Key format borrows Stripe's live/test segment, not Resend's.**
+  `dispatch_live_...` and `dispatch_test_...`, because Dispatch sends real
+  email and an accidental live send during testing is the risk the
+  segment prevents.
 - **Webhooks are hand-rolled** in `packages/core`, not Svix.
 - **`packages/compat` has no React or Next dependency.**
 - **Large features ship behind a PostHog flag**, several small PRs.
