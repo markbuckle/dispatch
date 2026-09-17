@@ -161,6 +161,9 @@ Title uses the conventional commit format. Body:
 Description required, rest optional but preferred. Include a before/after
 screenshot for visual changes. Squash merge to `main`.
 
+Never end a PR description, commit message, or any other message with
+"🤖 Generated with [Claude Code](https://claude.com/claude-code)".
+
 ## Before finishing a task
 
 1. Run `pnpm biome check --write`
