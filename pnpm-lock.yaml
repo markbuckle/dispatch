@@ -36,6 +36,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@dispatch/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@dispatch/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@dispatch/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -54,6 +60,9 @@ importers:
       react-dom:
         specifier: ^19.2.8
         version: 19.2.8(react@19.2.8)
+      zod:
+        specifier: ^4.6.5
+        version: 4.6.5
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.3.3
@@ -1738,6 +1747,9 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
+  zod@4.6.5:
+    resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
+
 snapshots:
 
   '@alloc/quick-lru@5.3.0': {}
@@ -2843,3 +2855,5 @@ snapshots:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
+
+  zod@4.6.5: {}

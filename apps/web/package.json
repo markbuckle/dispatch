@@ -8,12 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@dispatch/core": "workspace:*",
+    "@dispatch/db": "workspace:*",
     "@dispatch/ui": "workspace:*",
     "@supabase/ssr": "^0.12.6",
     "@supabase/supabase-js": "^2.115.0",
     "next": "^15.5.25",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
