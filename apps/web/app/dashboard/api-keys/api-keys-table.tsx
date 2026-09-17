@@ -11,6 +11,14 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
   timeZone: 'UTC',
 });
 
+// en-GB renders September as Sept, the one month it abbreviates to four letters
+function formatDate(value: Date): string {
+  return dateFormat
+    .formatToParts(value)
+    .map((part) => (part.type === 'month' ? part.value.slice(0, 3) : part.value))
+    .join('');
+}
+
 export function ApiKeysTable({ keys }: { keys: ApiKeySummary[] }) {
   return (
     <div className="overflow-hidden rounded-lg border border-border-default">
@@ -45,15 +53,15 @@ export function ApiKeysTable({ keys }: { keys: ApiKeySummary[] }) {
                 {permissionLabels[key.permission]}
               </td>
               <td className="h-row px-5 align-middle text-text-muted">
-                {key.lastUsedAt ? dateFormat.format(key.lastUsedAt) : 'Never'}
+                {key.lastUsedAt ? formatDate(key.lastUsedAt) : 'Never'}
               </td>
               <td className="h-row px-5 align-middle text-text-muted">
-                {dateFormat.format(key.createdAt)}
+                {formatDate(key.createdAt)}
               </td>
               <td className="h-row px-5 text-right align-middle">
                 {key.revokedAt ? (
                   <span className="text-meta text-text-muted">
-                    Revoked {dateFormat.format(key.revokedAt)}
+                    Revoked {formatDate(key.revokedAt)}
                   </span>
                 ) : (
                   <RevokeApiKeyButton id={key.id} keyPrefix={key.keyPrefix} />
