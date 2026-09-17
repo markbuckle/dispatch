@@ -12,12 +12,14 @@ import {
 // Supabase owns auth.users, so this declares only enough of it to hang a foreign key on
 const authSchema = pgSchema('auth');
 
-export const authUsers = authSchema.table('users', {
+// unexported because drizzle-kit generates CREATE TABLE for every exported table, and this one already exists
+const authUsers = authSchema.table('users', {
   id: uuid('id').primaryKey(),
 });
 
 export const apiKeyPermission = pgEnum('api_key_permission', ['full_access', 'sending_access']);
 
+// Supabase serves public tables over REST with the browser's key; Drizzle connects as owner and bypasses RLS
 export const apiKeys = pgTable(
   'api_keys',
   {
@@ -40,7 +42,7 @@ export const apiKeys = pgTable(
     uniqueIndex('api_keys_hashed_key_idx').on(table.hashedKey),
     index('api_keys_user_id_idx').on(table.userId),
   ],
-);
+).enableRLS();
 
 export type ApiKey = typeof apiKeys.$inferSelect;
 export type NewApiKey = typeof apiKeys.$inferInsert;
