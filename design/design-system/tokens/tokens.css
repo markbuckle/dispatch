@@ -47,6 +47,8 @@
   --dispatch-danger-fg:   #FF9592;
   --dispatch-danger-tint: rgba(255,149,146,0.07);
   --dispatch-danger-edge: rgba(255,149,146,0.24);
+  --dispatch-danger-hover:  rgba(255,149,146,0.14);
+  --dispatch-danger-active: rgba(255,149,146,0.20);
 
   --dispatch-info-bg:   #0D2740;
   --dispatch-info-fg:   #70B8FF;
@@ -57,6 +59,9 @@
   --dispatch-neutral-fg: #C0C4CA;
   --dispatch-off-bg:     #1A1A1E;
   --dispatch-off-fg:     #8C9096;
+
+  /* Dims the page behind a dialog. The only full-screen fill in the system. */
+  --dispatch-scrim: rgba(0,0,0,0.6);
 
   /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
@@ -89,10 +94,12 @@
   --dispatch-warning-tint: rgba(171,100,0,0.06); --dispatch-warning-edge: rgba(171,100,0,0.22);
   --dispatch-danger-bg: #FFE5E5; --dispatch-danger-fg: #CE2C31;
   --dispatch-danger-tint: rgba(206,44,49,0.06); --dispatch-danger-edge: rgba(206,44,49,0.22);
+  --dispatch-danger-hover: rgba(206,44,49,0.12); --dispatch-danger-active: rgba(206,44,49,0.18);
   --dispatch-info-bg: #E1F0FF; --dispatch-info-fg: #0D74CE;
   --dispatch-info-tint: rgba(13,116,206,0.06); --dispatch-info-edge: rgba(13,116,206,0.22);
   --dispatch-neutral-bg: #F0F0F3; --dispatch-neutral-fg: #60646C;
   --dispatch-off-bg: #F9F9FB; --dispatch-off-fg: #80838D;
+  --dispatch-scrim: rgba(0,0,0,0.4);
 
   --dispatch-ring:    inset 0 1px 0 rgba(0,0,0,0.02);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
@@ -132,6 +139,8 @@
   --color-danger-fg: var(--dispatch-danger-fg);
   --color-danger-tint: var(--dispatch-danger-tint);
   --color-danger-edge: var(--dispatch-danger-edge);
+  --color-danger-hover: var(--dispatch-danger-hover);
+  --color-danger-active: var(--dispatch-danger-active);
   --color-info-bg: var(--dispatch-info-bg);
   --color-info-fg: var(--dispatch-info-fg);
   --color-info-tint: var(--dispatch-info-tint);
@@ -140,6 +149,7 @@
   --color-neutral-fg: var(--dispatch-neutral-fg);
   --color-off-bg: var(--dispatch-off-bg);
   --color-off-fg: var(--dispatch-off-fg);
+  --color-scrim: var(--dispatch-scrim);
 
   --font-display: Geist, Inter, ui-sans-serif, system-ui, sans-serif;
   --font-sans:    Inter, ui-sans-serif, system-ui, sans-serif;
@@ -305,6 +315,13 @@ a:hover { color: var(--dispatch-text-primary); }
   background: var(--dispatch-text-primary);
   color: var(--dispatch-text-inverse);
 }
+
+/* Dialog open, per foundations/motion.md. The content keeps its centring transform in the keyframe. */
+@keyframes dispatch-scrim-in { from { opacity: 0 } }
+@keyframes dispatch-dialog-in { from { opacity: 0; transform: translate(-50%, -50%) scale(0.98) } }
+
+.dispatch-scrim-enter  { animation: dispatch-scrim-in  200ms cubic-bezier(0.4,0,0.2,1); }
+.dispatch-dialog-enter { animation: dispatch-dialog-in 200ms cubic-bezier(0.4,0,0.2,1); }
 
 @keyframes dispatch-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.5 } }
 @keyframes dispatch-spin { to { transform: rotate(360deg) } }

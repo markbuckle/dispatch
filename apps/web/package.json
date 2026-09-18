@@ -11,6 +11,7 @@
     "@dispatch/core": "workspace:*",
     "@dispatch/db": "workspace:*",
     "@dispatch/ui": "workspace:*",
+    "@radix-ui/react-dialog": "^1.1.23",
     "@supabase/ssr": "^0.12.6",
     "@supabase/supabase-js": "^2.115.0",
     "next": "^15.5.25",

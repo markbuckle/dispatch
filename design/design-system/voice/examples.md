@@ -79,7 +79,7 @@ Every pair below is the same message written twice.
 
 ## Destructive confirmation
 
-- ✅ **Revoke `dsp_live_8Kq2…A0`?** Anything using this key stops sending immediately. This can't be undone.
+- ✅ **Revoke `dispatch_live_8Kq2xY7p…`?** Anything using this key stops sending immediately. This can't be undone.
   [Cancel] [Revoke key]
 - ❌ **Are you sure?** This action cannot be undone. Please confirm you want to proceed.
 
