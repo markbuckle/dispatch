@@ -159,7 +159,14 @@ Title uses the conventional commit format. Body:
 ```
 
 Description required, rest optional but preferred. Include a before/after
-screenshot for visual changes. Squash merge to `main`.
+screenshot for visual changes. Merge to `main` with a merge commit, not a
+squash. Every commit on the branch lands on `main` as written, so each one
+has to meet the commit rules above.
+
+Keep the build plan table in `README.md` current, in the same PR as the
+code. The first PR of a phase marks it `in progress`, and the PR that
+finishes it marks it `done`. If scope moves to another phase, move the
+words in the table too, so a row never claims work that hasn't shipped.
 
 Never end a PR description, commit message, or any other message with
 "🤖 Generated with [Claude Code](https://claude.com/claude-code)".
