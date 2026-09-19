@@ -9,17 +9,22 @@ export const DialogClose = RadixDialog.Close;
 
 export function DialogContent({
   children,
+  size = 'default',
   onInteractOutside,
 }: {
   children: ReactNode;
+  size?: 'default' | 'wide';
   onInteractOutside?: RadixDialog.DialogContentProps['onInteractOutside'];
 }) {
+  // capped to the viewport so a tall dialog scrolls its body instead of losing its title and actions
+  const bounds = `max-h-[calc(100dvh-40px)] w-[calc(100vw-40px)] ${size === 'wide' ? 'max-w-dialog-wide' : 'max-w-dialog'}`;
+
   return (
     <RadixDialog.Portal>
       <RadixDialog.Overlay className="dispatch-scrim-enter fixed inset-0 z-50 bg-scrim" />
       <RadixDialog.Content
         onInteractOutside={onInteractOutside}
-        className="dispatch-dialog-enter fixed top-1/2 left-1/2 z-50 w-[calc(100vw-40px)] max-w-dialog -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border border-border-strong bg-subtle shadow-overlay outline-none"
+        className={`dispatch-dialog-enter fixed top-1/2 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-lg border border-border-strong bg-subtle shadow-overlay outline-none ${bounds}`}
       >
         {children}
         <RadixDialog.Close
@@ -36,7 +41,7 @@ export function DialogContent({
 export function DialogHeader(props: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className="flex flex-col gap-1.5 border-b border-border-subtle px-5 py-4 pr-12"
+      className="flex shrink-0 flex-col gap-1.5 border-b border-border-subtle px-5 py-4 pr-12"
       {...props}
     />
   );
@@ -51,13 +56,13 @@ export function DialogDescription(props: RadixDialog.DialogDescriptionProps) {
 }
 
 export function DialogBody(props: HTMLAttributes<HTMLDivElement>) {
-  return <div className="px-5 py-5" {...props} />;
+  return <div className="min-h-0 overflow-y-auto px-5 py-5" {...props} />;
 }
 
 export function DialogFooter(props: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className="flex items-center justify-end gap-2 border-t border-border-subtle bg-surface px-5 py-4"
+      className="flex shrink-0 items-center justify-end gap-2 border-t border-border-subtle bg-surface px-5 py-4"
       {...props}
     />
   );

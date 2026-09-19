@@ -68,7 +68,7 @@ module.exports = {
       },
       transitionDuration: { fast: '120ms', overlay: '200ms', slow: '300ms' },
       transitionTimingFunction: { out: 'cubic-bezier(0,0,0.2,1)', standard: 'cubic-bezier(0.4,0,0.2,1)' },
-      maxWidth: { marketing: '1200px', reading: '680px', dialog: '520px' },
+      maxWidth: { marketing: '1200px', reading: '680px', dialog: '520px', 'dialog-wide': '840px' },
       screens: { sm: '480px', md: '600px', lg: '767px', xl: '1024px', '2xl': '1280px' },
     },
   },

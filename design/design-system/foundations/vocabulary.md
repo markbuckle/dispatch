@@ -83,3 +83,15 @@ These strings appear in the product and must not be paraphrased.
 | Send failed inside Dispatch | `Failed` | danger |
 
 Note: `Canceled`, one L - US spelling, consistent with the API.
+
+## Domain status - fixed
+
+Domain verification has its own set, mapped one to one from SES verification statuses. These strings appear in the domains table and must not be paraphrased.
+
+| State | Label | Semantic |
+|---|---|---|
+| Added, SES hasn't started looking for the DKIM records | `Not started` | neutral |
+| SES is looking for the DKIM records | `Pending` | warning |
+| SES found the DKIM records | `Verified` | success |
+| SES couldn't finish the lookup and will retry | `Temporary failure` | warning |
+| SES didn't find the DKIM records within 72 hours | `Failed` | danger |
