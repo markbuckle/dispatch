@@ -10,7 +10,7 @@ import {
 } from '@dispatch/db';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { createClient } from '../../../lib/supabase/server';
+import { requireUserId } from '../../../lib/supabase/require-user-id';
 
 const KEYS_PATH = '/dashboard/api-keys';
 
@@ -30,17 +30,6 @@ export type CreateApiKeyResult =
   | { status: 'rejected'; message: string };
 
 export type RevokeApiKeyResult = { status: 'revoked' } | { status: 'rejected'; message: string };
-
-// middleware guards the page, but an action is its own endpoint and has to establish the user itself
-async function requireUserId(): Promise<string> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('Not signed in');
-
-  return user.id;
-}
 
 export async function listApiKeys(): Promise<ApiKeySummary[]> {
   return listApiKeysForUser(await requireUserId());

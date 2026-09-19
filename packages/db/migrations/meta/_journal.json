@@ -15,6 +15,13 @@
       "when": 1789776268158,
       "tag": "0001_create_domains",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789817316679,
+      "tag": "0002_add_domains_last_checked_at",
+      "breakpoints": true
     }
   ]
 }

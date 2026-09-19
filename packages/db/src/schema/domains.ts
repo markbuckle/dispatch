@@ -39,6 +39,8 @@ export const domains = pgTable(
     // the CNAME target varies by region, so it is stored rather than assumed to be dkim.amazonses.com
     dkimHostedZone: text('dkim_hosted_zone').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    // null until the first check, because the status SES returns on creation is not a DNS lookup
+    lastCheckedAt: timestamp('last_checked_at', { withTimezone: true }),
     verifiedAt: timestamp('verified_at', { withTimezone: true }),
   },
   (table) => [
