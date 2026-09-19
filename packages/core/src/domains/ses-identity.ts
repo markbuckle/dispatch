@@ -1,0 +1,73 @@
+import {
+  CreateEmailIdentityCommand,
+  type DkimAttributes,
+  GetEmailIdentityCommand,
+  SESv2Client,
+  type VerificationStatus,
+} from '@aws-sdk/client-sesv2';
+
+export type DomainStatus = 'not_started' | 'pending' | 'verified' | 'failed' | 'temporary_failure';
+
+export type DomainIdentity = {
+  status: DomainStatus;
+  dkimTokens: string[];
+  dkimHostedZone: string;
+};
+
+const DOMAIN_STATUS: Record<VerificationStatus, DomainStatus> = {
+  NOT_STARTED: 'not_started',
+  PENDING: 'pending',
+  SUCCESS: 'verified',
+  FAILED: 'failed',
+  TEMPORARY_FAILURE: 'temporary_failure',
+};
+
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`Missing required env var: ${name}`);
+  return value;
+}
+
+let ses: SESv2Client | undefined;
+
+// read on first call, like getDb, so importing core never requires AWS config
+function getSes(): SESv2Client {
+  if (!ses) {
+    ses = new SESv2Client({
+      region: requireEnv('SES_REGION'),
+      // explicit keys, because the SDK's default chain would fall back to a local ~/.aws profile with wider access
+      credentials: {
+        accessKeyId: requireEnv('SES_ACCESS_KEY_ID'),
+        secretAccessKey: requireEnv('SES_SECRET_ACCESS_KEY'),
+      },
+    });
+  }
+  return ses;
+}
+
+function toDomainIdentity(
+  domain: string,
+  status: VerificationStatus | undefined,
+  dkim: DkimAttributes | undefined,
+): DomainIdentity {
+  // an identity without its DKIM records can never be verified, so storing one would strand the domain
+  if (!status || !dkim?.Tokens?.length || !dkim.SigningHostedZone) {
+    throw new Error(`SES returned an incomplete identity for ${domain}`);
+  }
+  return {
+    status: DOMAIN_STATUS[status],
+    dkimTokens: dkim.Tokens,
+    dkimHostedZone: dkim.SigningHostedZone,
+  };
+}
+
+export async function createDomainIdentity(domain: string): Promise<DomainIdentity> {
+  const identity = await getSes().send(new CreateEmailIdentityCommand({ EmailIdentity: domain }));
+  // CreateEmailIdentity returns no VerificationStatus, and a domain identity is verified by its DKIM records
+  return toDomainIdentity(domain, identity.DkimAttributes?.Status, identity.DkimAttributes);
+}
+
+export async function getDomainIdentity(domain: string): Promise<DomainIdentity> {
+  const identity = await getSes().send(new GetEmailIdentityCommand({ EmailIdentity: domain }));
+  return toDomainIdentity(domain, identity.VerificationStatus, identity.DkimAttributes);
+}

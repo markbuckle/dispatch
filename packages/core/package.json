@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "vitest": "^5.0.1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.1135.0"
   }
 }
