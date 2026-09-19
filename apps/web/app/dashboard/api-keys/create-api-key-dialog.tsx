@@ -2,6 +2,7 @@
 
 import { type FormEvent, useId, useState, useTransition } from 'react';
 import { primaryButton, secondaryButton } from '../button-styles';
+import { CopyButton } from '../copy-button';
 import {
   Dialog,
   DialogBody,
@@ -157,26 +158,11 @@ export function CreateApiKeyDialog() {
   );
 }
 
-// Copy confirmation is a label swap held for 1400ms, per foundations/motion.md
 function CopyField({ value }: { value: string }) {
-  const [hasCopied, setHasCopied] = useState(false);
-
-  async function handleCopy() {
-    await navigator.clipboard.writeText(value);
-    setHasCopied(true);
-    setTimeout(() => setHasCopied(false), 1400);
-  }
-
   return (
     <div className="flex h-control-lg items-center gap-2 rounded-md border border-border-default bg-surface pr-1 pl-3.5">
       <span className="flex-1 truncate font-mono text-mono text-text-secondary">{value}</span>
-      <button
-        type="button"
-        onClick={handleCopy}
-        className="dispatch-transition h-7 shrink-0 rounded-sm bg-hover px-2.5 text-caption font-medium text-text-secondary outline-none hover:bg-border-default hover:text-text-primary focus-visible:shadow-focus"
-      >
-        {hasCopied ? 'Copied' : 'Copy'}
-      </button>
+      <CopyButton value={value} />
     </div>
   );
 }

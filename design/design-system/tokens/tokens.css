@@ -212,6 +212,8 @@
   --container-marketing: 1200px;
   --container-reading:   680px;
   --container-dialog:    520px;
+  /* DNS records: fits a DKIM CNAME name for a typical subdomain on one line of 13.5px mono */
+  --container-dialog-wide: 840px;
 }
 
 /* ── Fonts ───────────────────────────────────────────────────────── */
