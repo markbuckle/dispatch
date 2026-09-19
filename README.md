@@ -14,8 +14,8 @@ applications. See `CLAUDE.md` for engineering rules and
 | 3 | Supabase auth, signup and login pages, session middleware | done |
 | 4 | Dashboard shell: sidebar, search, routing, empty states | done |
 | 5 | API keys: generation, hashing, one-time reveal, Hono skeleton, rate limiting | in progress |
-| 6 | Domains: SES identity, DKIM records, verification polling | |
-| 7 | Send pipeline + Emails list and detail | |
+| 6 | Domains: SES identity, DKIM records, on-demand verification check | done |
+| 7 | Send pipeline + Emails list and detail, domain verification polling | |
 | 8 | Templates: CRUD, variable interpolation, live preview | |
 | 9 | Compatibility checker, shipped behind a PostHog flag | |
 | 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | |
