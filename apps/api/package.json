@@ -7,8 +7,10 @@
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
+    "@dispatch/core": "workspace:*",
     "@hono/node-server": "^2.1.1",
-    "hono": "^4.13.8"
+    "hono": "^4.13.8",
+    "inngest": "^4.20.0"
   },
   "devDependencies": {
     "tsx": "^4.23.13"
