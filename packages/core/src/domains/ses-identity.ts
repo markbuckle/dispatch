@@ -8,6 +8,7 @@ import {
   SESv2Client,
   type VerificationStatus,
 } from '@aws-sdk/client-sesv2';
+import { requireEnv } from '../env';
 
 // callers match on these instead of importing the AWS SDK to recognise its exceptions
 export class DomainAlreadyExistsError extends Error {
@@ -39,12 +40,6 @@ const DOMAIN_STATUS: Record<VerificationStatus, DomainStatus> = {
   FAILED: 'failed',
   TEMPORARY_FAILURE: 'temporary_failure',
 };
-
-function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`Missing required env var: ${name}`);
-  return value;
-}
 
 let ses: SESv2Client | undefined;
 
