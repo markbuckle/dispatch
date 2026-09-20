@@ -4,6 +4,7 @@ packages:
 
 allowBuilds:
   esbuild: false
+  protobufjs: false
 
 publicHoistPattern:
   - "@types/*"

@@ -81,3 +81,12 @@ export class SesTransport implements Transport {
     return { providerMessageId: response.MessageId };
   }
 }
+
+export function createTransport(): Transport {
+  const name = process.env.EMAIL_TRANSPORT ?? 'console';
+  if (name === 'console') return new ConsoleTransport();
+  if (name === 'ses') return new SesTransport();
+
+  // falling back to console on a typo would read as a successful send that never left the process
+  throw new Error(`Unknown EMAIL_TRANSPORT: ${name}`);
+}
