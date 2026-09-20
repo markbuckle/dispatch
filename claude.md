@@ -163,6 +163,16 @@ screenshot for visual changes. Merge to `main` with a merge commit, not a
 squash. Every commit on the branch lands on `main` as written, so each one
 has to meet the commit rules above.
 
+Write the description in plain language, for a reader who does not know
+the codebase. Lead with what changed and why it matters, name things the
+way a person would rather than the way the code does, and explain a term
+the first time it appears. Do not hard wrap the body, so GitHub reflows
+it to whatever screen is reading it.
+
+Technical specifics still belong in the body when a reviewer needs them,
+such as an IAM policy or a migration. Put them after the plain
+explanation, not instead of it.
+
 Keep the build plan table in `README.md` current, in the same PR as the
 code. The first PR of a phase marks it `in progress`, and the PR that
 finishes it marks it `done`. If scope moves to another phase, move the
