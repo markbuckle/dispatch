@@ -18,6 +18,7 @@ TypeScript strict, pnpm workspaces, Turborepo.
 
 | Layer | Choice |
 |---|---|
+| Runtime | Node 22, pinned in `.nvmrc` and `engines` |
 | API | Hono |
 | Web | Next.js 15, App Router, RSC for data, SWR only for polling views |
 | Styling | Tailwind, Radix Primitives, Radix Colors |
