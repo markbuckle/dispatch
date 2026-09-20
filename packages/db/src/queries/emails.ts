@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type Email, emails, type NewEmail } from '../schema/emails';
 
@@ -24,6 +24,10 @@ export async function markEmailSent(id: string, providerMessageId: string): Prom
     .where(eq(emails.id, id));
 }
 
+// still-queued guard, so a send that succeeded while the caller gave up cannot be overwritten as failed
 export async function markEmailFailed(id: string, error: string): Promise<void> {
-  await getDb().update(emails).set({ status: 'failed', error }).where(eq(emails.id, id));
+  await getDb()
+    .update(emails)
+    .set({ status: 'failed', error })
+    .where(and(eq(emails.id, id), eq(emails.status, 'queued')));
 }

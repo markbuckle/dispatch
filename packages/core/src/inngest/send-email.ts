@@ -20,8 +20,8 @@ export const sendEmail = inngest.createFunction(
           from: row.from,
           to: row.to,
           subject: row.subject,
-          html: row.html,
-          text: row.text,
+          html: row.html ?? undefined,
+          text: row.text ?? undefined,
         },
       };
     });

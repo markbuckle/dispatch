@@ -7,8 +7,9 @@ export type SendEmailParams = {
   from: string;
   to: string[];
   subject: string;
-  html: string;
-  text: string;
+  // SES treats both bodies as optional, and the route is where at least one is required
+  html?: string;
+  text?: string;
 };
 
 export type SendEmailResult = {
@@ -30,7 +31,7 @@ export class ConsoleTransport implements Transport {
       from: params.from,
       to: params.to,
       subject: params.subject,
-      // the text body is the readable one, and the html would bury it
+      html: params.html,
       text: params.text,
     });
 
@@ -64,9 +65,10 @@ export class SesTransport implements Transport {
         Content: {
           Simple: {
             Subject: { Data: params.subject, Charset: 'UTF-8' },
+            // sending an empty part is not the same as omitting it, so only what exists goes
             Body: {
-              Html: { Data: params.html, Charset: 'UTF-8' },
-              Text: { Data: params.text, Charset: 'UTF-8' },
+              ...(params.html && { Html: { Data: params.html, Charset: 'UTF-8' } }),
+              ...(params.text && { Text: { Data: params.text, Charset: 'UTF-8' } }),
             },
           },
         },
