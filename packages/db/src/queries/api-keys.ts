@@ -24,6 +24,21 @@ export async function listApiKeysForUser(userId: string): Promise<ApiKeySummary[
     .orderBy(desc(apiKeys.createdAt));
 }
 
+export type AuthenticatedApiKey = Pick<ApiKey, 'id' | 'userId' | 'permission'>;
+
+// one round trip authenticates and records the use; a revoked key matches nothing and reads as unknown
+export async function authenticateApiKey(
+  hashedKey: string,
+): Promise<AuthenticatedApiKey | undefined> {
+  const [key] = await getDb()
+    .update(apiKeys)
+    .set({ lastUsedAt: sql`now()` })
+    .where(and(eq(apiKeys.hashedKey, hashedKey), isNull(apiKeys.revokedAt)))
+    .returning({ id: apiKeys.id, userId: apiKeys.userId, permission: apiKeys.permission });
+
+  return key;
+}
+
 export async function insertApiKey(values: NewApiKey): Promise<void> {
   await getDb().insert(apiKeys).values(values);
 }

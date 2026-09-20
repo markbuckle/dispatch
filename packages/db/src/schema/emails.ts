@@ -23,8 +23,9 @@ export const emails = pgTable(
     to: text('to_addresses').array().notNull(),
     from: text('from_address').notNull(),
     subject: text('subject').notNull(),
-    html: text('html').notNull(),
-    text: text('text').notNull(),
+    // an email is html, plain text, or both, so neither column can be required on its own
+    html: text('html'),
+    text: text('text'),
     status: emailStatus('status').notNull(),
     providerMessageId: text('provider_message_id'),
     error: text('error'),

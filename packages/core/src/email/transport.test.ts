@@ -28,8 +28,20 @@ describe('ConsoleTransport', () => {
       from: params.from,
       to: params.to,
       subject: params.subject,
+      html: params.html,
       text: params.text,
     });
+  });
+
+  it('logs an email that carries only one body', async () => {
+    const info = vi.spyOn(logger, 'info').mockImplementation(() => logger);
+
+    await new ConsoleTransport().send({ ...params, text: undefined });
+
+    expect(info).toHaveBeenCalledWith(
+      'email sent',
+      expect.objectContaining({ html: params.html, text: undefined }),
+    );
   });
 
   it('returns an id that cannot be mistaken for an SES message id', async () => {

@@ -29,6 +29,13 @@
       "when": 1789906505667,
       "tag": "0003_create_emails",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789931477194,
+      "tag": "0004_allow_one_sided_email_bodies",
+      "breakpoints": true
     }
   ]
 }
