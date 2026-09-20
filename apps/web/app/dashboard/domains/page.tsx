@@ -1,10 +1,13 @@
+import { isDomainUnsettled } from '@dispatch/db';
 import { EmptyState } from '../empty-state';
 import { listDomains } from './actions';
 import { AddDomainDialog } from './add-domain-dialog';
+import { DomainsPoller } from './domains-poller';
 import { DomainsTable } from './domains-table';
 
 export default async function DomainsPage() {
   const domains = await listDomains();
+  const isAnyUnsettled = domains.some((domain) => isDomainUnsettled(domain.status));
 
   return (
     <div className="flex flex-col gap-6 p-6">
@@ -13,7 +16,10 @@ export default async function DomainsPage() {
         <AddDomainDialog />
       </header>
       {domains.length > 0 ? (
-        <DomainsTable domains={domains} />
+        <>
+          <DomainsTable domains={domains} />
+          {isAnyUnsettled && <DomainsPoller />}
+        </>
       ) : (
         <div className="rounded-lg border border-border-default">
           <EmptyState
