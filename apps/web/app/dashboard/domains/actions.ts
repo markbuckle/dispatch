@@ -13,6 +13,7 @@ import {
   findDomainForUser,
   insertDomain,
   listDomainsForUser,
+  listUnsettledDomainsForUser,
   recordDomainCheckForUser,
 } from '@dispatch/db';
 import { revalidatePath } from 'next/cache';
@@ -79,6 +80,22 @@ export async function createDomain(input: CreateDomainInput): Promise<CreateDoma
   revalidatePath(DOMAINS_PATH);
 
   return { status: 'created', domain };
+}
+
+// polled from the domains page; the page stops rendering the poller once nothing is left unsettled
+export async function recheckPendingDomains(): Promise<void> {
+  const userId = await requireUserId();
+
+  // one at a time, because an account with many pending domains would otherwise burst SES on every tick
+  for (const domain of await listUnsettledDomainsForUser(userId)) {
+    const identity = await getDomainIdentity(domain.name).catch((error: unknown) => {
+      if (error instanceof DomainNotFoundError) return null;
+      throw error;
+    });
+    if (identity) await recordDomainCheckForUser(domain.id, userId, identity.status);
+  }
+
+  revalidatePath(DOMAINS_PATH);
 }
 
 export async function checkDomainStatus(id: string): Promise<CheckDomainStatusResult> {

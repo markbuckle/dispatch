@@ -1,6 +1,20 @@
-import { and, desc, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type Domain, domains, type NewDomain } from '../schema/domains';
+
+// verified and failed are terminal; the rest can still change without anyone asking again
+const UNSETTLED: Domain['status'][] = ['not_started', 'pending', 'temporary_failure'];
+
+export function isDomainUnsettled(status: Domain['status']): boolean {
+  return UNSETTLED.includes(status);
+}
+
+export async function listUnsettledDomainsForUser(userId: string): Promise<Domain[]> {
+  return getDb()
+    .select()
+    .from(domains)
+    .where(and(eq(domains.userId, userId), inArray(domains.status, UNSETTLED)));
+}
 
 export async function listDomainsForUser(userId: string): Promise<Domain[]> {
   return getDb()
