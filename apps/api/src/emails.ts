@@ -3,6 +3,7 @@ import { insertEmail, markEmailFailed } from '@dispatch/db';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { type AuthVariables, authenticate } from './authenticate';
+import { rateLimit } from './rate-limit';
 
 // SES accepts at most 50 recipients on a single send
 const MAX_RECIPIENTS = 50;
@@ -32,7 +33,8 @@ const sendEmailSchema = z
 
 export const emails = new Hono<{ Variables: AuthVariables }>();
 
-emails.post('/', authenticate, async (context) => {
+// limited after authenticating, so an unauthenticated caller cannot spend a key's budget
+emails.post('/', authenticate, rateLimit, async (context) => {
   const body = await context.req.json().catch(() => undefined);
   if (body === undefined) {
     return context.json({ message: 'Send a JSON body.' }, 400);
