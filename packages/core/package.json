@@ -13,6 +13,7 @@
     "vitest": "^5.0.1"
   },
   "dependencies": {
-    "@aws-sdk/client-sesv2": "^3.1135.0"
+    "@aws-sdk/client-sesv2": "^3.1135.0",
+    "winston": "^3.19.0"
   }
 }
