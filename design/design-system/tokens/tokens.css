@@ -55,6 +55,9 @@
   --dispatch-info-tint: rgba(112,184,255,0.07);
   --dispatch-info-edge: rgba(112,184,255,0.24);
 
+  /* an email preview renders as a mail client would, so this stays white in both themes */
+  --dispatch-preview-paper: #FFFFFF;
+
   --dispatch-neutral-bg: #1E1E22;
   --dispatch-neutral-fg: #C0C4CA;
   --dispatch-off-bg:     #1A1A1E;
@@ -145,6 +148,7 @@
   --color-info-fg: var(--dispatch-info-fg);
   --color-info-tint: var(--dispatch-info-tint);
   --color-info-edge: var(--dispatch-info-edge);
+  --color-preview-paper: var(--dispatch-preview-paper);
   --color-neutral-bg: var(--dispatch-neutral-bg);
   --color-neutral-fg: var(--dispatch-neutral-fg);
   --color-off-bg: var(--dispatch-off-bg);
@@ -214,6 +218,8 @@
   --container-dialog:    520px;
   /* DNS records: fits a DKIM CNAME name for a typical subdomain on one line of 13.5px mono */
   --container-dialog-wide: 840px;
+  /* what an email is actually laid out for, so a preview is not wider than any client would show */
+  --container-email:     600px;
 }
 
 /* ── Fonts ───────────────────────────────────────────────────────── */
