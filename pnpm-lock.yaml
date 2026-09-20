@@ -32,6 +32,12 @@ importers:
       '@hono/node-server':
         specifier: ^2.1.1
         version: 2.1.1(hono@4.13.8)
+      '@upstash/ratelimit':
+        specifier: ^2.1.0
+        version: 2.1.0(@upstash/redis@1.38.4)
+      '@upstash/redis':
+        specifier: ^1.38.4
+        version: 1.38.4
       hono:
         specifier: ^4.13.8
         version: 4.13.8
@@ -122,7 +128,7 @@ importers:
     dependencies:
       drizzle-orm:
         specifier: ^0.45.2
-        version: 0.45.2(@opentelemetry/api@1.9.1)(@types/pg@8.15.6)(postgres@3.4.9)
+        version: 0.45.2(@opentelemetry/api@1.9.1)(@types/pg@8.15.6)(@upstash/redis@1.38.4)(postgres@3.4.9)
       postgres:
         specifier: ^3.4.9
         version: 3.4.9
@@ -2015,6 +2021,18 @@ packages:
   '@types/triple-beam@1.3.5':
     resolution: {integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==}
 
+  '@upstash/core-analytics@0.0.10':
+    resolution: {integrity: sha512-7qJHGxpQgQr9/vmeS1PktEwvNAF7TI4iJDi8Pu2CFZ9YUGHZH4fOP5TfYlZ4aVxfopnELiE4BS4FBjyK7V1/xQ==}
+    engines: {node: '>=16.0.0'}
+
+  '@upstash/ratelimit@2.1.0':
+    resolution: {integrity: sha512-a0bpet6HkEfLaTldcBgIgUCe7ELfnpudrruNDye/W1Oknz+ekB9PthUbqFSWRNZnV0y/EbK8YXYfhLG5KU8DYw==}
+    peerDependencies:
+      '@upstash/redis': ^1.38.2
+
+  '@upstash/redis@1.38.4':
+    resolution: {integrity: sha512-ZX69mKReun/yieyHYLoBg0eSiF6hjCQjd8zUKkJ5eCHehDV6P8S8oZOHxGSfkH1spfOhGZk0EGerBrfUsXow8g==}
+
   '@vitest/mocker@5.0.1':
     resolution: {integrity: sha512-6K1DoBNAPGvuOcSsGA4D6x+5zEEff/KmOOP3uetT2TrGpVfI+HRHRnJJfKi5ib/g1vx8IYHQD8s0pbJz8WQI7Q==}
     peerDependencies:
@@ -3016,6 +3034,9 @@ packages:
   ulid@2.4.0:
     resolution: {integrity: sha512-fIRiVTJNcSRmXKPZtGzFQv9WRrZ3M9eoptl/teFJvjOzmpU+/K/JH6HZ8deBfb5vMEpicJcLn7JmvdknlMq7Zg==}
     hasBin: true
+
+  uncrypto@0.1.3:
+    resolution: {integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==}
 
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
@@ -4938,6 +4959,19 @@ snapshots:
 
   '@types/triple-beam@1.3.5': {}
 
+  '@upstash/core-analytics@0.0.10':
+    dependencies:
+      '@upstash/redis': 1.38.4
+
+  '@upstash/ratelimit@2.1.0(@upstash/redis@1.38.4)':
+    dependencies:
+      '@upstash/core-analytics': 0.0.10
+      '@upstash/redis': 1.38.4
+
+  '@upstash/redis@1.38.4':
+    dependencies:
+      uncrypto: 0.1.3
+
   '@vitest/mocker@5.0.1(vite@8.3.0(@types/node@26.4.0)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.1))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
@@ -5059,10 +5093,11 @@ snapshots:
       esbuild: 0.25.12
       tsx: 4.23.13
 
-  drizzle-orm@0.45.2(@opentelemetry/api@1.9.1)(@types/pg@8.15.6)(postgres@3.4.9):
+  drizzle-orm@0.45.2(@opentelemetry/api@1.9.1)(@types/pg@8.15.6)(@upstash/redis@1.38.4)(postgres@3.4.9):
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
       '@types/pg': 8.15.6
+      '@upstash/redis': 1.38.4
       postgres: 3.4.9
 
   eastasianwidth@0.2.0: {}
@@ -5826,6 +5861,8 @@ snapshots:
   typescript@6.0.3: {}
 
   ulid@2.4.0: {}
+
+  uncrypto@0.1.3: {}
 
   undici-types@8.3.0: {}
 

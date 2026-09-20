@@ -2,7 +2,7 @@ import { hashApiKey } from '@dispatch/core';
 import { type AuthenticatedApiKey, authenticateApiKey } from '@dispatch/db';
 import { createMiddleware } from 'hono/factory';
 
-export type AuthVariables = { userId: string };
+export type AuthVariables = { userId: string; apiKeyId: string };
 
 // exhaustive, so a permission added later fails the build here instead of silently sending
 const CAN_SEND: Record<AuthenticatedApiKey['permission'], boolean> = {
@@ -30,6 +30,7 @@ export const authenticate = createMiddleware<{ Variables: AuthVariables }>(
     }
 
     context.set('userId', key.userId);
+    context.set('apiKeyId', key.id);
     await next();
   },
 );

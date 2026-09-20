@@ -10,6 +10,8 @@
     "@dispatch/core": "workspace:*",
     "@dispatch/db": "workspace:*",
     "@hono/node-server": "^2.1.1",
+    "@upstash/ratelimit": "^2.1.0",
+    "@upstash/redis": "^1.38.4",
     "hono": "^4.13.8",
     "inngest": "^4.20.0",
     "zod": "^4.6.5"
