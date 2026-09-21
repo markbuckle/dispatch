@@ -5,3 +5,4 @@ export * from './queries/emails';
 export * from './schema/api-keys';
 export * from './schema/domains';
 export * from './schema/emails';
+export * from './schema/templates';
