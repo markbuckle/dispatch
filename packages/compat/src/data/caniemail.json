@@ -1,0 +1,537 @@
+{
+  "source": {
+    "url": "https://www.caniemail.com/api/data.json",
+    "project": "Can I email... (github.com/hteumeuleu/caniemail)",
+    "api_version": "1.0.4",
+    "last_update_date": "2026-09-16 13:05:00 +0000",
+    "retrieved_at": "2026-09-21"
+  },
+  "features": [
+    {
+      "slug": "css-display-flex",
+      "title": "display:flex",
+      "url": "https://www.caniemail.com/features/css-display-flex/",
+      "last_test_date": "2021-11-02",
+      "support_score": 82.93,
+      "clients": [
+        {
+          "family": "GMX",
+          "platform": "Desktop Webmail",
+          "version": "2022-06",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "Android",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "Desktop Webmail",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "iOS",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows",
+          "version": "2019",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows Mail",
+          "version": "2019-02",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "WEB.DE",
+          "platform": "Desktop Webmail",
+          "version": "2022-06",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Gmail",
+          "platform": "Android",
+          "version": "2026-03",
+          "level": "partial",
+          "note": "Not supported with non Google accounts."
+        },
+        {
+          "family": "Gmail",
+          "platform": "iOS",
+          "version": "2026-03",
+          "level": "partial",
+          "note": "Not supported with non Google accounts."
+        }
+      ]
+    },
+    {
+      "slug": "css-display-grid",
+      "title": "display:grid",
+      "url": "https://www.caniemail.com/features/css-display-grid/",
+      "last_test_date": "2019-02-28",
+      "support_score": 82.93,
+      "clients": [
+        {
+          "family": "GMX",
+          "platform": "Desktop Webmail",
+          "version": "2022-06",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "Android",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "Desktop Webmail",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "iOS",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows",
+          "version": "2019",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows Mail",
+          "version": "2019-02",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "WEB.DE",
+          "platform": "Desktop Webmail",
+          "version": "2022-06",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Gmail",
+          "platform": "Android",
+          "version": "2026-03",
+          "level": "partial",
+          "note": "Not supported with non Google accounts."
+        },
+        {
+          "family": "Gmail",
+          "platform": "iOS",
+          "version": "2026-03",
+          "level": "partial",
+          "note": "Not supported with non Google accounts."
+        }
+      ]
+    },
+    {
+      "slug": "css-variables",
+      "title": "CSS Variables (Custom Properties)",
+      "url": "https://www.caniemail.com/features/css-variables/",
+      "last_test_date": "2020-02-25",
+      "support_score": 45.24,
+      "clients": [
+        {
+          "family": "AOL",
+          "platform": "Android",
+          "version": "2020-01",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "AOL",
+          "platform": "Desktop Webmail",
+          "version": "2020-01",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "AOL",
+          "platform": "iOS",
+          "version": "2020-01",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Fastmail",
+          "platform": "Desktop Webmail",
+          "version": "2021-07",
+          "level": "unsupported",
+          "note": "Partial. The `var()` function is supported, but not the variable declaration."
+        },
+        {
+          "family": "Gmail",
+          "platform": "Android",
+          "version": "2019-08",
+          "level": "unsupported",
+          "note": "Partial. The `var()` function is supported, but not the variable declaration. Partial. Not supported with non Google accounts."
+        },
+        {
+          "family": "Gmail",
+          "platform": "Desktop Webmail",
+          "version": "2019-08",
+          "level": "unsupported",
+          "note": "Partial. The `var()` function is supported, but not the variable declaration."
+        },
+        {
+          "family": "Gmail",
+          "platform": "iOS",
+          "version": "2019-08",
+          "level": "unsupported",
+          "note": "Partial. The `var()` function is supported, but not the variable declaration. Partial. Not supported with non Google accounts."
+        },
+        {
+          "family": "Gmail",
+          "platform": "Mobile Webmail",
+          "version": "2020-02",
+          "level": "unsupported",
+          "note": "Partial. The `var()` function is supported, but not the variable declaration."
+        },
+        {
+          "family": "GMX",
+          "platform": "Desktop Webmail",
+          "version": "2022-09",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Mail.ru",
+          "platform": "Desktop Webmail",
+          "version": "2020-10",
+          "level": "unsupported",
+          "note": "Partial. The `var()` function is supported, but not the variable declaration."
+        },
+        {
+          "family": "Orange",
+          "platform": "Android",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "Desktop Webmail",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Orange",
+          "platform": "iOS",
+          "version": "2024-04",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Android",
+          "version": "2020-02",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "iOS",
+          "version": "2020-02",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "macOS",
+          "version": "16.80",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Outlook.com",
+          "version": "2024-01",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows",
+          "version": "2019",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows Mail",
+          "version": "2020-01",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "WEB.DE",
+          "platform": "Desktop Webmail",
+          "version": "2022-09",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Yahoo! Mail",
+          "platform": "Android",
+          "version": "2020-02",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Yahoo! Mail",
+          "platform": "Desktop Webmail",
+          "version": "2020-02",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Yahoo! Mail",
+          "platform": "iOS",
+          "version": "2020-02",
+          "level": "unsupported",
+          "note": null
+        }
+      ]
+    },
+    {
+      "slug": "css-position",
+      "title": "position",
+      "url": "https://www.caniemail.com/features/css-position/",
+      "last_test_date": "2021-05-16",
+      "support_score": 80.49,
+      "clients": [
+        {
+          "family": "Gmail",
+          "platform": "Android",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Gmail",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Gmail",
+          "platform": "iOS",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Gmail",
+          "platform": "Mobile Webmail",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Mail.ru",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "iOS",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows",
+          "version": "2019",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "Outlook",
+          "platform": "Windows Mail",
+          "version": "2021-05",
+          "level": "unsupported",
+          "note": null
+        },
+        {
+          "family": "AOL",
+          "platform": "Android",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` but not  `absolute`, `sticky` and `fixed`."
+        },
+        {
+          "family": "AOL",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` but not  `absolute`, `sticky` and `fixed`."
+        },
+        {
+          "family": "AOL",
+          "platform": "iOS",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` but not  `absolute`, `sticky` and `fixed`."
+        },
+        {
+          "family": "Apple Mail",
+          "platform": "iOS",
+          "version": "14.5",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`."
+        },
+        {
+          "family": "Apple Mail",
+          "platform": "macOS",
+          "version": "14",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`."
+        },
+        {
+          "family": "Fastmail",
+          "platform": "Desktop Webmail",
+          "version": "2021-07",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`. Buggy. `fixed` is replaced by `absolute`."
+        },
+        {
+          "family": "HEY",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` and `sticky` but not `absolute` and `fixed`."
+        },
+        {
+          "family": "LaPoste.net",
+          "platform": "Desktop Webmail",
+          "version": "2021-08",
+          "level": "partial",
+          "note": "Partial. Supports `relative` and `sticky` but not `absolute` and `fixed`."
+        },
+        {
+          "family": "Orange",
+          "platform": "Android",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`."
+        },
+        {
+          "family": "Orange",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`."
+        },
+        {
+          "family": "Orange",
+          "platform": "iOS",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`."
+        },
+        {
+          "family": "Outlook",
+          "platform": "Android",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `sticky` but not `relative`, `absolute` and `fixed`."
+        },
+        {
+          "family": "Outlook",
+          "platform": "macOS",
+          "version": "16.80",
+          "level": "partial",
+          "note": "Partial. Supports `sticky` but not `relative`, `absolute` and `fixed`."
+        },
+        {
+          "family": "Outlook",
+          "platform": "Outlook.com",
+          "version": "2023-12",
+          "level": "partial",
+          "note": "Partial. Supports `sticky` but not `relative`, `absolute` and `fixed`."
+        },
+        {
+          "family": "Samsung Email",
+          "platform": "Android",
+          "version": "6.0",
+          "level": "partial",
+          "note": "Partial. Supports `relative`, `absolute` but not `sticky` and `fixed`."
+        },
+        {
+          "family": "SFR",
+          "platform": "Android",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` and `sticky` but not `absolute` and `fixed`."
+        },
+        {
+          "family": "SFR",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` and `sticky` but not `absolute` and `fixed`."
+        },
+        {
+          "family": "SFR",
+          "platform": "iOS",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` and `sticky` but not `absolute` and `fixed`."
+        },
+        {
+          "family": "Yahoo! Mail",
+          "platform": "Android",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` but not  `absolute`, `sticky` and `fixed`."
+        },
+        {
+          "family": "Yahoo! Mail",
+          "platform": "Desktop Webmail",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` but not  `absolute`, `sticky` and `fixed`."
+        },
+        {
+          "family": "Yahoo! Mail",
+          "platform": "iOS",
+          "version": "2021-05",
+          "level": "partial",
+          "note": "Partial. Supports `relative` but not  `absolute`, `sticky` and `fixed`."
+        }
+      ]
+    }
+  ]
+}

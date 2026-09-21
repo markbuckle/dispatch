@@ -1,5 +1,21 @@
 {
   "name": "@dispatch/compat",
   "private": true,
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "vendor:caniemail": "node scripts/vendor-caniemail.mjs"
+  },
+  "dependencies": {
+    "css-tree": "^3.2.1",
+    "htmlparser2": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/css-tree": "^3.2.0",
+    "vitest": "^5.0.1"
+  }
 }
