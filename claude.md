@@ -8,8 +8,8 @@ Email API for developers. Minimal, dark-mode-first, built as a portfolio project
 - Comments: one line max, `//` only, explain why not what, never narrate structure (see Comments section for examples)
 - No `any`. No `as` casts to escape a type error, fix the type instead
 - Before touching UI, read `design/design-system/CLAUDE.md` first. Never invent a colour, size, radius, or duration - if it isn't in `design/design-system/tokens/tokens.css`, the token is missing, add it there before using it
-- One change per pull request
 - Never commit directly to `main`
+- Never run `git commit`, and never merge a pull request. Leave the change in the working tree, hand over the commit message and the PR title and body, and stop there. Committing and merging are done by hand
 - Say what you are about to change and why, then wait for confirmation, before writing code
 
 ## Stack
@@ -104,6 +104,9 @@ Never: `// Helpers`, `// Imports`, `// Main component`, or anything that address
 
 ## Commits
 
+Write the message, do not run the command. Hand the message over and let it be
+committed by hand.
+
 Conventional commits, type prefix required.
 
 ```
@@ -115,6 +118,8 @@ refactor: extract transport interface from send pipeline
 Never `wip`, `update`, `changes`, or anything meaningless in six months.
 
 ## Pull requests
+
+Write the title and body, do not open the pull request and do not merge it.
 
 Title uses the conventional commit format. Body:
 

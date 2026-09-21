@@ -71,12 +71,16 @@ packages/config              currently unused - tailwind v4 configures
 
 ## Opening and merging a PR
 
+Every step here is done by hand. Claude Code never commits and never merges.
+It leaves the change in the working tree and hands over the commit message
+and the PR title and body, and the commit, push and merge are yours.
+
 ```powershell
 git checkout main
 git pull
 
 git checkout -b feat/short-description
-# make one change
+# make your changes
 
 git add <files>
 git commit -m "feat: short description"
