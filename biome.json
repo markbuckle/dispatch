@@ -8,7 +8,12 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/migrations/meta"]
+    "includes": [
+      "**",
+      "!**/migrations/meta",
+      "!packages/compat/src/data",
+      "!packages/compat/src/fixtures"
+    ]
   },
   "formatter": {
     "enabled": true,
