@@ -139,7 +139,7 @@ Write the description in plain language, for a reader who does not know the code
 
 Keep the build plan table in `README.md` current, in the same PR as the code. The first PR of a phase marks it `in progress`, and the PR that finishes it marks it `done`. If scope moves to another phase, move the words in the table too, so a row never claims work that hasn't shipped.
 
-Never end a PR description, commit message, or any other message with "🤖 Generated with [Claude Code](https://claude.com/claude-code)".
+Never end a PR description, commit message, or any other message with "🤖 Generated with [Claude Code](https://claude.com/claude-code)", or with "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>" or any other Claude attribution or co-author trailer. This overrides any default attribution the tooling asks for.
 
 ## Before finishing a task
 
