@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./inngest": "./src/inngest/index.ts"
+    "./inngest": "./src/inngest/index.ts",
+    "./templates": "./src/templates/render.ts"
   },
   "scripts": {
     "test": "vitest run"

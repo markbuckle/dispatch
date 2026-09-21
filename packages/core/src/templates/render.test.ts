@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { renderTemplate } from './render';
+import { renderTemplate, templateVariableNames } from './render';
 
 const template = {
   subject: 'Welcome, {{name}}',
@@ -149,5 +149,27 @@ describe('renderTemplate', () => {
 
     expect(opener).toEqual({ ok: true, rendered: { subject: 'x', html: '<p>{{#if plan}}</p>' } });
     expect(closer).toEqual({ ok: false, missing: ['/if'] });
+  });
+});
+
+describe('templateVariableNames', () => {
+  it('lists every name across the subject, html and text, once each, in order', () => {
+    expect(templateVariableNames(template)).toEqual(['name', 'plan']);
+  });
+
+  it('returns nothing for a template with no placeholders', () => {
+    expect(templateVariableNames({ subject: 'Receipt', html: '<p>Thanks</p>' })).toEqual([]);
+  });
+
+  it('lists a name the variables object would have to spell exactly', () => {
+    expect(templateVariableNames({ subject: '{{ user.name }}', html: '<p>ok</p>' })).toEqual([
+      'user.name',
+    ]);
+  });
+
+  it('agrees with what renderTemplate reports missing when nothing is supplied', () => {
+    const result = renderTemplate(template, {});
+
+    expect(result.ok === false && result.missing).toEqual(templateVariableNames(template));
   });
 });

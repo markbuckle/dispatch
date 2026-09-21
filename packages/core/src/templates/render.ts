@@ -69,3 +69,17 @@ export function renderTemplate(
 
   return { ok: true, rendered: { subject, html, ...(text !== undefined && { text }) } };
 }
+
+// the editor asks for a sample value per name, and parsing placeholders there would be a second copy of the rule
+export function templateVariableNames(template: TemplateContent): string[] {
+  const names: string[] = [];
+
+  for (const content of [template.subject, template.html, template.text ?? '']) {
+    for (const match of content.matchAll(PLACEHOLDER)) {
+      const name = nameOf(match[0]);
+      if (!names.includes(name)) names.push(name);
+    }
+  }
+
+  return names;
+}

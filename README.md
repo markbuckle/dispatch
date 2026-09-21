@@ -16,7 +16,7 @@ applications. See `CLAUDE.md` for engineering rules and
 | 5 | API keys: generation, hashing, one-time reveal, Hono skeleton | done |
 | 6 | Domains: SES identity, DKIM records, on-demand verification check | done |
 | 7 | Send pipeline + Emails list and detail, domain verification polling, rate limiting | done |
-| 8 | Templates: CRUD, variable interpolation, live preview | in progress |
+| 8 | Templates: CRUD, variable interpolation, live preview | done |
 | 9 | Compatibility checker, shipped behind a PostHog flag | |
 | 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | |
 | 11 | Metrics and Logs | |
