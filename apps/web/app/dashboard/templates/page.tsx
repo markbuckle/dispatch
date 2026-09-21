@@ -11,9 +11,11 @@ export default async function TemplatesPage() {
     <div className="flex flex-col gap-6 p-6">
       <header className="flex items-center justify-between gap-4">
         <h1 className="font-display text-h1 text-text-primary">Templates</h1>
-        <Link href="/dashboard/templates/new" className={primaryButton}>
-          New template
-        </Link>
+        {templates.length > 0 && (
+          <Link href="/dashboard/templates/new" className={primaryButton}>
+            New template
+          </Link>
+        )}
       </header>
       {templates.length > 0 ? (
         <TemplatesTable templates={templates} />
