@@ -1,7 +1,6 @@
 'use client';
 
 import type { Template } from '@dispatch/db';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type FormEvent, type ReactNode, useId, useState, useTransition } from 'react';
@@ -10,20 +9,9 @@ import { fieldLabel, inputField, textareaField } from '../field-styles';
 import { createTemplate, updateTemplate } from './actions';
 import { TemplatePreview } from './template-preview';
 
-// the engine roughly doubles this page's javascript, so only an account the flag lets in downloads it
-const CompatibilityPanel = dynamic(() =>
-  import('./compatibility-panel').then((module) => module.CompatibilityPanel),
-);
-
 const TEMPLATES_PATH = '/dashboard/templates';
 
-export function TemplateEditor({
-  template,
-  isCompatibilityCheckerEnabled,
-}: {
-  template?: Template;
-  isCompatibilityCheckerEnabled: boolean;
-}) {
+export function TemplateEditor({ template }: { template?: Template }) {
   const router = useRouter();
   const nameId = useId();
   const subjectId = useId();
@@ -128,12 +116,9 @@ export function TemplateEditor({
           </Field>
         </div>
 
-        <div className="flex min-w-0 flex-col gap-6">
-          {isCompatibilityCheckerEnabled && <CompatibilityPanel html={html} />}
-          <TemplatePreview
-            template={{ subject, html, text: text.trim() === '' ? undefined : text }}
-          />
-        </div>
+        <TemplatePreview
+          template={{ subject, html, text: text.trim() === '' ? undefined : text }}
+        />
       </div>
     </form>
   );
