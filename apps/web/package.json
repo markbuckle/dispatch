@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@dispatch/compat": "workspace:*",
     "@dispatch/core": "workspace:*",
     "@dispatch/db": "workspace:*",
     "@dispatch/ui": "workspace:*",

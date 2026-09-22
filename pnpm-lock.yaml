@@ -54,9 +54,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@dispatch/compat':
-        specifier: workspace:*
-        version: link:../../packages/compat
       '@dispatch/core':
         specifier: workspace:*
         version: link:../../packages/core
