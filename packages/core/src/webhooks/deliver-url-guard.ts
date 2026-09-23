@@ -1,6 +1,7 @@
 import { lookup } from 'node:dns/promises';
 
-export type UrlCheck = { ok: true } | { ok: false; reason: string };
+// terminal means no later attempt can change the answer, so the caller can stop rather than wait
+export type UrlCheck = { ok: true } | { ok: false; terminal: boolean; reason: string };
 
 export type AddressResolver = (hostname: string) => Promise<string[]>;
 
@@ -56,11 +57,12 @@ export async function checkDeliveryUrl(
   try {
     url = new URL(rawUrl);
   } catch {
-    return { ok: false, reason: 'The endpoint URL could not be parsed.' };
+    // the stored url is what it is, so re-reading it later reaches the same verdict
+    return { ok: false, terminal: true, reason: 'The endpoint URL could not be parsed.' };
   }
 
   if (url.protocol !== 'https:') {
-    return { ok: false, reason: 'The endpoint URL has to use https.' };
+    return { ok: false, terminal: true, reason: 'The endpoint URL has to use https.' };
   }
 
   let addresses: string[];
@@ -68,17 +70,32 @@ export async function checkDeliveryUrl(
     // fetch resolves the name again for itself, so this narrows the window rather than closing it
     addresses = await resolve(url.hostname);
   } catch {
-    return { ok: false, reason: `The endpoint host ${url.hostname} did not resolve.` };
+    // a resolver that threw has said nothing about the host, and saying nothing is not a verdict
+    return {
+      ok: false,
+      terminal: false,
+      reason: `The endpoint host ${url.hostname} could not be looked up.`,
+    };
   }
 
   if (addresses.length === 0) {
-    return { ok: false, reason: `The endpoint host ${url.hostname} did not resolve.` };
+    // an unregistered domain can be registered, and broken DNS gets repaired
+    return {
+      ok: false,
+      terminal: false,
+      reason: `The endpoint host ${url.hostname} did not resolve.`,
+    };
   }
 
   // every answer has to be public, because fetch may pick any of them
   const blocked = addresses.find(isPrivateAddress);
   if (blocked !== undefined) {
-    return { ok: false, reason: `The endpoint host resolves to the private address ${blocked}.` };
+    // a private address is a property of where the name points, and waiting does not move it
+    return {
+      ok: false,
+      terminal: true,
+      reason: `The endpoint host resolves to the private address ${blocked}.`,
+    };
   }
 
   return { ok: true };

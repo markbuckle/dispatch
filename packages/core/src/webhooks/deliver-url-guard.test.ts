@@ -13,11 +13,14 @@ describe('checkDeliveryUrl', () => {
     expect(await checkDeliveryUrl('https://api.example.com/hooks', PUBLIC)).toEqual({ ok: true });
   });
 
-  it('rejects a url that is not https', async () => {
+  it('rejects a url that is not https, and says no later attempt will differ', async () => {
     const result = await checkDeliveryUrl('http://api.example.com/hooks', PUBLIC);
 
-    expect(result.ok).toBe(false);
-    expect(result).toMatchObject({ reason: expect.stringContaining('https') });
+    expect(result).toMatchObject({
+      ok: false,
+      terminal: true,
+      reason: expect.stringContaining('https'),
+    });
   });
 
   it.each([
@@ -28,11 +31,14 @@ describe('checkDeliveryUrl', () => {
     ['the cloud metadata address', '169.254.169.254'],
     ['the unspecified address', '0.0.0.0'],
     ['carrier grade NAT', '100.64.0.1'],
-  ])('rejects %s', async (_label, address) => {
+  ])('rejects %s as terminal', async (_label, address) => {
     const result = await checkDeliveryUrl('https://internal.example.com', resolvesTo(address));
 
-    expect(result.ok).toBe(false);
-    expect(result).toMatchObject({ reason: expect.stringContaining(address) });
+    expect(result).toMatchObject({
+      ok: false,
+      terminal: true,
+      reason: expect.stringContaining(address),
+    });
   });
 
   it.each([
@@ -41,10 +47,10 @@ describe('checkDeliveryUrl', () => {
     ['an IPv6 link-local address', 'fe80::1'],
     ['an IPv4 loopback wearing an IPv6 prefix', '::ffff:127.0.0.1'],
     ['the metadata address wearing an IPv6 prefix', '::ffff:169.254.169.254'],
-  ])('rejects %s', async (_label, address) => {
+  ])('rejects %s as terminal', async (_label, address) => {
     const result = await checkDeliveryUrl('https://internal.example.com', resolvesTo(address));
 
-    expect(result.ok).toBe(false);
+    expect(result).toMatchObject({ ok: false, terminal: true });
   });
 
   it('rejects a host where only one of several answers is private', async () => {
@@ -53,24 +59,28 @@ describe('checkDeliveryUrl', () => {
       resolvesTo('93.184.216.34', '10.0.0.7'),
     );
 
-    expect(result.ok).toBe(false);
+    expect(result).toMatchObject({ ok: false, terminal: true });
   });
 
-  it('rejects a host that does not resolve at all', async () => {
+  // a name that resolves to nothing today can resolve tomorrow, so these two keep their attempts
+  it('rejects a host that does not resolve, without calling it terminal', async () => {
     const result = await checkDeliveryUrl('https://nowhere.example.com', resolvesTo());
 
-    expect(result.ok).toBe(false);
+    expect(result).toMatchObject({ ok: false, terminal: false });
   });
 
-  it('rejects a host whose lookup throws', async () => {
+  it('rejects a host whose lookup throws, without calling it terminal', async () => {
     const result = await checkDeliveryUrl('https://nowhere.example.com', async () => {
       throw new Error('ENOTFOUND');
     });
 
-    expect(result.ok).toBe(false);
+    expect(result).toMatchObject({ ok: false, terminal: false });
   });
 
-  it('rejects a url that cannot be parsed', async () => {
-    expect((await checkDeliveryUrl('not a url', PUBLIC)).ok).toBe(false);
+  it('rejects a url that cannot be parsed as terminal', async () => {
+    expect(await checkDeliveryUrl('not a url', PUBLIC)).toMatchObject({
+      ok: false,
+      terminal: true,
+    });
   });
 });

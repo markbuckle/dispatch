@@ -40,6 +40,15 @@ async function attemptDelivery(
 
   const allowed = await checkDeliveryUrl(delivery.url);
   if (!allowed.ok) {
+    // four more attempts against an address that cannot change would report Pending for hours and still fail
+    if (allowed.terminal) {
+      await recordDeliveryAttempt(deliveryId, {
+        status: 'failed',
+        error: `${allowed.reason} Not retried.`,
+      });
+      return { settled: 'failed' };
+    }
+
     await recordDeliveryAttempt(deliveryId, { ...unsuccessful, error: allowed.reason });
     return outcome;
   }
