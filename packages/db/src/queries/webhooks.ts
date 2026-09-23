@@ -5,15 +5,18 @@ import { type NewWebhook, type Webhook, webhooks } from '../schema/webhooks';
 // the signing secret is left out, so listing a page of endpoints never carries every secret across the wire
 export type WebhookSummary = Pick<Webhook, 'id' | 'url' | 'events' | 'disabledAt' | 'createdAt'>;
 
+// named once, so the secret cannot reappear in a select that drifted from this list
+const summaryColumns = {
+  id: webhooks.id,
+  url: webhooks.url,
+  events: webhooks.events,
+  disabledAt: webhooks.disabledAt,
+  createdAt: webhooks.createdAt,
+};
+
 export async function listWebhooksForUser(userId: string): Promise<WebhookSummary[]> {
   return getDb()
-    .select({
-      id: webhooks.id,
-      url: webhooks.url,
-      events: webhooks.events,
-      disabledAt: webhooks.disabledAt,
-      createdAt: webhooks.createdAt,
-    })
+    .select(summaryColumns)
     .from(webhooks)
     .where(eq(webhooks.userId, userId))
     .orderBy(desc(webhooks.createdAt));
@@ -25,13 +28,7 @@ export async function findWebhookForUser(
   userId: string,
 ): Promise<WebhookSummary | undefined> {
   const [webhook] = await getDb()
-    .select({
-      id: webhooks.id,
-      url: webhooks.url,
-      events: webhooks.events,
-      disabledAt: webhooks.disabledAt,
-      createdAt: webhooks.createdAt,
-    })
+    .select(summaryColumns)
     .from(webhooks)
     .where(and(eq(webhooks.id, id), eq(webhooks.userId, userId)));
 
@@ -51,8 +48,9 @@ export async function revealSigningSecretForUser(
   return webhook?.signingSecret;
 }
 
-export async function insertWebhook(values: NewWebhook): Promise<Webhook> {
-  const [webhook] = await getDb().insert(webhooks).values(values).returning();
+// the caller generated the secret it passed in, so the row never has to carry it back out
+export async function insertWebhook(values: NewWebhook): Promise<WebhookSummary> {
+  const [webhook] = await getDb().insert(webhooks).values(values).returning(summaryColumns);
   if (!webhook) throw new Error(`Insert returned no row for ${values.url}`);
 
   return webhook;
