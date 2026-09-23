@@ -4,4 +4,6 @@ export * from './domains/ses-identity';
 export * from './email/transport';
 export * from './logger';
 export * from './templates/render';
+export * from './webhooks/deliver-url-guard';
+export * from './webhooks/payload';
 export * from './webhooks/sign';

@@ -1,6 +1,7 @@
 'use client';
 
 import type { WebhookSummary } from '@dispatch/db';
+import Link from 'next/link';
 import { Fragment, type ReactNode, useId, useState, useTransition } from 'react';
 import { smallButton } from '../button-styles';
 import { CopyField } from '../copy-field';
@@ -74,7 +75,12 @@ export function WebhooksTable({ webhooks }: { webhooks: WebhookSummary[] }) {
               <Fragment key={webhook.id}>
                 <tr className="dispatch-transition border-b border-border-subtle last:border-b-0 hover:bg-surface">
                   <td className="h-row px-5 align-middle font-mono text-mono text-text-primary">
-                    {webhook.url}
+                    <Link
+                      href={`/dashboard/webhooks/${webhook.id}`}
+                      className="dispatch-transition rounded-xs text-text-primary outline-none hover:text-text-secondary focus-visible:shadow-focus"
+                    >
+                      {webhook.url}
+                    </Link>
                   </td>
                   <td className="h-row px-5 align-middle text-text-secondary">
                     {webhook.events.map((event) => eventLabels[event]).join(', ')}
