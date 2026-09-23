@@ -1,4 +1,4 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, arrayContains, desc, eq, isNull } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type NewWebhook, type Webhook, webhooks } from '../schema/webhooks';
 
@@ -54,6 +54,25 @@ export async function insertWebhook(values: NewWebhook): Promise<WebhookSummary>
   if (!webhook) throw new Error(`Insert returned no row for ${values.url}`);
 
   return webhook;
+}
+
+export type WebhookEndpoint = Pick<Webhook, 'id' | 'url'>;
+
+// the fan-out job runs as the system, so it matches on the event owner rather than on a request's user
+export async function listWebhooksForEventType(
+  userId: string,
+  eventType: Webhook['events'][number],
+): Promise<WebhookEndpoint[]> {
+  return getDb()
+    .select({ id: webhooks.id, url: webhooks.url })
+    .from(webhooks)
+    .where(
+      and(
+        eq(webhooks.userId, userId),
+        isNull(webhooks.disabledAt),
+        arrayContains(webhooks.events, [eventType]),
+      ),
+    );
 }
 
 export async function deleteWebhookForUser(id: string, userId: string): Promise<boolean> {

@@ -1,8 +1,9 @@
-import { findEmail, markEmailFailed, markEmailSent } from '@dispatch/db';
+import { findEmail, insertEmailEvent, markEmailFailed, markEmailSent } from '@dispatch/db';
 import { NonRetriableError } from 'inngest';
 import { createTransport } from '../email/transport';
+import { buildWebhookPayload } from '../webhooks/payload';
 import { inngest } from './client';
-import { emailSendQueued } from './events';
+import { emailEventRecorded, emailSendQueued } from './events';
 
 export const sendEmail = inngest.createFunction(
   { id: 'send-email', triggers: [emailSendQueued] },
@@ -15,6 +16,7 @@ export const sendEmail = inngest.createFunction(
       // step output is json, so returning the row would type its timestamps as Date when they come back strings
       return {
         id: row.id,
+        userId: row.userId,
         status: row.status,
         params: {
           from: row.from,
@@ -41,6 +43,32 @@ export const sendEmail = inngest.createFunction(
     }
 
     await step.run('record-sent', () => markEmailSent(email.id, providerMessageId));
+
+    const recorded = await step.run('record-event', async () => {
+      const occurredAt = new Date();
+      const row = await insertEmailEvent({
+        emailId: email.id,
+        userId: email.userId,
+        type: 'sent',
+        occurredAt,
+        payload: buildWebhookPayload({
+          type: 'sent',
+          occurredAt,
+          emailId: email.id,
+          from: email.params.from,
+          to: email.params.to,
+          subject: email.params.subject,
+        }),
+      });
+
+      return { id: row.id };
+    });
+
+    await step.sendEvent(
+      'announce-event',
+      // the event row id doubles as the dedup key, so a retried step cannot fan out twice
+      emailEventRecorded.create({ emailEventId: recorded.id }, { id: `event-${recorded.id}` }),
+    );
 
     return { providerMessageId };
   },

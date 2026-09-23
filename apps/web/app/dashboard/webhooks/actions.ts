@@ -1,11 +1,16 @@
 'use server';
 
 import { generateSigningSecret } from '@dispatch/core';
+import { inngest, webhookDeliveryQueued } from '@dispatch/core/inngest';
 import {
+  type DeliverySummary,
   deleteWebhookForUser,
   emailEventType,
+  findWebhookForUser,
   insertWebhook,
+  listDeliveriesForWebhook,
   listWebhooksForUser,
+  requeueDeliveryForUser,
   revealSigningSecretForUser,
   type WebhookSummary,
 } from '@dispatch/db';
@@ -32,6 +37,8 @@ export type RevealWebhookSecretResult =
   | { status: 'rejected'; message: string };
 
 export type DeleteWebhookResult = { status: 'deleted' } | { status: 'rejected'; message: string };
+
+export type ReplayDeliveryResult = { status: 'queued' } | { status: 'rejected'; message: string };
 
 export async function listWebhooks(): Promise<WebhookSummary[]> {
   return listWebhooksForUser(await requireUserId());
@@ -70,6 +77,46 @@ export async function revealWebhookSecret(id: string): Promise<RevealWebhookSecr
   }
 
   return { status: 'revealed', secret };
+}
+
+export async function getWebhook(id: string): Promise<WebhookSummary | undefined> {
+  const userId = await requireUserId();
+  const parsed = z.uuid().safeParse(id);
+  if (!parsed.success) return undefined;
+
+  return findWebhookForUser(parsed.data, userId);
+}
+
+export async function listDeliveries(webhookId: string): Promise<DeliverySummary[]> {
+  const userId = await requireUserId();
+  const parsed = z.uuid().safeParse(webhookId);
+  if (!parsed.success) return [];
+
+  return listDeliveriesForWebhook(parsed.data, userId);
+}
+
+export async function replayDelivery(id: string): Promise<ReplayDeliveryResult> {
+  const userId = await requireUserId();
+  const parsed = z.uuid().safeParse(id);
+  if (!parsed.success) {
+    return { status: 'rejected', message: 'That delivery no longer exists.' };
+  }
+
+  const requeued = await requeueDeliveryForUser(parsed.data, userId);
+  if (!requeued) {
+    return { status: 'rejected', message: 'Only a failed delivery can be replayed.' };
+  }
+
+  // the attempt count makes this id unique per replay, or Inngest would dedup it against the first queueing
+  await inngest.send(
+    webhookDeliveryQueued.create(
+      { deliveryId: requeued.id },
+      { id: `delivery-${requeued.id}-replay-${requeued.attemptCount}` },
+    ),
+  );
+  revalidatePath(`${WEBHOOKS_PATH}/${requeued.webhookId}`);
+
+  return { status: 'queued' };
 }
 
 export async function deleteWebhook(id: string): Promise<DeleteWebhookResult> {

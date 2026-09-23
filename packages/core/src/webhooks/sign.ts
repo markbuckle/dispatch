@@ -13,6 +13,11 @@ export function generateSigningSecret(): string {
   return `${SECRET_PREFIX}${randomBytes(SECRET_BYTES).toString('base64')}`;
 }
 
+// generated once per delivery and resent by every retry, because it is the receiver's idempotency key
+export function generateMessageId(): string {
+  return `msg_${randomBytes(16).toString('hex')}`;
+}
+
 // the prefix labels the secret for humans and is not key material, so it comes off before decoding
 function secretKey(secret: string): Buffer {
   return Buffer.from(secret.slice(SECRET_PREFIX.length), 'base64');
