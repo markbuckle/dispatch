@@ -8,8 +8,15 @@ const authUsers = authSchema.table('users', {
   id: uuid('id').primaryKey(),
 });
 
-// delivered and bounced wait for Phase 10, because nothing could set them until webhooks ingest SES events
-export const emailStatus = pgEnum('email_status', ['queued', 'sent', 'failed']);
+export const emailStatus = pgEnum('email_status', [
+  'queued',
+  'sent',
+  'failed',
+  'delivered',
+  'bounced',
+  'complained',
+  'delivery_delayed',
+]);
 
 // Supabase serves public tables over REST with the browser's key; Drizzle connects as owner and bypasses RLS
 export const emails = pgTable(
@@ -26,6 +33,7 @@ export const emails = pgTable(
     // an email is html, plain text, or both, so neither column can be required on its own
     html: text('html'),
     text: text('text'),
+    // denormalized latest event; email_events is the record, and a late sent cannot undo delivered
     status: emailStatus('status').notNull(),
     providerMessageId: text('provider_message_id'),
     error: text('error'),
