@@ -2,7 +2,8 @@
 
 import { type FormEvent, useId, useState, useTransition } from 'react';
 import { primaryButton, secondaryButton } from '../button-styles';
-import { CopyButton } from '../copy-button';
+import { CheckIcon } from '../check-icon';
+import { CopyField } from '../copy-field';
 import {
   Dialog,
   DialogBody,
@@ -155,33 +156,5 @@ export function CreateApiKeyDialog() {
         )}
       </DialogContent>
     </Dialog>
-  );
-}
-
-function CopyField({ value }: { value: string }) {
-  return (
-    <div className="flex h-control-lg items-center gap-2 rounded-md border border-border-default bg-surface pr-1 pl-3.5">
-      <span className="flex-1 truncate font-mono text-mono text-text-secondary">{value}</span>
-      <CopyButton value={value} />
-    </div>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      width={18}
-      height={18}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.25}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="shrink-0 text-text-primary"
-      aria-hidden
-    >
-      <path d="M7 17 L13 23 L25 9" />
-    </svg>
   );
 }
