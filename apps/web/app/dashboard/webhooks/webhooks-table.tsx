@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { Fragment, type ReactNode, useId, useState, useTransition } from 'react';
 import { smallButton } from '../button-styles';
 import { CopyField } from '../copy-field';
+import { eventLabels } from '../event-labels';
 import { formatRelative, formatUtc } from '../format-time';
 import { revealWebhookSecret } from './actions';
 import { DeleteWebhookButton } from './delete-webhook-button';
-import { eventLabels } from './events';
 
 function omit(source: Record<string, string>, key: string): Record<string, string> {
   const next = { ...source };

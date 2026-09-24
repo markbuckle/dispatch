@@ -1,8 +1,8 @@
 import type { DeliverySummary } from '@dispatch/db';
 import type { ReactNode } from 'react';
+import { eventLabels } from '../../event-labels';
 import { formatRelative, formatUtc } from '../../format-time';
 import { DeliveryStatusPill } from '../delivery-status-pill';
-import { eventLabels } from '../events';
 import { ReplayDeliveryButton } from './replay-delivery-button';
 
 export function DeliveriesTable({ deliveries }: { deliveries: DeliverySummary[] }) {
