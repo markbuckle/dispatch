@@ -1,16 +1,6 @@
-import type { WebhookSummary } from '@dispatch/db';
+import type { EmailEventType } from '../event-labels';
 
-export type EmailEventType = WebhookSummary['events'][number];
-
-// the words are fixed in foundations/vocabulary.md, which calls a temporary rejection Deferred
-export const eventLabels: Record<EmailEventType, string> = {
-  sent: 'Sent',
-  delivered: 'Delivered',
-  bounced: 'Bounced',
-  complained: 'Complained',
-  delivery_delayed: 'Deferred',
-};
-
+// the descriptions belong to the create dialog, unlike the labels, which the metrics cards share
 export const eventOptions: { value: EmailEventType; description: string }[] = [
   { value: 'sent', description: 'Handed to the provider for delivery.' },
   { value: 'delivered', description: 'Confirmed at the destination.' },

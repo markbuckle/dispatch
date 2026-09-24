@@ -3,6 +3,7 @@ export * from './queries/api-keys';
 export * from './queries/domains';
 export * from './queries/email-events';
 export * from './queries/emails';
+export * from './queries/metrics';
 export * from './queries/templates';
 export * from './queries/webhook-deliveries';
 export * from './queries/webhooks';

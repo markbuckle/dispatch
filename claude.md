@@ -54,6 +54,7 @@ These are deliberate and should not be revisited without discussion.
 - `INNGEST_DEV=1` points the Inngest client at a local dev server. It must be unset everywhere else, or a deployed app talks to nothing.
 - Both `apps/api` and `apps/web` send Inngest events, so both need the event key in a deployed environment. `apps/web` became a producer when replaying a webhook delivery shipped, which is easy to miss because it only fails on that one button.
 - `SES_CONFIGURATION_SET` and `SES_EVENTS_TOPIC_ARN` come from `terraform output` in `infra/`. Without the first, SES sends mail and reports nothing; without the second, `/sns/ses` rejects everything, which is the correct way for it to fail.
+- **Before setting `SES_CONFIGURATION_SET`, add `arn:aws:ses:<region>:<account>:configuration-set/dispatch-events` to the `Resource` list of the sending IAM user's `ses:SendEmail` statement.** `ses:SendEmail` is authorized against the configuration set as well as the identity, so a policy listing only identities fails every send with `AccessDeniedException` the moment the variable is set. `infra/README.md` carries the full statement.
 - The SNS subscription cannot confirm until the api is publicly reachable. A pending subscription before then is expected, not a broken apply.
 
 ## Repo structure

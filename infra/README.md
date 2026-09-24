@@ -21,7 +21,41 @@ Terraform for the SES event pipeline: a configuration set, an SNS topic, and an 
 | `topic_name` | `dispatch-ses-events` | |
 | `api_notification_url` | none | Public https URL ending in `/sns/ses` |
 
+## Prerequisite: the sending user needs the configuration set on its policy
+
+A configuration set is a resource in its own right, and `ses:SendEmail` is authorized
+against both the identity and the configuration set a send names. The sending IAM user's
+policy grants the identities only, so the moment `SES_CONFIGURATION_SET` is set, every
+send fails with `AccessDeniedException` until `dispatch-events` is added to that same
+`Resource` list:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ses:SendEmail",
+      "Resource": [
+        "arn:aws:ses:us-east-1:<account>:identity/<your sending domain>",
+        "arn:aws:ses:us-east-1:<account>:configuration-set/dispatch-events"
+      ]
+    }
+  ]
+}
+```
+
+Grant this before setting the environment variable, not after. In between, sending is
+broken, and the error names a resource the send does not obviously use, which makes it
+slow to recognise.
+
 ## Applying
+
+Terraform authenticates as whatever the AWS CLI's credential chain resolves to, which is
+not either of the runtime users; neither can create a configuration set or a topic. Use a
+principal that holds `ses:CreateConfigurationSet`, `ses:CreateConfigurationSetEventDestination`,
+`sns:CreateTopic`, `sns:SetTopicAttributes` and `sns:Subscribe` on these resources, and keep
+its credentials off any deployed environment.
 
 ```
 cd infra

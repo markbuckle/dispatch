@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isFeatureEnabled, WEBHOOKS } from '../../../../lib/flags/is-feature-enabled';
 import { EmptyState } from '../../empty-state';
+import { eventLabels } from '../../event-labels';
 import { getWebhook, listDeliveries } from '../actions';
-import { eventLabels } from '../events';
 import { DeliveriesTable } from './deliveries-table';
 
 export default async function WebhookPage({ params }: { params: Promise<{ id: string }> }) {

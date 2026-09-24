@@ -14,9 +14,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../dialog';
+import { type EmailEventType, eventLabels } from '../event-labels';
 import { fieldLabel, inputField } from '../field-styles';
 import { createWebhook } from './actions';
-import { type EmailEventType, eventLabels, eventOptions } from './events';
+import { eventOptions } from './events';
 
 // an endpoint subscribed to nothing looks broken, so the useful default is everything
 const ALL_EVENTS = eventOptions.map((option) => option.value);
