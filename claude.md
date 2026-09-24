@@ -45,7 +45,16 @@ These are deliberate and should not be revisited without discussion.
 - **Key format borrows Stripe's live/test segment** Resend keys are `re_` plus a random secret, with nothing marking the environment. Dispatch issues `dispatch_live_...` and `dispatch_test_...` because Dispatch sends real email, and an accidental live send during testing is the specific risk the segment prevents. It is part of the hashed string, so a test key can never verify against a live key's hash.
 - **Webhooks are hand-rolled**, not Svix. HMAC signing and retry with backoff are implemented in `packages/core`. This is intentional, not a gap to fill with a vendor.
 - **`packages/compat` has no React or Next dependency.** The compatibility checker must run identically from the dashboard, a CLI, and CI.
+- **SES reports outcomes through SNS, verified by signature rather than by a key.** A configuration set publishes DELIVERY, BOUNCE, COMPLAINT and DELIVERY_DELAY to a topic, which POSTs to `/sns/ses`. That route has no API key auth because SNS has none to send: the X.509 signature is the authentication. Two checks have to happen before anything else, and in this order - the `SigningCertURL` host must be `sns.<region>.amazonaws.com` before the certificate is fetched, or a caller supplies their own certificate and signs whatever they like, and the `TopicArn` must match ours, because a valid signature proves SNS sent it and not that our topic did. The route verifies, emits an event and returns 200; the work happens in an Inngest function, because SNS retries anything slow.
+- **`emails.status` never moves backwards.** It is a denormalized view of the latest meaningful event and `email_events` is the append-only record. SES reports out of order and can report a delivery before the send step finishes its own bookkeeping, so every status write is conditional on the rank in `packages/db/src/schema/email-status-rank.ts`. `complained` outranks `delivered` because a spam complaint follows a successful delivery; `failed` sits outside that lifecycle, so `markEmailFailed` keeps its stricter queued-only guard.
 - **Large features ship behind a PostHog flag** across several small PRs merged to `main`, rather than one large PR or a long-lived branch.
+
+## Deploying
+
+- `INNGEST_DEV=1` points the Inngest client at a local dev server. It must be unset everywhere else, or a deployed app talks to nothing.
+- Both `apps/api` and `apps/web` send Inngest events, so both need the event key in a deployed environment. `apps/web` became a producer when replaying a webhook delivery shipped, which is easy to miss because it only fails on that one button.
+- `SES_CONFIGURATION_SET` and `SES_EVENTS_TOPIC_ARN` come from `terraform output` in `infra/`. Without the first, SES sends mail and reports nothing; without the second, `/sns/ses` rejects everything, which is the correct way for it to fail.
+- The SNS subscription cannot confirm until the api is publicly reachable. A pending subscription before then is expected, not a broken apply.
 
 ## Repo structure
 
@@ -54,12 +63,14 @@ tsconfig.json     shared strict TypeScript config, everything extends it
 biome.json        lint and format rules for the whole repo
 design/
   design-system/  tokens, foundations docs, logo, DECISIONS.md, PROVENANCE.md
+infra/            terraform for the SES configuration set and SNS topic,
+                  applied by hand, state local and gitignored
 apps/
   web/      Next.js: landing, auth, dashboard
   api/      Hono: public REST API v1
 packages/
   db/       Drizzle schema, migrations, client
-  core/     send pipeline, key hashing, webhook signing
+  core/     send pipeline, key hashing, webhook signing, SNS verification
   compat/   compatibility checker engine, framework-free
   ui/       Radix + Tailwind components
   config/   currently unused - tailwind v4 configures via tokens.css's

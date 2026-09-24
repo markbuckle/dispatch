@@ -8,13 +8,15 @@
   },
   "scripts": {
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "test": "vitest run"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
     "postgres": "^3.4.9"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.31.10"
+    "drizzle-kit": "^0.31.10",
+    "vitest": "^5.0.1"
   }
 }

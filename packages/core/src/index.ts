@@ -7,3 +7,4 @@ export * from './templates/render';
 export * from './webhooks/deliver-url-guard';
 export * from './webhooks/payload';
 export * from './webhooks/sign';
+export * from './webhooks/verify-sns';
