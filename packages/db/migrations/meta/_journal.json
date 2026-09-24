@@ -50,6 +50,13 @@
       "when": 1790120542044,
       "tag": "0006_create_webhooks",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1790248226128,
+      "tag": "0007_create_request_logs",
+      "breakpoints": true
     }
   ]
 }

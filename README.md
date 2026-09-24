@@ -19,9 +19,9 @@ applications. See `CLAUDE.md` for engineering rules and
 | 8 | Templates: CRUD, variable interpolation, live preview | done |
 | 9 | Compatibility checker, shipped behind a PostHog flag | done |
 | 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | done |
-| 11 | Metrics and Logs | in progress |
+| 11 | Metrics and Logs | done |
 | 12 | Settings and Profile | |
-| 13 | Polish, Playwright E2E, case study writeup | |
+| 13 | Polish, Playwright E2E, request log retention, case study writeup | |
 
 ## Architecture
 

@@ -7,7 +7,8 @@ if (existsSync(envFile)) process.loadEnvFile(envFile);
 
 export default defineConfig({
   dialect: 'postgresql',
-  schema: './src/schema',
+  // excludes the colocated tests, which drizzle-kit would try to load and choke on the vitest import
+  schema: './src/schema/!(*.test).ts',
   out: './migrations',
   dbCredentials: { url: process.env.DATABASE_URL ?? '' },
 });
