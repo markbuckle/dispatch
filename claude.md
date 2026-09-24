@@ -20,7 +20,7 @@ TypeScript strict, pnpm workspaces, Turborepo.
 |---|---|
 | Runtime | Node 22, pinned in `.nvmrc` and `engines` |
 | API | Hono |
-| Web | Next.js 15, App Router, RSC for data, SWR only for polling views |
+| Web | Next.js 15, App Router, RSC for data. No client fetching library and no SWR |
 | Styling | Tailwind, Radix Primitives, Radix Colors |
 | Validation | Zod, source of truth for types via `z.infer` |
 | DB | Postgres + Drizzle |
@@ -47,6 +47,7 @@ These are deliberate and should not be revisited without discussion.
 - **`packages/compat` has no React or Next dependency.** The compatibility checker must run identically from the dashboard, a CLI, and CI.
 - **SES reports outcomes through SNS, verified by signature rather than by a key.** A configuration set publishes DELIVERY, BOUNCE, COMPLAINT and DELIVERY_DELAY to a topic, which POSTs to `/sns/ses`. That route has no API key auth because SNS has none to send: the X.509 signature is the authentication. Two checks have to happen before anything else, and in this order - the `SigningCertURL` host must be `sns.<region>.amazonaws.com` before the certificate is fetched, or a caller supplies their own certificate and signs whatever they like, and the `TopicArn` must match ours, because a valid signature proves SNS sent it and not that our topic did. The route verifies, emits an event and returns 200; the work happens in an Inngest function, because SNS retries anything slow.
 - **`emails.status` never moves backwards.** It is a denormalized view of the latest meaningful event and `email_events` is the append-only record. SES reports out of order and can report a delivery before the send step finishes its own bookkeeping, so every status write is conditional on the rank in `packages/db/src/schema/email-status-rank.ts`. `complained` outranks `delivered` because a spam complaint follows a successful delivery; `failed` sits outside that lifecycle, so `markEmailFailed` keeps its stricter queued-only guard.
+- **A list does not poll; a pending record does.** Every table in the dashboard is a plain RSC read, refreshed by loading the page. The one poller, `DomainsPoller`, waits on a specific record the user is watching resolve and stops once it settles. Emails is the strongest candidate for a live list, since a status really does move underneath the reader, and it still does not poll. A request log, which is written once about something already finished, has no future state to wait for at all.
 - **Large features ship behind a PostHog flag** across several small PRs merged to `main`, rather than one large PR or a long-lived branch.
 
 ## Deploying

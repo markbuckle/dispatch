@@ -8,9 +8,13 @@ import {
 import { Hono } from 'hono';
 import { serve } from 'inngest/hono';
 import { emails } from './emails';
+import { requestLogger } from './request-logger';
 import { sns } from './sns';
 
 export const app = new Hono();
+
+// first, so it wraps every route including the ones registered below it
+app.use('*', requestLogger);
 
 app.get('/health', (context) => context.json({ status: 'ok' }));
 
