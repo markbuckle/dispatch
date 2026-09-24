@@ -12,3 +12,15 @@ export const emailEventRecorded = eventType('email/event.recorded', {
 export const webhookDeliveryQueued = eventType('webhook/delivery.queued', {
   schema: z.object({ deliveryId: z.uuid() }),
 });
+
+export const sesNotificationReceived = eventType('ses/notification.received', {
+  schema: z.object({
+    // the SNS envelope id, which is what makes a redelivered notification recognisable
+    snsMessageId: z.string().min(1),
+    publishedAt: z.string().min(1),
+    notification: z.object({
+      eventType: z.string().min(1),
+      mail: z.object({ messageId: z.string().min(1) }),
+    }),
+  }),
+});

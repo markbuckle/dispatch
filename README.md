@@ -18,7 +18,7 @@ applications. See `CLAUDE.md` for engineering rules and
 | 7 | Send pipeline + Emails list and detail, domain verification polling, rate limiting | done |
 | 8 | Templates: CRUD, variable interpolation, live preview | done |
 | 9 | Compatibility checker, shipped behind a PostHog flag | done |
-| 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | in progress |
+| 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | done |
 | 11 | Metrics and Logs | |
 | 12 | Settings and Profile | |
 | 13 | Polish, Playwright E2E, case study writeup | |

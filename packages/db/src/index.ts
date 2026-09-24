@@ -9,6 +9,7 @@ export * from './queries/webhooks';
 export * from './schema/api-keys';
 export * from './schema/domains';
 export * from './schema/email-events';
+export * from './schema/email-status-rank';
 export * from './schema/emails';
 export * from './schema/templates';
 export * from './schema/webhook-deliveries';

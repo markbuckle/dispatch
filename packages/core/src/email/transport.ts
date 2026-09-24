@@ -58,10 +58,15 @@ function getSender(): SESv2Client {
 
 export class SesTransport implements Transport {
   async send(params: SendEmailParams): Promise<SendEmailResult> {
+    // unset in dev and in the transport tests, where there is no configuration set to report events to
+    const configurationSet = process.env.SES_CONFIGURATION_SET;
+
     const response = await getSender().send(
       new SendEmailCommand({
         FromEmailAddress: params.from,
         Destination: { ToAddresses: params.to },
+        // without this SES sends the message and tells nobody what became of it
+        ...(configurationSet && { ConfigurationSetName: configurationSet }),
         Content: {
           Simple: {
             Subject: { Data: params.subject, Charset: 'UTF-8' },

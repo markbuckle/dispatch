@@ -10,6 +10,17 @@ export async function insertEmailEvent(values: NewEmailEvent): Promise<EmailEven
   return event;
 }
 
+// undefined means the provider event id was already stored, so a redelivered notification lands here and stops
+export async function insertEmailEventOnce(values: NewEmailEvent): Promise<EmailEvent | undefined> {
+  const [event] = await getDb()
+    .insert(emailEvents)
+    .values(values)
+    .onConflictDoNothing({ target: emailEvents.providerEventId })
+    .returning();
+
+  return event;
+}
+
 // the fan-out job reads the event it was handed, so this is unscoped for the same reason
 export async function findEmailEvent(id: string): Promise<EmailEvent | undefined> {
   const [event] = await getDb().select().from(emailEvents).where(eq(emailEvents.id, id));
