@@ -220,6 +220,8 @@
   --container-dialog-wide: 840px;
   /* what an email is actually laid out for, so a preview is not wider than any client would show */
   --container-email:     600px;
+  /* the floor components/DropdownMenu.tsx sets, so a short menu is not narrower than its trigger reads */
+  --container-menu:      180px;
 }
 
 /* ── Fonts ───────────────────────────────────────────────────────── */
@@ -330,6 +332,11 @@ a:hover { color: var(--dispatch-text-primary); }
 
 .dispatch-scrim-enter  { animation: dispatch-scrim-in  200ms cubic-bezier(0.4,0,0.2,1); }
 .dispatch-dialog-enter { animation: dispatch-dialog-in 200ms cubic-bezier(0.4,0,0.2,1); }
+
+/* Menu open. A dropdown is positioned by its trigger, so it rises rather than scaling from a centre. */
+@keyframes dispatch-menu-in { from { opacity: 0; transform: translateY(-2px) } }
+
+.dispatch-menu-enter { animation: dispatch-menu-in 200ms cubic-bezier(0.4,0,0.2,1); }
 
 @keyframes dispatch-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.5 } }
 @keyframes dispatch-spin { to { transform: rotate(360deg) } }
