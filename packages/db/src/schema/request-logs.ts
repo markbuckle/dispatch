@@ -23,8 +23,8 @@ export const requestLogs = pgTable(
   'request_logs',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    // null for a request that never authenticated, which is most of what a public endpoint refuses
-    userId: uuid('user_id').references(() => authUsers.id, { onDelete: 'cascade' }),
+    // null when a request never authenticated, and set null on deletion so a log outlives the account
+    userId: uuid('user_id').references(() => authUsers.id, { onDelete: 'set null' }),
     // set null rather than cascade, because revoking a key should not erase what it did
     apiKeyId: uuid('api_key_id').references(() => apiKeys.id, { onDelete: 'set null' }),
     method: text('method').notNull(),

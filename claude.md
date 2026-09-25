@@ -57,6 +57,8 @@ These are deliberate and should not be revisited without discussion.
 - `SES_CONFIGURATION_SET` and `SES_EVENTS_TOPIC_ARN` come from `terraform output` in `infra/`. Without the first, SES sends mail and reports nothing; without the second, `/sns/ses` rejects everything, which is the correct way for it to fail.
 - **Before setting `SES_CONFIGURATION_SET`, add `arn:aws:ses:<region>:<account>:configuration-set/dispatch-events` to the `Resource` list of the sending IAM user's `ses:SendEmail` statement.** `ses:SendEmail` is authorized against the configuration set as well as the identity, so a policy listing only identities fails every send with `AccessDeniedException` the moment the variable is set. `infra/README.md` carries the full statement.
 - The SNS subscription cannot confirm until the api is publicly reachable. A pending subscription before then is expected, not a broken apply.
+- `SUPABASE_SERVICE_ROLE_KEY` is what deleting an account authenticates with, because the anon key cannot reach Supabase's admin api. It bypasses RLS entirely, so it is never prefixed `NEXT_PUBLIC_` and is only ever imported from a `'use server'` file. `apps/web/lib/supabase/admin.ts` is the one place that reads it.
+- **Deleting an account removes every Dispatch row and nothing on AWS.** The cascade from `auth.users` clears domains, keys, templates, emails and webhooks, and detaches request logs, but a verified SES domain identity stays registered in the AWS account. Deprovisioning it is a manual step until something reclaims identities on delete.
 
 ## Repo structure
 

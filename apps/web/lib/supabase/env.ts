@@ -14,3 +14,10 @@ export function getSupabaseEnv() {
     ),
   };
 }
+
+export function getSupabaseAdminEnv() {
+  return {
+    url: requireEnv('NEXT_PUBLIC_SUPABASE_URL', process.env.NEXT_PUBLIC_SUPABASE_URL),
+    serviceRoleKey: requireEnv('SUPABASE_SERVICE_ROLE_KEY', process.env.SUPABASE_SERVICE_ROLE_KEY),
+  };
+}

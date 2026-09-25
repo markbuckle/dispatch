@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
+import { createAdminClient } from '../../../lib/supabase/admin';
 import { requireUserId } from '../../../lib/supabase/require-user-id';
 import { createClient } from '../../../lib/supabase/server';
 import { readDisplayName } from './display-name';
@@ -41,6 +42,8 @@ type Rejected = { status: 'rejected'; message: string };
 export type UpdateDisplayNameResult = { status: 'saved' } | Rejected;
 
 export type ChangePasswordResult = { status: 'changed' } | Rejected;
+
+export type DeleteAccountResult = Rejected;
 
 export type UpdateEmailResult = { status: 'sent' } | Rejected;
 
@@ -108,4 +111,23 @@ export async function signOut(): Promise<never> {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect('/login');
+}
+
+// takes no arguments on purpose: the id deleted comes from the session, never from a caller
+export async function deleteAccount(): Promise<DeleteAccountResult> {
+  const userId = await requireUserId();
+
+  const admin = createAdminClient();
+  const { error } = await admin.auth.admin.deleteUser(userId);
+  if (error) {
+    return { status: 'rejected', message: error.message };
+  }
+
+  const supabase = await createClient();
+  try {
+    // the user row is already gone, so the auth server is entitled to refuse this
+    await supabase.auth.signOut();
+  } catch {}
+
+  redirect('/login?deleted=1');
 }

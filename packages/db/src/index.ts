@@ -6,6 +6,7 @@ export * from './queries/emails';
 export * from './queries/metrics';
 export * from './queries/request-logs';
 export * from './queries/templates';
+export * from './queries/usage';
 export * from './queries/webhook-deliveries';
 export * from './queries/webhooks';
 export * from './schema/api-keys';

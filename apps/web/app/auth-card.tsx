@@ -7,7 +7,9 @@ import { AuthShell } from './auth-shell';
 
 type Mode = 'login' | 'signup';
 
-export function AuthCard({ mode }: { mode: Mode }) {
+export type AuthNotice = { tone: 'neutral' | 'danger'; text: string };
+
+export function AuthCard({ mode, notice: urlNotice }: { mode: Mode; notice?: AuthNotice }) {
   const isSignup = mode === 'signup';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -92,6 +94,14 @@ export function AuthCard({ mode }: { mode: Mode }) {
       </div>
 
       <div className="rounded-lg border border-border-default bg-surface p-6 shadow-ring">
+        {urlNotice && (
+          <p
+            className={`mb-5 text-caption ${urlNotice.tone === 'danger' ? 'text-danger-fg' : 'text-text-secondary'}`}
+          >
+            {urlNotice.text}
+          </p>
+        )}
+
         <div className="flex flex-col gap-3">
           <button
             type="button"
