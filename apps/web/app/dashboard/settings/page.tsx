@@ -1,10 +1,5 @@
-import { EmptyState } from '../empty-state';
+import { redirect } from 'next/navigation';
 
 export default function SettingsPage() {
-  return (
-    <EmptyState
-      title="Nothing to configure yet"
-      body="Workspace settings will live here as they ship."
-    />
-  );
+  redirect('/dashboard/settings/usage');
 }

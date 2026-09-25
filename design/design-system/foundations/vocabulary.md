@@ -10,6 +10,8 @@
 
 **About outcomes:** arrives, lands in the inbox, verified, delivered, bounced, suppressed, opened, clicked, failed.
 
+**Danger zone:** the heading for a section holding an irreversible, account-level action - deleting an account, and nothing milder. A single action per zone, styled with `danger-edge`, never used for anything a second click can undo.
+
 ## The developer's nouns
 
 Use these. They are what the audience already calls things.

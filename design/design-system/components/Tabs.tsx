@@ -6,7 +6,9 @@ export function Tabs({ className, ...props }: RTabs.TabsProps) {
   return <RTabs.Root className={cn('flex flex-col gap-5', className)} {...props} />;
 }
 
-/** Underline, not a pill. A pill tab bar reads as marketing chrome in a dense product. */
+/** Underline, for switching panels within one page. A pill bar here reads as marketing chrome.
+ *  Navigation between sub-pages is the exception and uses pills - see the Settings tabs, which are
+ *  links with their own URLs rather than panels, and match the login and signup switcher. */
 export function TabsList({ className, ...props }: RTabs.TabsListProps) {
   return <RTabs.List className={cn('flex gap-4 border-b border-border-subtle', className)} {...props} />;
 }

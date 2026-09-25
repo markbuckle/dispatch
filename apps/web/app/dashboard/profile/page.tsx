@@ -1,6 +1,7 @@
-import { dangerButton, primaryButton } from '../button-styles';
+import { primaryButton } from '../button-styles';
 import { getProfile } from './actions';
 import { ChangePasswordForm } from './change-password-form';
+import { DeleteAccountDialog } from './delete-account-dialog';
 import { DisplayNameForm } from './display-name-form';
 import { EmailForm } from './email-form';
 
@@ -44,18 +45,13 @@ export default async function ProfilePage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="text-meta font-medium text-text-secondary">Delete account</h2>
-        <div className="flex flex-col gap-4 rounded-lg border border-border-default p-5">
+        <h2 className="text-meta font-medium text-text-secondary">Danger zone</h2>
+        <div className="flex flex-col gap-4 rounded-lg border border-danger-edge p-5">
           <p className="text-body text-text-secondary">
-            Deleting your account removes every domain, API key, template and email log it owns.
-            This cannot be undone.
+            Deleting your account removes every domain, API key, template and email it owns. Your
+            request logs stay, with the account detached from them. This cannot be undone.
           </p>
-          <div className="flex flex-col gap-[7px]">
-            <button type="button" disabled className={`${dangerButton} w-max`}>
-              Delete account
-            </button>
-            <span className="text-caption text-text-muted">Not wired up yet.</span>
-          </div>
+          <DeleteAccountDialog email={profile.email} />
         </div>
       </section>
     </div>

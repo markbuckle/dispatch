@@ -1,7 +1,8 @@
+import { API_BASE_URL } from '../lib/api-url';
 import { HeaderBorder } from './header-border';
 import { Lockup, Mark } from './logo';
 
-const request = `curl -X POST https://api.dispatch.dev/v1/emails \\
+const request = `curl -X POST ${API_BASE_URL}/v1/emails \\
   -H "Authorization: Bearer $DISPATCH_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
