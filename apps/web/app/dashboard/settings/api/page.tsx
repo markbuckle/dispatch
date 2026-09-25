@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
 import { API_BASE_URL } from '../../../../lib/api-url';
+import { CopyButton } from '../../copy-button';
 import { CopyField } from '../../copy-field';
 
-const sendRequest = `curl -X POST ${API_BASE_URL}/v1/emails \
+// String.raw so the line continuations survive: a lone backslash before a newline is one inside a template literal
+const sendRequest = String.raw`curl -X POST ${API_BASE_URL}/v1/emails \
   -H "Authorization: Bearer $DISPATCH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36,9 +38,15 @@ export default function ApiSettingsPage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-meta font-medium text-text-secondary">Sending an email</h2>
-        <pre className="overflow-x-auto rounded-lg border border-border-default p-5 font-mono text-mono text-text-secondary">
-          {sendRequest}
-        </pre>
+        <div className="overflow-hidden rounded-lg border border-border-default">
+          <div className="flex items-center justify-between gap-4 border-b border-border-subtle bg-subtle px-3 py-2">
+            <span className="font-mono text-micro text-text-muted">shell</span>
+            <CopyButton value={sendRequest} label="curl command" />
+          </div>
+          <pre className="overflow-x-auto p-5 font-mono text-mono text-text-secondary">
+            {sendRequest}
+          </pre>
+        </div>
       </section>
     </div>
   );
