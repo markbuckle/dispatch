@@ -52,11 +52,72 @@ These are deliberate and should not be revisited without discussion.
 
 ## Deploying
 
-- `INNGEST_DEV=1` points the Inngest client at a local dev server. It must be unset everywhere else, or a deployed app talks to nothing.
-- Both `apps/api` and `apps/web` send Inngest events, so both need the event key in a deployed environment. `apps/web` became a producer when replaying a webhook delivery shipped, which is easy to miss because it only fails on that one button.
+Two Vercel projects, both building from this repo. `dispatch` has its root directory set to `apps/web`; `dispatch-api` has its root directory set to `apps/api`. Root directory is the whole reason the api builds at all, because a build from the repo root finds nothing to deploy.
+
+`apps/api` runs as one serverless function, not as the long-running server `pnpm dev` starts. `apps/api/api/index.ts` hands the Hono app to Vercel and `apps/api/vercel.json` rewrites every path onto it, so Hono still does all the routing. `apps/api/src/index.ts` is the local dev path only, and its `serve()` call never runs in a deployed environment. Deploy the api from Vercel's builders rather than with `vercel deploy --prebuilt`: a local `vercel build` on Windows produces a bundle with no `node_modules` in it, and the function then fails at invocation with every import missing.
+
+`dispatch-api` has SSO deployment protection turned off. The api is a public REST API that authenticates callers with its own keys, and `/sns/ses` has to be reachable by SNS, which cannot answer an SSO challenge.
+
+### Every variable, and what breaks without it
+
+| Variable | Read by | Without it |
+|---|---|---|
+| `DATABASE_URL` | web and api | every query throws on first use |
+| `NEXT_PUBLIC_SUPABASE_URL` | web | no auth at all |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | web | no auth at all |
+| `SUPABASE_SERVICE_ROLE_KEY` | web | deleting an account throws |
+| `POSTHOG_PROJECT_API_KEY` | web | every flag resolves off |
+| `POSTHOG_SECRET_API_KEY` | web | every flag resolves off |
+| `POSTHOG_HOST` | web | every flag resolves off |
+| `SES_REGION` | web | adding a domain throws |
+| `SES_ACCESS_KEY_ID` | web | adding a domain throws |
+| `SES_SECRET_ACCESS_KEY` | web | adding a domain throws |
+| `INNGEST_EVENT_KEY` | web and api | events go nowhere, so a send queues and never sends |
+| `INNGEST_SIGNING_KEY` | api | Inngest cannot invoke a function |
+| `EMAIL_TRANSPORT` | api | falls back to `console`, so a send is logged instead of sent |
+| `SES_SENDER_REGION` | api | sending throws |
+| `SES_SENDER_ACCESS_KEY_ID` | api | sending throws |
+| `SES_SENDER_SECRET_ACCESS_KEY` | api | sending throws |
+| `SES_CONFIGURATION_SET` | api | SES sends the mail and reports nothing back |
+| `SES_EVENTS_TOPIC_ARN` | api | `/sns/ses` rejects every notification |
+| `UPSTASH_REDIS_REST_URL` | api | the send endpoint throws on its first request |
+| `UPSTASH_REDIS_REST_TOKEN` | api | the send endpoint throws on its first request |
+| `LOG_LEVEL` | web and api, optional | defaults to `info` |
+
+The two SES credential pairs are separate on purpose. `SES_*` manages domain identities and only `apps/web` uses it; `SES_SENDER_*` sends mail and only `apps/api` uses it. Neither app needs the other's pair.
+
+The three PostHog variables are all or nothing. `apps/web/lib/flags/evaluate.ts` builds no client unless all three are present, and every flag then resolves to `false`, which silently hides the compatibility checker and turns `/dashboard/webhooks` into a 404. A shipped feature disappearing is the failure mode, not an error in a log.
+
+### Two that must never be set in a deployed environment
+
+- `INNGEST_DEV=1` points the Inngest client at a local dev server, so a deployed app talks to nothing. It is set in both `.env.local` files, which is exactly why a bulk import of one of those files into a deployed environment is the wrong way to fill these in.
+- `POSTHOG_FLAG_OVERRIDES` bypasses PostHog entirely and pins every flag to whatever the override string says, including the webhooks flag. It is also set in `apps/web/.env.local`.
+
+### Registering with Inngest
+
+Locally the dev server discovers functions by polling `PUT /api/inngest`. In a deployed environment that registration is explicit: the app has to be synced from the Inngest dashboard against the deployed `/api/inngest` url, and until it is, no background function runs and every send sits at `queued`. All four functions are served from `apps/api`; `apps/web` only produces events and serves none.
+
+### SES and SNS
+
 - `SES_CONFIGURATION_SET` and `SES_EVENTS_TOPIC_ARN` come from `terraform output` in `infra/`. Without the first, SES sends mail and reports nothing; without the second, `/sns/ses` rejects everything, which is the correct way for it to fail.
 - **Before setting `SES_CONFIGURATION_SET`, add `arn:aws:ses:<region>:<account>:configuration-set/dispatch-events` to the `Resource` list of the sending IAM user's `ses:SendEmail` statement.** `ses:SendEmail` is authorized against the configuration set as well as the identity, so a policy listing only identities fails every send with `AccessDeniedException` the moment the variable is set. `infra/README.md` carries the full statement.
-- The SNS subscription cannot confirm until the api is publicly reachable. A pending subscription before then is expected, not a broken apply.
+- The SNS subscription cannot confirm until the api is publicly reachable. A pending subscription before then is expected, not a broken apply. A subscription pointing at a tunnel url is worse than pending: it reads as confirmed and delivers to a host that no longer resolves, so re-apply against the deployed api url whenever that url changes.
+
+### Auth redirect urls live in Supabase, not in this repo
+
+Every auth flow builds its `redirectTo` from `window.location.origin`, so the app always asks to come
+back to the host it is being used from. Supabase honours that only when the url matches the project's
+Redirect URLs allow list, and quietly substitutes the Site URL when it does not. A Site URL still
+pointing at `http://localhost:3000` therefore sends deployed password reset links to a machine the
+recipient is not running, and the browser reports an expired or invalid token rather than a
+misconfigured redirect, which points the investigation at the wrong thing entirely.
+
+Under Authentication, URL Configuration: Site URL is `https://dispatchit.ca`, and the allow list holds
+`https://dispatchit.ca/**` for production, `http://localhost:3000/**` for local dev, and
+`https://*-markbuckles-projects.vercel.app/**` for auth on preview deploys.
+
+### Accounts
+
 - `SUPABASE_SERVICE_ROLE_KEY` is what deleting an account authenticates with, because the anon key cannot reach Supabase's admin api. It bypasses RLS entirely, so it is never prefixed `NEXT_PUBLIC_` and is only ever imported from a `'use server'` file. `apps/web/lib/supabase/admin.ts` is the one place that reads it.
 - **Deleting an account removes every Dispatch row and nothing on AWS.** The cascade from `auth.users` clears domains, keys, templates, emails and webhooks, and detaches request logs, but a verified SES domain identity stays registered in the AWS account. Deprovisioning it is a manual step until something reclaims identities on delete.
 

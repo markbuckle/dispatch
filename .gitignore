@@ -10,3 +10,5 @@ dist
 *.tsbuildinfo
 .DS_Store
 .pw-profile/
+.vercel
+apps/api/api/server.js

@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build": "node scripts/build.mjs",
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
@@ -17,6 +18,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
     "tsx": "^4.23.13"
   }
 }
