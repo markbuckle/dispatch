@@ -1,9 +1,10 @@
+import { writeFile } from 'node:fs/promises';
 import { build } from 'esbuild';
 
 // inlined rather than left to the runtime: the workspace packages ship extensionless TypeScript imports, and their own dependencies do not resolve from apps/api under pnpm's isolated node_modules
 await build({
   entryPoints: ['src/vercel.ts'],
-  outfile: 'api/index.js',
+  outfile: 'api/server.js',
   bundle: true,
   platform: 'node',
   format: 'esm',
@@ -14,3 +15,11 @@ await build({
     js: "import { createRequire as __createRequire } from 'node:module';\nconst require = __createRequire(import.meta.url);",
   },
 });
+
+// node binds a module's sourcemap as it compiles it, so the switch has to be thrown from outside the bundle and the import has to be dynamic to stay below it
+await writeFile(
+  'api/index.js',
+  `process.setSourceMapsEnabled(true);
+export const fetch = async (request) => (await import('./server.js')).fetch(request);
+`,
+);
