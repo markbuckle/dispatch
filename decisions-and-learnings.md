@@ -55,3 +55,43 @@ which is the Web-standard signature the runtime looks for.
 The general lesson is that this class of bug does not show up in a build log. Invoking the built
 artifact with plain `node` before deploying caught two of these in a minute each, where a deploy
 and a log read would have taken far longer per attempt.
+
+## Vercel discovers functions by reading the source tree, not the build output
+
+Found in Phase 13, after several deploys that appeared to work.
+
+A Vercel project with no framework decides which serverless functions exist by scanning `api/` in the
+checked out source, before it runs the build command. A build that generates its own entry point into
+`api/` is therefore too late: the directory is empty at the moment that decision is made, and the
+deployment ends up containing no functions at all.
+
+Nothing about this fails loudly. The build succeeds, the deployment reports Ready, and every route
+returns `NOT_FOUND` from the edge because there is nothing behind it. The build log says nothing,
+because from the build's point of view everything went fine.
+
+CLI deploys hide it entirely. `vercel deploy` uploads the working tree, so anyone who has just run the
+build locally uploads the generated entry along with everything else and the function is found. Every
+deploy of this api was made that way, which is why a Git deployment that could never have worked went
+unnoticed until a push produced one.
+
+Naming the entry in `vercel.json` under `functions` does not rescue it and fails harder: the pattern is
+checked against that same source scan, so the build stops with `The pattern "api/index.js" defined in
+functions doesn't match any Serverless Functions inside the api directory`.
+
+So `apps/api/api/index.js` is committed and the build generates only `api/server.js` beside it. Vercel
+finds the entry when it scans, the build supplies the bundle, and `@vercel/nft` traces the entry's
+dynamic import so the bundle travels with it. The check worth repeating after any change here is to
+delete the bundle and deploy, because that is what a clean clone looks like; if the routes answer, the
+arrangement holds.
+
+## Node binds a module's sourcemap when it compiles it
+
+Also Phase 13. `process.setSourceMapsEnabled(true)` governs only modules compiled after the call, so
+throwing the switch from inside the bundle does nothing for the bundle's own stack traces, even though
+`process.sourceMapsEnabled` reads `true` immediately afterwards. Moving the switch above a static
+`import` does not help either, because an ESM graph is compiled in full before any of it is evaluated.
+
+That is why the committed entry sets the flag and only then reaches for the bundle through a dynamic
+`import`, which is the one ordering that leaves the bundle compiled after the switch is thrown. The
+alternative is `NODE_OPTIONS=--enable-source-maps`, which works, but it lives in platform configuration
+rather than in the repository, so a deployment created anywhere else loses it without saying so.
