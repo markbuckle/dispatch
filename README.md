@@ -21,7 +21,8 @@ applications. See `CLAUDE.md` for engineering rules and
 | 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | done |
 | 11 | Metrics and Logs | done |
 | 12 | Settings and Profile | done |
-| 13 | Polish, Playwright E2E, request log retention, case study writeup | |
+| 13 | Deployment: both apps live, env verified, SNS on a permanent endpoint | done |
+| 14 | Polish, Playwright E2E, request log retention, case study writeup | |
 
 ## Architecture
 
@@ -133,3 +134,8 @@ On every PR and every push to `main`: `pnpm lint`, `pnpm typecheck`
 | `pnpm format` | Biome check --write |
 | `pnpm typecheck` | tsc --noEmit |
 | `pnpm test` | run tests |
+
+### Terrform path fix
+
+`$env:Path = [Environment::GetEnvironmentVariable('Path','Machine') + ';' + [Environment::GetEnvironmentVariable('Path','User')`
+>> `terraform version`
