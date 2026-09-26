@@ -21,6 +21,18 @@ Terraform for the SES event pipeline: a configuration set, an SNS topic, and an 
 | `topic_name` | `dispatch-ses-events` | |
 | `api_notification_url` | none | Public https URL ending in `/sns/ses` |
 
+## The current endpoint
+
+| | |
+|---|---|
+| Endpoint | `https://dispatch-api-xi.vercel.app/sns/ses` |
+| Vercel project | `dispatch-api`, root directory `apps/api` |
+
+That host is the production alias of the `dispatch-api` project, so it survives redeploys and is
+stable as long as the project keeps its name. Re-apply with a new `api_notification_url` whenever
+that changes, and never point it at a tunnel: a quick tunnel url confirms while the tunnel is up
+and then reads as a healthy subscription delivering to a host that no longer resolves.
+
 ## Prerequisite: the sending user needs the configuration set on its policy
 
 A configuration set is a resource in its own right, and `ses:SendEmail` is authorized
@@ -60,7 +72,7 @@ its credentials off any deployed environment.
 ```
 cd infra
 terraform init
-terraform apply -var="api_notification_url=https://<the deployed api>/sns/ses"
+terraform apply -var="api_notification_url=https://dispatch-api-xi.vercel.app/sns/ses"
 ```
 
 Then set two values in the api's environment, both printed as outputs:
@@ -69,6 +81,30 @@ Then set two values in the api's environment, both printed as outputs:
 SES_CONFIGURATION_SET=dispatch-events
 SES_EVENTS_TOPIC_ARN=arn:aws:sns:us-east-1:<account>:dispatch-ses-events
 ```
+
+## If the subscription stays pending
+
+`endpoint_auto_confirms = true` makes the provider wait for the endpoint to confirm itself rather
+than returning with a pending subscription. It does not reliably honour `confirmation_timeout_in_minutes`:
+an apply here held the state lock for eleven hours waiting on a confirmation that never arrived,
+and had to be killed by hand before the lock could be cleared.
+
+SNS sends the `SubscriptionConfirmation` once, at `Subscribe` time, and does not retry it. When that
+one delivery is missed the subscription sits unconfirmed until it expires, however healthy the
+endpoint is. Asking SNS to send another costs nothing and does not create a second subscription,
+because a `Subscribe` naming a topic and endpoint that already have a pending subscription resends
+the confirmation for that same subscription and returns the same arn:
+
+```
+aws sns subscribe \
+  --topic-arn arn:aws:sns:us-east-1:<account>:dispatch-ses-events \
+  --protocol https \
+  --notification-endpoint https://dispatch-api-xi.vercel.app/sns/ses
+```
+
+Terraform state stays correct through this, because the arn does not change. Confirm with
+`aws sns list-subscriptions-by-topic`: a confirmed subscription carries a real arn where an
+unconfirmed one carries the literal string `PendingConfirmation`.
 
 ## The subscription stays pending, and that is normal
 
