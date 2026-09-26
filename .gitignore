@@ -11,4 +11,4 @@ dist
 .DS_Store
 .pw-profile/
 .vercel
-apps/api/api
+apps/api/api/server.js
