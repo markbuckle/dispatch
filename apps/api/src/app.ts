@@ -2,6 +2,7 @@ import {
   deliverWebhook,
   fanOutWebhookEvent,
   inngest,
+  purgeRequestLogs,
   recordSesEvent,
   sendEmail,
 } from '@dispatch/core/inngest';
@@ -29,6 +30,6 @@ app.on(
   '/api/inngest',
   serve({
     client: inngest,
-    functions: [sendEmail, fanOutWebhookEvent, deliverWebhook, recordSesEvent],
+    functions: [sendEmail, fanOutWebhookEvent, deliverWebhook, recordSesEvent, purgeRequestLogs],
   }),
 );

@@ -1,4 +1,4 @@
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, inArray, lt } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type NewRequestLog, type RequestLog, requestLogs } from '../schema/request-logs';
 
@@ -26,4 +26,33 @@ export async function listRequestLogsForUser({
     .where(eq(requestLogs.userId, userId))
     .orderBy(desc(requestLogs.createdAt))
     .limit(limit);
+}
+
+export type DeleteRequestLogsBatch = {
+  before: Date;
+  limit: number;
+};
+
+// retention runs as the system rather than on behalf of a request, so there is no owner to match on
+export async function deleteRequestLogsBatch({
+  before,
+  limit,
+}: DeleteRequestLogsBatch): Promise<number> {
+  const db = getDb();
+  // Postgres has no DELETE ... LIMIT, so the bound comes from a subquery
+  const deleted = await db
+    .delete(requestLogs)
+    .where(
+      inArray(
+        requestLogs.id,
+        db
+          .select({ id: requestLogs.id })
+          .from(requestLogs)
+          .where(lt(requestLogs.createdAt, before))
+          .limit(limit),
+      ),
+    )
+    .returning({ id: requestLogs.id });
+
+  return deleted.length;
 }
