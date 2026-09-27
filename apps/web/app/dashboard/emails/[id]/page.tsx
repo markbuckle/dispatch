@@ -1,15 +1,30 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { ReactNode } from 'react';
+import { cache, type ReactNode } from 'react';
 import { CopyButton } from '../../copy-button';
 import { formatUtc } from '../../format-time';
 import { getEmail } from '../actions';
 import { EmailHtml } from '../email-html';
 import { EmailStatusPill } from '../email-status-pill';
 
+// cached so generateMetadata and the page read the row once between them
+const readEmail = cache(async (id: string) => getEmail(id));
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const email = await readEmail(id);
+
+  return { title: email ? `${email.subject} - Dispatch` : 'Email - Dispatch' };
+}
+
 export default async function EmailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const email = await getEmail(id);
+  const email = await readEmail(id);
   if (!email) notFound();
 
   return (
@@ -27,7 +42,7 @@ export default async function EmailPage({ params }: { params: Promise<{ id: stri
         </header>
       </div>
 
-      <dl className="grid grid-cols-2 gap-x-6 gap-y-5 rounded-lg border border-border-default p-5">
+      <dl className="grid grid-cols-1 gap-x-6 gap-y-5 rounded-lg border border-border-default p-5 sm:grid-cols-2">
         <Field label="From">{email.from}</Field>
         <Field label="To">{email.to.join(', ')}</Field>
         <Field label="Created">

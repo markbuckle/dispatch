@@ -21,7 +21,7 @@ function formatDate(value: Date): string {
 
 export function ApiKeysTable({ keys }: { keys: ApiKeySummary[] }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-border-default">
+    <div className="overflow-x-auto rounded-lg border border-border-default">
       <table className="w-full border-collapse text-body">
         <thead className="bg-subtle">
           <tr>
