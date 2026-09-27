@@ -70,13 +70,13 @@ export default function Home() {
       </header>
 
       <main id="main">
-        <section className="mx-auto max-w-marketing px-5 pt-32 pb-24 lg:px-8">
-          <h1 className="dispatch-display-gradient font-serif text-display-2xl">
+        <section className="mx-auto max-w-marketing px-5 pt-24 pb-24 lg:px-8 lg:pt-32">
+          <h1 className="dispatch-display-gradient font-serif text-display-2xl-s sm:text-display-2xl-m lg:text-display-2xl">
             Email for developers
           </h1>
           <p className="mt-6 max-w-reading text-body text-text-secondary">
-            The best way to reach humans instead of spam folders other than Resend.<br></br> A
-            portfolio project to deliver emails like the pros.
+            The best way to reach humans instead of spam folders other than Resend.
+            <br className="hidden lg:inline" /> A portfolio project to deliver emails like the pros.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -116,7 +116,7 @@ export default function Home() {
               </div>
               <ol className="flex flex-1 flex-col justify-center gap-8 overflow-x-auto px-5 py-5">
                 {events.map((event) => (
-                  <li key={event.iso} className="flex items-baseline gap-5">
+                  <li key={event.iso} className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
                     <time
                       dateTime={event.iso}
                       className="font-mono text-mono text-text-muted tabular-nums"
