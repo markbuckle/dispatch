@@ -16,7 +16,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 ## 2. Non-negotiables, in Dispatch terms
 
 1. **No brand accent colour.** The base is monochrome. Blue `#0090FF` is the focus ring and the info state - it is not a brand colour and must never appear as decoration, a gradient, or a hero fill.
-2. **One UI typeface: Inter.** Geist for product display and the wordmark. Commit Mono for anything a developer would copy. Instrument Serif is the marketing hero face, once per page at `display-2xl`, or not at all.
+2. **One UI typeface: Inter.** Geist for product display and the wordmark. Commit Mono for anything a developer would copy. Instrument Serif is the marketing hero face, once per page or not at all. It is the one token with responsive steps: `display-2xl` on desktop, `display-2xl-m` below `lg`, `display-2xl-s` below `sm`. Size is all that changes - see `foundations/typography.md`.
 3. **Dark is the canvas.** `#08080A`. Light mode exists as a mirrored token set for users who ask; never design light-first.
 4. **Sentence case everywhere.** No Title Case. ALL CAPS only in a ≤3-word overline at 12px with +0.06em tracking.
 5. **No hype vocabulary.** Banned: revolutionary, game-changing, 10x, cutting-edge, supercharge, unleash, leverage, transform, synergy, seamless, robust, blazing-fast, AI-powered as a bare adjective.
@@ -35,7 +35,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 | Background | `#08080A` (dark). Marketing sections may use `#0E0E10` for one band, max. |
 | Body size | **16px product**, 16px marketing |
 | Page title, product | **36px** Geist 600, -0.032em |
-| Hero title, marketing | **116px** Instrument Serif 400, -0.02em, `.dispatch-display-gradient` |
+| Hero title, marketing | **116px** Instrument Serif 400, -0.02em, `.dispatch-display-gradient`, stepping to 76px below `lg` and 56px below `sm` |
 | Table row height | **60px**, 20px cell padding, 16px text, 48px header row |
 | Heading case | Sentence case |
 | Primary CTA, product | Light fill `#EDEEF0` on near-black, 9px radius, **42px** tall |
