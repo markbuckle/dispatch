@@ -1,15 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { primaryButton } from './dashboard/button-styles';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from './dashboard/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from './dashboard/dialog';
 
 // Below --breakpoint-lg the 252px sidebar takes a third of the screen before a table starts.
 // A width query, not a device check, so a narrow desktop window is told the same thing.
@@ -17,14 +11,9 @@ const NARROW_VIEWPORT = '(width < 767px)';
 
 // On the auth pages the notice predicts; in the dashboard it describes what is already on screen
 const copy = {
-  auth: {
-    body: 'Its tables run to 6 columns, and the sidebar takes 252px before they start. A phone shows you the sidebar and little else. Signing in works fine either way.',
-    action: 'Continue anyway',
-  },
-  dashboard: {
-    body: 'Its tables run to 6 columns, and the sidebar takes 252px of what you have. Each table scrolls sideways, so a row is still readable one part at a time.',
-    action: 'Close',
-  },
+  auth: 'The dashboard puts your emails, domains, and delivery logs side by side - a desktop-class experience that needs the room only a laptop or larger screen can give. Head over to your computer and open this page there to sign in and run Dispatch.',
+  dashboard:
+    'The dashboard puts your emails, domains, and delivery logs side by side - a desktop-class experience that needs the room only a laptop or larger screen can give. Head over to your computer and open this page there to run Dispatch.',
 } as const;
 
 // Storage is unavailable in some private browsing modes, and a notice is not worth throwing over
@@ -74,15 +63,22 @@ export function DesktopNotice({ surface }: { surface: keyof typeof copy }) {
     // there is no originating control to go back to, which is expected here and not a bug
     <Dialog open={isNarrow && !isDismissed} onOpenChange={handleOpenChange}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>The dashboard needs a wider screen</DialogTitle>
-          <DialogDescription>{copy[surface].body}</DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <button type="button" onClick={() => handleOpenChange(false)} className={primaryButton}>
-            {copy[surface].action}
-          </button>
-        </DialogFooter>
+        {/* the two sanctioned marketing devices, reused so the lighting is not hand-rolled */}
+        <span aria-hidden="true" className="dispatch-glow absolute inset-x-0 top-0 h-32" />
+        <span aria-hidden="true" className="dispatch-rule absolute inset-x-0 top-0 h-px" />
+        <div className="relative flex flex-col items-center gap-4 px-6 py-9 text-center">
+          <span className="text-overline text-text-secondary uppercase">Best on desktop</span>
+          <DialogTitle className="font-serif text-display-s-serif text-text-primary">
+            Dispatch&apos;s dashboard is built for your laptop only
+          </DialogTitle>
+          <DialogDescription className="text-body text-text-secondary">
+            {copy[surface]}
+          </DialogDescription>
+          {/* the close control still dismisses in place, so this is the way out and not the only way on */}
+          <Link href="/" className={`${primaryButton} mt-2`}>
+            Got it
+          </Link>
+        </div>
       </DialogContent>
     </Dialog>
   );

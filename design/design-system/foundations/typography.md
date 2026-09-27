@@ -7,7 +7,7 @@ Four faces, each with one job. **Inter does almost all the work.**
 | **Inter** | The entire product UI, and marketing body copy | Extracted: every button, link and caption on the reference resolves to Inter |
 | **Geist** | Marketing display and the wordmark | Display sizes only - never below 24px |
 | **Commit Mono** | API keys, IDs, code, DNS records, HTML in the compatibility checker | Free (SIL OFL), self-hosted. Falls back to Geist Mono. |
-| **Instrument Serif** | The marketing hero title, and nothing else | Once per page, or not at all. The product never uses it. One weight only, 400. |
+| **Instrument Serif** | The marketing hero title, and the desktop notice | Once per page, or not at all. One weight only, 400. |
 
 ## The scale
 
@@ -20,6 +20,7 @@ Four faces, each with one job. **Inter does almost all the work.**
 | `display-l` | 56px | 500 | 1.05 | -0.03em | Geist |
 | `display-m` | 36px | 500 | 1.10 | -0.025em | Geist |
 | `display-s` | 28px | 500 | 1.15 | -0.02em | Geist |
+| `display-s-serif` | 28px | **400** | 1.15 | -0.02em | Instrument Serif |
 | `h1` | **36px** | 600 | 1.15 | -0.032em | Geist |
 | `h2` | 24px | 600 | 1.25 | -0.02em | Inter |
 | `h3` | 20px | 600 | 1.30 | -0.015em | Inter |
@@ -96,6 +97,8 @@ One per page, and only on marketing. The recipe:
 - `.dispatch-display-gradient` runs `text-primary` down to `text-secondary`, holding solid to 45% so the top half stays bright. Defined in `tokens/tokens.css`.
 - The element stays a real `h1`. The gradient works by painting transparent text over a clipped background, so the text itself is still there for a screen reader and for select-and-copy.
 - Sentence case, like every other heading. One line if it fits, two at the outside.
+
+**The serif has one product use.** `DesktopNotice` sets its title in Instrument Serif at `display-s-serif`, 28px at 400. The dialog is a marketing-shaped interruption that happens to render over the product, and it is the one surface whose job is to send the reader away, so it is allowed to look like the landing page rather than the dashboard. Nothing else in the product takes the serif.
 
 At 116px in a 1200px container this holds one line up to roughly 20 characters. Past that it wraps, which is fine - wrapping is never a reason to shrink the token. A word wider than the viewport is a different problem, and the two steps above are the answer to it.
 

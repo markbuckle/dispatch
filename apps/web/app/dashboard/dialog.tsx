@@ -21,7 +21,7 @@ export function DialogContent({
 
   return (
     <RadixDialog.Portal>
-      <RadixDialog.Overlay className="dispatch-scrim-enter fixed inset-0 z-50 bg-scrim" />
+      <RadixDialog.Overlay className="dispatch-scrim-enter fixed inset-0 z-50 bg-scrim backdrop-blur-scrim" />
       <RadixDialog.Content
         onInteractOutside={onInteractOutside}
         className={`dispatch-dialog-enter fixed top-1/2 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-lg border border-border-strong bg-subtle shadow-overlay outline-none ${bounds}`}
