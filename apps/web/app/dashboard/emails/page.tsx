@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import { EmptyState } from '../empty-state';
 import { listEmails } from './actions';
 import { EmailsTable } from './emails-table';
+
+export const metadata: Metadata = {
+  title: 'Emails - Dispatch',
+};
 
 export default async function EmailsPage() {
   const emails = await listEmails();

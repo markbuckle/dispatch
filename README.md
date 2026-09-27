@@ -22,7 +22,7 @@ applications. See `CLAUDE.md` for engineering rules and
 | 11 | Metrics and Logs | done |
 | 12 | Settings and Profile | done |
 | 13 | Deployment: both apps live, env verified, SNS on a permanent endpoint | done |
-| 14 | Polish, Playwright E2E, request log retention, case study writeup | |
+| 14 | Polish, Playwright E2E, request log retention, case study writeup | in progress |
 
 ## Architecture
 

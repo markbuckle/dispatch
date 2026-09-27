@@ -1,8 +1,13 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { primaryButton } from '../button-styles';
 import { EmptyState } from '../empty-state';
 import { listTemplates } from './actions';
 import { TemplatesTable } from './templates-table';
+
+export const metadata: Metadata = {
+  title: 'Templates - Dispatch',
+};
 
 export default async function TemplatesPage() {
   const templates = await listTemplates();

@@ -20,7 +20,7 @@ type DnsRecordsButtonProps = Pick<Domain, 'name' | 'dkimTokens' | 'dkimHostedZon
 export function DnsRecordsButton({ name, dkimTokens, dkimHostedZone }: DnsRecordsButtonProps) {
   return (
     <Dialog>
-      <DialogTrigger className={smallButton}>DNS records</DialogTrigger>
+      <DialogTrigger className={smallButton}>Show records</DialogTrigger>
       <DialogContent size="wide">
         <DialogHeader>
           <DialogTitle>DNS records for {name}</DialogTitle>
@@ -32,7 +32,7 @@ export function DnsRecordsButton({ name, dkimTokens, dkimHostedZone }: DnsRecord
           <DnsRecords name={name} dkimTokens={dkimTokens} dkimHostedZone={dkimHostedZone} />
         </DialogBody>
         <DialogFooter>
-          <DialogClose className={primaryButton}>Done</DialogClose>
+          <DialogClose className={primaryButton}>Close</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

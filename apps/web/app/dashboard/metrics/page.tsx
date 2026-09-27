@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { EmptyState } from '../empty-state';
 import { type EmailEventType, eventLabels } from '../event-labels';
 import { getMetrics } from './actions';
@@ -26,15 +27,26 @@ function windowDays(days: number): string[] {
   });
 }
 
+export const metadata: Metadata = {
+  title: 'Metrics - Dispatch',
+};
+
 export default async function MetricsPage() {
   const { days, totals, daily } = await getMetrics();
 
   if (totals.length === 0) {
     return (
-      <EmptyState
-        title="No metrics yet"
-        body="Send an email and its delivery, bounces and complaints show up here."
-      />
+      <div className="flex flex-col gap-6 p-6">
+        <header>
+          <h1 className="font-display text-h1 text-text-primary">Metrics</h1>
+        </header>
+        <div className="rounded-lg border border-border-default">
+          <EmptyState
+            title="No metrics yet"
+            body="Send an email and its delivery, bounces, and complaints show up here."
+          />
+        </div>
+      </div>
     );
   }
 

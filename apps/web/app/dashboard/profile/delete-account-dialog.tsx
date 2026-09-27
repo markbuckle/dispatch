@@ -11,6 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '../dialog';
 import { fieldLabel, inputField } from '../field-styles';
 import { deleteAccount } from './actions';
@@ -45,14 +46,12 @@ export function DeleteAccountDialog({ email }: { email: string }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <button type="button" onClick={() => setIsOpen(true)} className={`${dangerButton} w-max`}>
-        Delete account
-      </button>
+      <DialogTrigger className={`${dangerButton} w-max`}>Delete account</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete your account?</DialogTitle>
           <DialogDescription>
-            Every domain, API key, template and email goes with it. Dispatch cannot bring any of it
+            Every domain, API key, template, and email goes with it. Dispatch cannot bring any of it
             back.
           </DialogDescription>
         </DialogHeader>

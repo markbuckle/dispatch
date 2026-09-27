@@ -33,7 +33,6 @@ const events = [
   },
 ];
 
-const navLink = 'dispatch-transition text-body text-text-secondary hover:text-text-primary';
 const footerLink = 'dispatch-transition text-meta text-text-secondary hover:text-text-primary';
 const overline = 'text-overline text-text-muted uppercase';
 
@@ -48,15 +47,9 @@ export default function Home() {
       </a>
 
       <header className="sticky top-0 z-10 bg-canvas">
-        <nav className="relative mx-auto flex h-16 max-w-marketing items-center px-5 lg:px-8">
+        <nav className="mx-auto flex h-16 max-w-marketing items-center px-5 lg:px-8">
           <a href="/" aria-label="Dispatch home">
             <Lockup />
-          </a>
-          <a
-            href="#features"
-            className={`-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 hidden md:block ${navLink}`}
-          >
-            Features
           </a>
           <div className="ml-auto flex items-center gap-2">
             <a
@@ -92,12 +85,6 @@ export default function Home() {
               className="dispatch-transition dispatch-cta flex items-center rounded-2xl px-4 py-2 text-body font-medium"
             >
               Get an API key
-            </a>
-            <a
-              href="/docs"
-              className="dispatch-transition flex h-control-lg items-center rounded-chip px-5 text-body font-medium text-text-secondary hover:bg-subtle hover:text-text-primary"
-            >
-              Read the docs
             </a>
           </div>
 
@@ -161,20 +148,13 @@ export default function Home() {
         <div className="relative mx-auto flex max-w-marketing flex-wrap items-center gap-x-8 gap-y-4 px-5 pt-16 pb-16 lg:px-8">
           <Mark />
           <div className="flex items-center gap-6">
-            <a href="/docs" className={footerLink}>
-              Docs
-            </a>
-            <a href="/changelog" className={footerLink}>
-              Changelog
+            <a href="/terms" className={footerLink}>
+              Terms
             </a>
             <a href="/privacy" className={footerLink}>
               Privacy
             </a>
           </div>
-          <a href="/status" className={`flex items-center gap-2 ${footerLink}`}>
-            <span className="size-2 rounded-full bg-success-fg" aria-hidden="true" />
-            All systems operational
-          </a>
           <span className="ml-auto text-caption text-text-muted">© 2026 Dispatch</span>
         </div>
       </footer>

@@ -53,7 +53,7 @@ export function ForgotPasswordForm() {
                 autoComplete="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
               />
             </div>
 
@@ -64,7 +64,7 @@ export function ForgotPasswordForm() {
               disabled={submitting}
               className="dispatch-transition flex h-control items-center justify-center rounded-md bg-text-primary text-body font-medium text-text-inverse outline-none hover:bg-white focus-visible:shadow-focus active:bg-[#C8CACD] disabled:cursor-not-allowed disabled:bg-border-default disabled:text-text-muted"
             >
-              {submitting ? 'Sending...' : 'Send reset link'}
+              {submitting ? 'Sending' : 'Send reset link'}
             </button>
           </form>
         )}

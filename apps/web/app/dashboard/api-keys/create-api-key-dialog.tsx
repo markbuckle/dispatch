@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../dialog';
+import { fieldLabel, inputField } from '../field-styles';
 import { createApiKey } from './actions';
 import { type ApiKeyPermission, permissionLabels, permissionOptions } from './permissions';
 
@@ -79,7 +80,7 @@ export function CreateApiKeyDialog() {
               </div>
             </DialogBody>
             <DialogFooter>
-              <DialogClose className={primaryButton}>Done</DialogClose>
+              <DialogClose className={primaryButton}>Close</DialogClose>
             </DialogFooter>
           </>
         ) : (
@@ -93,7 +94,7 @@ export function CreateApiKeyDialog() {
             <DialogBody>
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col gap-[7px]">
-                  <label htmlFor={nameId} className="text-caption font-medium text-text-secondary">
+                  <label htmlFor={nameId} className={fieldLabel}>
                     Name
                   </label>
                   <input
@@ -103,7 +104,7 @@ export function CreateApiKeyDialog() {
                     placeholder="Production server"
                     maxLength={40}
                     autoComplete="off"
-                    className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+                    className={inputField}
                   />
                 </div>
 

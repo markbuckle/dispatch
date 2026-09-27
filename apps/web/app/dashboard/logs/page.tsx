@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import { EmptyState } from '../empty-state';
 import { listLogs } from './actions';
 import { LogsTable } from './logs-table';
+
+export const metadata: Metadata = {
+  title: 'Logs - Dispatch',
+};
 
 export default async function LogsPage() {
   const logs = await listLogs();

@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { getUsage } from './actions';
+
+export const metadata: Metadata = {
+  title: 'Usage - Dispatch',
+};
 
 export default async function UsagePage() {
   const usage = await getUsage();

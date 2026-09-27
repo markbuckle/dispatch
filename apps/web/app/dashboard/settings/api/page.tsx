@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { API_BASE_URL } from '../../../../lib/api-url';
 import { CopyButton } from '../../copy-button';
@@ -13,6 +14,10 @@ const sendRequest = String.raw`curl -X POST ${API_BASE_URL}/v1/emails \
     "subject": "Your receipt",
     "html": "<p>Thanks for your order.</p>"
   }'`;
+
+export const metadata: Metadata = {
+  title: 'API - Dispatch',
+};
 
 export default function ApiSettingsPage() {
   return (

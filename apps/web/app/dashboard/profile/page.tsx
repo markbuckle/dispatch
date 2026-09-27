@@ -1,9 +1,14 @@
+import type { Metadata } from 'next';
 import { primaryButton } from '../button-styles';
 import { getProfile } from './actions';
 import { ChangePasswordForm } from './change-password-form';
 import { DeleteAccountDialog } from './delete-account-dialog';
 import { DisplayNameForm } from './display-name-form';
 import { EmailForm } from './email-form';
+
+export const metadata: Metadata = {
+  title: 'Profile - Dispatch',
+};
 
 export default async function ProfilePage() {
   const profile = await getProfile();
@@ -48,7 +53,7 @@ export default async function ProfilePage() {
         <h2 className="text-meta font-medium text-text-secondary">Danger zone</h2>
         <div className="flex flex-col gap-4 rounded-lg border border-danger-edge p-5">
           <p className="text-body text-text-secondary">
-            Deleting your account removes every domain, API key, template and email it owns. Your
+            Deleting your account removes every domain, API key, template, and email it owns. Your
             request logs stay, with the account detached from them. This cannot be undone.
           </p>
           <DeleteAccountDialog email={profile.email} />

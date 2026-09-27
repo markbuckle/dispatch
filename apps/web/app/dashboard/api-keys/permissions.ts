@@ -8,6 +8,6 @@ export const permissionLabels: Record<ApiKeyPermission, string> = {
 };
 
 export const permissionOptions: { value: ApiKeyPermission; description: string }[] = [
-  { value: 'full_access', description: 'Send email, and manage domains, templates and keys.' },
+  { value: 'full_access', description: 'Send email, and manage domains, templates, and keys.' },
   { value: 'sending_access', description: 'Send email. Nothing else.' },
 ];

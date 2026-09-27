@@ -10,6 +10,7 @@
 | `ring` | `inset 0 0 0 1px rgba(255,255,255,0.03)` | Cards, panels. Pairs with `border-default`. |
 | `overlay` | `0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)` | Dropdowns, dialogs, popovers, toasts. **The only permitted drop shadow.** |
 | `focus` | `0 0 0 2px var(--canvas), 0 0 0 4px #0090FF` | Focus ring on any interactive element |
+| `focus-field` | `0 0 0 3px rgba(0,144,255,0.22)` | Text inputs, textareas and selects, paired with a border that moves to `accent`. The offset ring would sit outside that border and read as two rings. |
 
 ## The three elevation levels
 
@@ -26,11 +27,12 @@ There is no level 3.
 ## Rules
 
 1. **Default is `none`.** If you're adding a shadow, justify it.
-2. **Hover changes the border, not the shadow.** `border-default` → `border-strong`, or `surface` → `hover`. Never animate a shadow on hover.
-3. **`overlay` only for things that actually overlay.** A card is not an overlay. A table is not an overlay.
-4. **No coloured shadows.** No green glow on a success toast, no red on an error dialog.
-5. **No inner shadows** beyond the 4% `ring` highlight. No inset bevels on inputs, no pressed-in fields.
-6. **No glow, no bloom, no ambient light.** If the design needs the eye pulled somewhere, use contrast or position.
+2. **A focus wash is for fields only.** Everything else that takes focus takes `focus`.
+3. **Hover changes the border, not the shadow.** `border-default` → `border-strong`, or `surface` → `hover`. Never animate a shadow on hover.
+4. **`overlay` only for things that actually overlay.** A card is not an overlay. A table is not an overlay.
+5. **No coloured shadows.** No green glow on a success toast, no red on an error dialog.
+6. **No inner shadows** beyond the 4% `ring` highlight. No inset bevels on inputs, no pressed-in fields.
+7. **No glow, no bloom, no ambient light.** If the design needs the eye pulled somewhere, use contrast or position.
 
 ## Why
 
