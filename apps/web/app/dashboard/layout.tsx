@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { DesktopNotice } from '../desktop-notice';
 import { ProfileButton } from './profile-button';
 import { SidebarNav } from './sidebar-nav';
 import { TopBar } from './top-bar';
@@ -18,6 +19,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <TopBar />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
+      <DesktopNotice surface="dashboard" />
     </div>
   );
 }
