@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { AuthCard, type AuthNotice } from '../auth-card';
+import { DesktopNotice } from '../desktop-notice';
 
 export const metadata: Metadata = {
   title: 'Log in - Dispatch',
@@ -18,5 +19,10 @@ export default async function LoginPage({
 }: {
   searchParams: Promise<{ deleted?: string; error?: string }>;
 }) {
-  return <AuthCard mode="login" notice={readNotice(await searchParams)} />;
+  return (
+    <>
+      <AuthCard mode="login" notice={readNotice(await searchParams)} />
+      <DesktopNotice surface="auth" />
+    </>
+  );
 }

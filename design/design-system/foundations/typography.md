@@ -7,17 +7,20 @@ Four faces, each with one job. **Inter does almost all the work.**
 | **Inter** | The entire product UI, and marketing body copy | Extracted: every button, link and caption on the reference resolves to Inter |
 | **Geist** | Marketing display and the wordmark | Display sizes only - never below 24px |
 | **Commit Mono** | API keys, IDs, code, DNS records, HTML in the compatibility checker | Free (SIL OFL), self-hosted. Falls back to Geist Mono. |
-| **Instrument Serif** | The marketing hero title, and nothing else | Once per page, or not at all. The product never uses it. One weight only, 400. |
+| **Instrument Serif** | The marketing hero title, and the desktop notice | Once per page, or not at all. One weight only, 400. |
 
 ## The scale
 
 | Token | Size | Weight | Line height | Tracking | Face |
 |---|---|---|---|---|---|
 | `display-2xl` | **116px** | **400** | 1.00 | -0.02em | Instrument Serif |
+| `display-2xl-m` | 76px | **400** | 1.00 | -0.02em | Instrument Serif |
+| `display-2xl-s` | 56px | **400** | 1.00 | -0.02em | Instrument Serif |
 | `display-xl` | 76px | 500 | 1.00 | -0.02em | Geist |
 | `display-l` | 56px | 500 | 1.05 | -0.03em | Geist |
 | `display-m` | 36px | 500 | 1.10 | -0.025em | Geist |
 | `display-s` | 28px | 500 | 1.15 | -0.02em | Geist |
+| `display-s-serif` | 28px | **400** | 1.15 | -0.02em | Instrument Serif |
 | `h1` | **36px** | 600 | 1.15 | -0.032em | Geist |
 | `h2` | 24px | 600 | 1.25 | -0.02em | Inter |
 | `h3` | 20px | 600 | 1.30 | -0.015em | Inter |
@@ -58,7 +61,7 @@ This is the single most important typographic behaviour in the system, and it's 
 2. **Three sizes per screen, maximum.** A dashboard screen is typically `h1` + `body` + `caption`. If you need a fourth, you probably need a different layout.
 3. **Line length 60–80 characters** for body copy. `--container-reading: 680px` at 16px lands in that band.
 4. **Weights: 400, 500, 600.** 400 body, 500 UI labels and captions, 600 headings. **700 is not in the system** - on a dark canvas, 600 already reads heavier than it would on white.
-4b. **Never let the browser synthesise a weight.** `display-2xl` is declared at 400 because Instrument Serif ships nothing heavier. Asking for 500 or 600 makes the engine fake it, which thickens the hairlines along with the stems and destroys the stroke contrast that is the whole reason for the face. If a display title needs more weight, it needs a different face, not a bolder number.
+4b. **Never let the browser synthesise a weight.** `display-2xl` and its two steps are declared at 400 because Instrument Serif ships nothing heavier. Asking for 500 or 600 makes the engine fake it, which thickens the hairlines along with the stems and destroys the stroke contrast that is the whole reason for the face. If a display title needs more weight, it needs a different face, not a bolder number.
 5. **No italics in the product UI.** Instrument Serif italic is allowed for a single marketing pull quote.
 6. **No text shadow. Ever.**
 7. **Tabular numerals for anything in a column.** `font-variant-numeric: tabular-nums` on timestamps, counts, durations, status codes, byte sizes. Proportional digits make a column of numbers unscannable.
@@ -84,15 +87,20 @@ This is the single most important typographic behaviour in the system, and it's 
 One per page, and only on marketing. The recipe:
 
 ```html
-<h1 class="dispatch-display-gradient font-serif text-display-2xl">Email for developers</h1>
+<h1 class="dispatch-display-gradient font-serif text-display-2xl-s sm:text-display-2xl-m lg:text-display-2xl">
+  Email for developers
+</h1>
 ```
 
 - `display-2xl` is 116px / 1.00 / -0.02em / 400, set in Instrument Serif.
+- **Scoped exception, the only one in the type system: the hero has three sizes.** `display-2xl` is the desktop size. `display-2xl-m` at 76px takes over below `lg`, and `display-2xl-s` at 56px below `sm`. Face, weight, line height and tracking are identical across all three - **size is the only thing that changes**, so the once-per-page serif rule holds at every breakpoint and nothing else about the hero is relaxed. The steps exist because a single unbreakable word at 116px is wider than a phone: "developers" needs about 500px and a 375px viewport offers 335px, so the page itself scrolls sideways. No other token in the scale steps.
 - `.dispatch-display-gradient` runs `text-primary` down to `text-secondary`, holding solid to 45% so the top half stays bright. Defined in `tokens/tokens.css`.
 - The element stays a real `h1`. The gradient works by painting transparent text over a clipped background, so the text itself is still there for a screen reader and for select-and-copy.
 - Sentence case, like every other heading. One line if it fits, two at the outside.
 
-At 116px in a 1200px container this holds one line up to roughly 20 characters. Past that it wraps, which is fine - it is not a reason to shrink the token.
+**The serif has one product use.** `DesktopNotice` sets its title in Instrument Serif at `display-s-serif`, 28px at 400. The dialog is a marketing-shaped interruption that happens to render over the product, and it is the one surface whose job is to send the reader away, so it is allowed to look like the landing page rather than the dashboard. Nothing else in the product takes the serif.
+
+At 116px in a 1200px container this holds one line up to roughly 20 characters. Past that it wraps, which is fine - wrapping is never a reason to shrink the token. A word wider than the viewport is a different problem, and the two steps above are the answer to it.
 
 ## Loading
 
