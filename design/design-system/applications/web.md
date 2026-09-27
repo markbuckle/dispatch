@@ -87,15 +87,17 @@ Opens with a full-bleed `.dispatch-glow` at 160px, then `.dispatch-rule` on top 
 
 ## Responsive
 
-| Breakpoint | Behaviour |
-|---|---|
-| < 480 | Single column, 20px gutters, sidebar becomes a bottom sheet, tables become stacked cards |
-| 480–600 | Single column, 24px gutters |
-| 600–767 | Two-up cards, sidebar collapses to 56px |
-| 767–1024 | Sidebar expanded, tables scroll horizontally |
-| > 1024 | Full layout, 1200px max marketing |
+**Scope, decided:** the marketing surface and the auth pages are responsive down to 375px. The product is desktop-only, and tells a narrow viewport so rather than degrading. The rows below the `lg` breakpoint therefore describe marketing only; the bottom sheet and the stacked-card table are not built.
 
-**Tables on mobile:** never squeeze columns. Either scroll horizontally with the first column pinned, or restructure each row into a card with the status pill top-right.
+| Breakpoint | Marketing | Product |
+|---|---|---|
+| < 480 | Single column, 20px gutters | Not supported, notice shown |
+| 480–600 | Single column, 24px gutters | Not supported, notice shown |
+| 600–767 | Two-up cards | Not supported, notice shown |
+| 767–1024 | Two-up cards, 32px gutters | Sidebar expanded, tables scroll horizontally |
+| > 1024 | Full layout, 1200px max | Full layout, fluid content |
+
+**Tables:** never squeeze columns. Scroll the table horizontally inside its own border, which is what the product does above `lg`. Restructuring a row into a card is the other sanctioned answer and is deliberately not used here - see the mobile scope decision in the root `CLAUDE.md`.
 
 ## Accessibility
 
