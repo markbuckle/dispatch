@@ -141,7 +141,7 @@ export function AuthCard({ mode, notice: urlNotice }: { mode: Mode; notice?: Aut
               autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+              className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
             />
           </div>
 
@@ -167,7 +167,7 @@ export function AuthCard({ mode, notice: urlNotice }: { mode: Mode; notice?: Aut
               autoComplete={isSignup ? 'new-password' : 'current-password'}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+              className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
             />
             {isSignup && (
               <span className="text-caption text-text-muted">At least 12 characters.</span>
@@ -184,8 +184,8 @@ export function AuthCard({ mode, notice: urlNotice }: { mode: Mode; notice?: Aut
           >
             {submitting
               ? isSignup
-                ? 'Creating account...'
-                : 'Logging in...'
+                ? 'Creating account'
+                : 'Logging in'
               : isSignup
                 ? 'Create account'
                 : 'Log in'}

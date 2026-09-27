@@ -1,18 +1,17 @@
+import type { Metadata } from 'next';
 import { isFeatureEnabled, WEBHOOKS } from '../../../lib/flags/is-feature-enabled';
 import { EmptyState } from '../empty-state';
 import { listWebhooks } from './actions';
 import { CreateWebhookDialog } from './create-webhook-dialog';
+import { WebhooksDisabled } from './webhooks-disabled';
 import { WebhooksTable } from './webhooks-table';
 
+export const metadata: Metadata = {
+  title: 'Webhooks - Dispatch',
+};
+
 export default async function WebhooksPage() {
-  if (!(await isFeatureEnabled(WEBHOOKS))) {
-    return (
-      <EmptyState
-        title="No webhooks yet"
-        body="Webhook signing and retries haven't shipped. You'll configure an endpoint here once they do."
-      />
-    );
-  }
+  if (!(await isFeatureEnabled(WEBHOOKS))) return <WebhooksDisabled />;
 
   const webhooks = await listWebhooks();
 

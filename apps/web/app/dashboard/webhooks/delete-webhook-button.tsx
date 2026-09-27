@@ -11,6 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '../dialog';
 import { deleteWebhook } from './actions';
 
@@ -37,9 +38,7 @@ export function DeleteWebhookButton({ id, url }: { id: string; url: string }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <button type="button" onClick={() => setIsOpen(true)} className={smallButton}>
-        Delete
-      </button>
+      <DialogTrigger className={smallButton}>Delete</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete this endpoint?</DialogTitle>

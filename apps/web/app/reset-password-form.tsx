@@ -69,7 +69,7 @@ export function ResetPasswordForm() {
                 autoComplete="new-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
               />
               <span className="text-caption text-text-muted">At least 12 characters.</span>
             </div>
@@ -89,7 +89,7 @@ export function ResetPasswordForm() {
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
-                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
               />
             </div>
 
@@ -100,7 +100,7 @@ export function ResetPasswordForm() {
               disabled={submitting}
               className="dispatch-transition flex h-control items-center justify-center rounded-md bg-text-primary text-body font-medium text-text-inverse outline-none hover:bg-white focus-visible:shadow-focus active:bg-[#C8CACD] disabled:cursor-not-allowed disabled:bg-border-default disabled:text-text-muted"
             >
-              {submitting ? 'Saving...' : 'Save new password'}
+              {submitting ? 'Saving' : 'Save new password'}
             </button>
           </form>
         )}

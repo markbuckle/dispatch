@@ -70,6 +70,8 @@
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
   --dispatch-focus:   0 0 0 2px var(--dispatch-canvas), 0 0 0 4px var(--dispatch-accent);
+  /* A field signals focus on its own border, so it takes a wash tight to the edge rather than the offset ring. */
+  --dispatch-focus-field: 0 0 0 3px rgba(0,144,255,0.22);
 }
 
 [data-theme="light"] {
@@ -106,6 +108,7 @@
 
   --dispatch-ring:    inset 0 1px 0 rgba(0,0,0,0.02);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
+  --dispatch-focus-field: 0 0 0 3px rgba(13,116,206,0.22);
 }
 
 /* ── Tailwind v4 theme ───────────────────────────────────────────── */
@@ -203,6 +206,7 @@
   --shadow-ring:    var(--dispatch-ring);
   --shadow-overlay: var(--dispatch-overlay);
   --shadow-focus:   var(--dispatch-focus);
+  --shadow-focus-field: var(--dispatch-focus-field);
 
   --ease-out:      cubic-bezier(0, 0, 0.2, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
@@ -340,6 +344,8 @@ a:hover { color: var(--dispatch-text-primary); }
 
 @keyframes dispatch-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.5 } }
 @keyframes dispatch-spin { to { transform: rotate(360deg) } }
+
+.dispatch-skeleton { animation: dispatch-pulse 1200ms ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

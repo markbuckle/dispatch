@@ -7,7 +7,7 @@ export function LogsTable({ logs }: { logs: RequestLog[] }) {
   const now = Date.now();
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border-default">
+    <div className="overflow-x-auto rounded-lg border border-border-default">
       <table className="w-full border-collapse text-body">
         <thead className="bg-subtle">
           <tr>
@@ -34,7 +34,7 @@ export function LogsTable({ logs }: { logs: RequestLog[] }) {
                 <StatusPill status={log.status} />
               </td>
               <td className="h-row px-5 align-middle text-text-secondary tabular-nums">
-                {log.durationMs} ms
+                {log.durationMs}ms
               </td>
               <td className="h-row px-5 align-middle text-text-muted">
                 <time dateTime={log.createdAt.toISOString()} title={formatUtc(log.createdAt)}>

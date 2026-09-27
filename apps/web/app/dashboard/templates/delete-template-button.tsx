@@ -11,6 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '../dialog';
 import { removeTemplate } from './actions';
 
@@ -43,9 +44,7 @@ export function DeleteTemplateButton({ id, name }: { id: string; name: string })
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <button type="button" onClick={() => setIsOpen(true)} className={smallButton}>
-        Delete
-      </button>
+      <DialogTrigger className={smallButton}>Delete</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete {name}?</DialogTitle>

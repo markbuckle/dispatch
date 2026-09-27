@@ -1,7 +1,12 @@
+import type { Metadata } from 'next';
 import { EmptyState } from '../empty-state';
 import { listApiKeys } from './actions';
 import { ApiKeysTable } from './api-keys-table';
 import { CreateApiKeyDialog } from './create-api-key-dialog';
+
+export const metadata: Metadata = {
+  title: 'API keys - Dispatch',
+};
 
 export default async function ApiKeysPage() {
   const keys = await listApiKeys();

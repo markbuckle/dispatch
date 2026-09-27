@@ -11,6 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '../dialog';
 import { removeDomain } from './actions';
 
@@ -43,9 +44,7 @@ export function RemoveDomainButton({ id, name }: { id: string; name: string }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <button type="button" onClick={() => setIsOpen(true)} className={smallButton}>
-        Remove
-      </button>
+      <DialogTrigger className={smallButton}>Remove</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Remove {name}?</DialogTitle>

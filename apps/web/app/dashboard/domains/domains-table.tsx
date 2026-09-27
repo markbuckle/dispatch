@@ -10,7 +10,7 @@ export function DomainsTable({ domains }: { domains: Domain[] }) {
   const now = Date.now();
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border-default">
+    <div className="overflow-x-auto rounded-lg border border-border-default">
       <table className="w-full border-collapse text-body">
         <thead className="bg-subtle">
           <tr>

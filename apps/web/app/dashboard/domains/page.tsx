@@ -1,9 +1,14 @@
 import { isDomainUnsettled } from '@dispatch/db';
+import type { Metadata } from 'next';
 import { EmptyState } from '../empty-state';
 import { listDomains } from './actions';
 import { AddDomainDialog } from './add-domain-dialog';
 import { DomainsPoller } from './domains-poller';
 import { DomainsTable } from './domains-table';
+
+export const metadata: Metadata = {
+  title: 'Domains - Dispatch',
+};
 
 export default async function DomainsPage() {
   const domains = await listDomains();

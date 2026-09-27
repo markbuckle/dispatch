@@ -48,7 +48,7 @@ If a surface instead produces *"what does this actually do?"* or *"who is this f
 
 ## Grammar and house style
 
-- **Sentence case** for every heading, button, label, nav item, and table header.
+- **Sentence case** for every heading, button, label, nav item, and table header. The one exception is the title of a document that exists as a document - Terms of Service, Privacy Policy - which keeps the capitals it is published under.
 - **Oxford comma:** yes.
 - **Em dashes:** avoid. Use a comma, a colon, or a full stop.
 - **Exclamation marks:** never in the product. Once a year in marketing, maybe.

@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../dialog';
+import { fieldLabel, inputField } from '../field-styles';
 import { createDomain } from './actions';
 import { DnsRecords } from './dns-records';
 
@@ -62,7 +63,7 @@ export function AddDomainDialog() {
               <DialogTitle>Add these records to your DNS</DialogTitle>
               <DialogDescription>
                 Add each one as a CNAME record. SES verifies {addedDomain.name} once it finds all 3.
-                You can open them again from DNS records in the domains table.
+                You can open them again from the domains table.
               </DialogDescription>
             </DialogHeader>
             <DialogBody>
@@ -73,7 +74,7 @@ export function AddDomainDialog() {
               />
             </DialogBody>
             <DialogFooter>
-              <DialogClose className={primaryButton}>Done</DialogClose>
+              <DialogClose className={primaryButton}>Close</DialogClose>
             </DialogFooter>
           </>
         ) : (
@@ -86,7 +87,7 @@ export function AddDomainDialog() {
             </DialogHeader>
             <DialogBody>
               <div className="flex flex-col gap-[7px]">
-                <label htmlFor={nameId} className="text-caption font-medium text-text-secondary">
+                <label htmlFor={nameId} className={fieldLabel}>
                   Domain
                 </label>
                 <input
@@ -96,7 +97,7 @@ export function AddDomainDialog() {
                   placeholder="mail.harborline.co"
                   autoComplete="off"
                   spellCheck={false}
-                  className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]"
+                  className={inputField}
                 />
                 {error && <p className="text-caption text-danger-fg">{error}</p>}
               </div>

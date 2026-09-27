@@ -11,6 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '../dialog';
 import { revokeApiKey } from './actions';
 
@@ -37,9 +38,7 @@ export function RevokeApiKeyButton({ id, keyPrefix }: { id: string; keyPrefix: s
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <button type="button" onClick={() => setIsOpen(true)} className={smallButton}>
-        Revoke
-      </button>
+      <DialogTrigger className={smallButton}>Revoke</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
