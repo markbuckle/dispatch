@@ -14,7 +14,8 @@ test('an api key is revealed once and can be revoked', async ({ page }) => {
   await expect(dialog.getByRole('heading', { name: 'API key created' })).toBeVisible();
   const key = await dialog.getByText(/^dispatch_(live|test)_/).innerText();
   expect(key).toMatch(/^dispatch_(live|test)_\S{20,}$/);
-  await dialog.getByRole('button', { name: 'Close' }).click();
+  // by its text, because the corner icon button is also labelled Close
+  await dialog.getByText('Close', { exact: true }).click();
 
   // the reveal is the only time the full key exists outside its hash
   await page.reload();
