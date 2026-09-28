@@ -12,6 +12,8 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   // no retries, so a flaky test fails loudly instead of passing on its second attempt
   retries: 0,
+  // a route's first hit is a dev compile locally and a cold start on a preview, both past the 5s default
+  expect: { timeout: 15_000 },
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
     ...devices['Desktop Chrome'],
