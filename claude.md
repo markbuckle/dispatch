@@ -145,6 +145,8 @@ What it deliberately does not cover:
 2. `pnpm --filter @dispatch/e2e exec playwright install chromium` once per machine.
 3. Start the web app with `pnpm start`, then run `pnpm e2e`. It targets `http://localhost:3000` unless `E2E_BASE_URL` says otherwise.
 
+A dev server compiles each route on its first request, and a dashboard route can take longer than the 15s assertion timeout to do it, so the first runs against a fresh server can fail on timeouts alone. Rerun until every route has compiled before reading a failure as real. Previews are production builds and do not have this problem. Never start a second dev server beside one that is already running: both write `apps/web/.next`, and the running one starts serving 404s for its own scripts.
+
 ### In CI
 
 `.github/workflows/e2e.yml` runs on GitHub's `deployment_status` event, which Vercel sends when a deploy finishes, and only for a successful preview deploy of the web project. The event carries the preview's url, so nothing has to guess it. It is its own workflow so a slow browser suite never holds up the fast checks, and it is not a required check.
