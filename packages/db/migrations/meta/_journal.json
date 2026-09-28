@@ -64,6 +64,13 @@
       "when": 1790298191541,
       "tag": "0008_loving_sasquatch",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790550355464,
+      "tag": "0009_add_request_logs_created_at_index",
+      "breakpoints": true
     }
   ]
 }

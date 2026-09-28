@@ -33,8 +33,12 @@ export const requestLogs = pgTable(
     durationMs: integer('duration_ms').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
-  // the shape the dashboard reads: one account, newest first
-  (table) => [index('request_logs_user_id_created_at_idx').on(table.userId, table.createdAt)],
+  (table) => [
+    // the shape the dashboard reads: one account, newest first
+    index('request_logs_user_id_created_at_idx').on(table.userId, table.createdAt),
+    // retention filters on age alone, and without this every purge ends in a scan of the whole table
+    index('request_logs_created_at_idx').on(table.createdAt),
+  ],
 ).enableRLS();
 
 export type RequestLog = typeof requestLogs.$inferSelect;
