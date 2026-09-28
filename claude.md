@@ -121,8 +121,41 @@ Under Authentication, URL Configuration: Site URL is `https://dispatchit.ca`, an
 
 ### Accounts
 
-- `SUPABASE_SERVICE_ROLE_KEY` is what deleting an account authenticates with, because the anon key cannot reach Supabase's admin api. It bypasses RLS entirely, so it is never prefixed `NEXT_PUBLIC_` and is only ever imported from a `'use server'` file. `apps/web/lib/supabase/admin.ts` is the one place that reads it.
+- `SUPABASE_SERVICE_ROLE_KEY` is what deleting an account authenticates with, because the anon key cannot reach Supabase's admin api. It bypasses RLS entirely, so it is never prefixed `NEXT_PUBLIC_` and is only ever imported from a `'use server'` file. `apps/web/lib/supabase/admin.ts` is the one place in either app that reads it; the e2e suite reads it too, from outside both apps, to create and delete its throwaway account.
 - **Deleting an account removes every Dispatch row and nothing on AWS.** The cascade from `auth.users` clears domains, keys, templates, emails and webhooks, and detaches request logs, but a verified SES domain identity stays registered in the AWS account. Deprovisioning it is a manual step until something reclaims identities on delete.
+
+## End-to-end tests
+
+`packages/e2e` is a Playwright suite that proves the critical paths work on a real deploy, not coverage. It runs against every web preview deploy, and by hand against a local dev server.
+
+**Previews share production's data.** There is one Supabase project, so a preview reads and writes the production database and production auth. Everything the suite does is therefore scoped to one throwaway account per run: the `setup` project creates a confirmed user through Supabase's admin api (production keeps email confirmation on, so signing up through the form would wait on an inbox), logs in through the real form and saves the session with `storageState`; the `teardown` project deletes that user, and the cascade takes its keys and templates with it. Test accounts are `e2e+<uuid>@example.com`, so one left behind by a cancelled run is easy to find under Authentication, Users.
+
+What it covers: the landing page and its links to the auth pages, the signed-out redirect from the dashboard, the styled 404, api key create, one-time reveal and revoke, and template create, edit and delete.
+
+What it deliberately does not cover:
+- **The send pipeline.** Previews use production's Inngest keys, so a send from a preview runs production's functions rather than the PR's, and a passing test would prove nothing about the change. The pipeline's manual proof is the Phase 13 check: a real send to `bounce@simulator.amazonses.com` through the deployed api, with the bounce arriving over SNS. Repeat that by hand after any change to the send path or SES wiring.
+- **Domains**, because adding one registers a real SES identity in the AWS account.
+- **Webhooks**, which sit behind a flag and deliver asynchronously.
+
+**CI never runs migrations.** A PR that adds a migration fails its e2e run until it is merged and migrated by hand, because the preview's code expects a schema the shared database does not have yet. That is a known limitation, not something to fix by letting CI apply schema changes to production.
+
+### Running it locally
+
+1. Add `SUPABASE_SERVICE_ROLE_KEY` to `apps/web/.env.local`. The config loads that file, which also supplies `NEXT_PUBLIC_SUPABASE_URL`, so the suite needs nothing of its own.
+2. `pnpm --filter @dispatch/e2e exec playwright install chromium` once per machine.
+3. Start the web app with `pnpm start`, then run `pnpm e2e`. It targets `http://localhost:3000` unless `E2E_BASE_URL` says otherwise.
+
+### In CI
+
+`.github/workflows/e2e.yml` runs on GitHub's `deployment_status` event, which Vercel sends when a deploy finishes, and only for a successful preview deploy of the web project. The event carries the preview's url, so nothing has to guess it. It is its own workflow so a slow browser suite never holds up the fast checks, and it is not a required check.
+
+Web previews sit behind Vercel's login, so the suite sends `x-vercel-protection-bypass` on requests to the preview's own origin, and only there, because the header on the browser's Supabase calls would fail their CORS preflight. It needs three repository secrets:
+
+| Secret | Where it comes from |
+|---|---|
+| `VERCEL_AUTOMATION_BYPASS_SECRET` | `dispatch` project, Settings, Deployment Protection, Protection Bypass for Automation |
+| `NEXT_PUBLIC_SUPABASE_URL` | the same value the web app uses |
+| `SUPABASE_SERVICE_ROLE_KEY` | the same value the web app uses |
 
 ## Repo structure
 
@@ -141,6 +174,7 @@ packages/
   core/     send pipeline, key hashing, webhook signing, SNS verification
   compat/   compatibility checker engine, framework-free
   ui/       Radix + Tailwind components
+  e2e/      Playwright suite, run against preview deploys
   config/   currently unused - tailwind v4 configures via tokens.css's
             @theme block directly, not a JS preset
 ```

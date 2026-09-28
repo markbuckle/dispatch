@@ -12,3 +12,6 @@ dist
 .pw-profile/
 .vercel
 apps/api/api/server.js
+.auth/
+test-results/
+playwright-report/
