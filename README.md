@@ -2,7 +2,7 @@
 
 Dispatch is an email API for developers: you verify a domain, create a key, and send with one HTTP request, and delivery, bounces and complaints come back to you as signed webhooks. It is a working product, not a mockup, sending real mail through AWS SES, built as a portfolio project for an application to Resend.
 
-**Live:** [dispatchit.ca](https://dispatchit.ca) · **API:** `https://api.dispatchit.ca` · **Case study:** [docs/case-study.md](docs/case-study.md)
+**Live:** [dispatchit.ca](https://dispatchit.ca) · **API:** `https://api.dispatchit.ca`
 
 ![The Dispatch dashboard](docs/images/dashboard.png)
 
@@ -110,7 +110,7 @@ Fifteen phases, each shipped as a series of small pull requests merged to `main`
 | 11 | Metrics and Logs | done |
 | 12 | Settings and Profile | done |
 | 13 | Deployment: both apps live, env verified, SNS on a permanent endpoint | done |
-| 14 | Polish, Playwright E2E, request log retention, case study writeup | done |
+| 14 | Polish, Playwright E2E, request log retention, README | done |
 
 Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md), and lessons from deployment in [decisions-and-learnings.md](decisions-and-learnings.md).
 

@@ -15,3 +15,4 @@ apps/api/api/server.js
 .auth/
 test-results/
 playwright-report/
+docs/case-study.md
