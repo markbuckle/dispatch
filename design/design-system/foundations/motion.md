@@ -49,18 +49,19 @@ The practical benefit is that Radix Primitives keep their default 200ms, so nobo
 - Entrance animations that delay reading - no fade-up on body copy, no staggered paragraph reveals
 - Typewriter effects, text shimmer, gradient sweeps
 - Confetti, celebration, or any animation on success
-- Animating the logo mark
+- Animating the logo mark. The footer wordmark's cursor spotlight is the one exception, see Marketing exceptions
 - Animation on data. A chart draws instantly. A number that changes, changes.
-- Anything over 300ms
+- Anything over 300ms, except the footer wordmark spotlight's 500ms fade
 
 ## Marketing exceptions
 
-The landing page may use exactly two:
+The landing page may use exactly three:
 
 1. **Scroll reveal** - `opacity 0→1` + `translateY(8px)→0`, 200ms, triggered once at 20% visibility. Never on the hero, never on anything above the fold.
 2. **Quiet marquee** for a customer logo band - constant linear speed, no easing, pauses on hover.
+3. **Footer wordmark spotlight** - a light that follows the cursor over the large wordmark above the footer, fading in and out at 500ms ease-out (`.dispatch-transition-spotlight`). Slower than every other transition on purpose: at 200ms the light snaps on, and at 500ms it reads as the letters catching it. Mouse only, never on touch. See DECISIONS.md #9.
 
-Not permitted anywhere: spotlight-follow-cursor, magic border, tilt-on-hover, number count-up on scroll.
+Not permitted anywhere: magic border, tilt-on-hover, number count-up on scroll. Spotlight-follow-cursor is permitted only as exception 3.
 
 ## Reduced motion
 

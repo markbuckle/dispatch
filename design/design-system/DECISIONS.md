@@ -87,11 +87,17 @@ A practical benefit decided it: Radix Primitives keep their default 200ms, so no
 
 Three primitives, from the brief, and nothing sampled from any reference brand: an **open circle** (the node at rest - never filled), a **butt-capped horizontal** (the taut line - no taper, no curve), and a **mitred chevron** (the sharp terminus - `stroke-linejoin: miter` is load-bearing; `round` or `bevel` kills the idea).
 
-The nine nav glyphs are drawn on the same 32-grid at the same stroke, so the product chrome and the brand are one drawing system. The auth "Home" control is the mark **run backwards** - chevron, line, node - a return stated in the brand's own vocabulary rather than a generic back arrow.
+The nine nav glyphs are drawn on the same 32-grid at the same stroke, so the product chrome and the brand are one drawing system.
 
 One counter-intuitive rule: **stroke thickens as the glyph shrinks** - 2.25 at display, 2.5 at 20px, 2.75 at 16px. The opposite of most icon sets, and the reason the set survives a 56px collapsed sidebar.
 
-## 9. What is still inferred
+## 9. The footer wordmark lights up
+
+The logo rules used to ban a glow, an outline and animation, and the marketing rules allowed three glow and gradient devices. The large wordmark above the landing page footer needed all of them, so both were loosened for it. Near the cursor its letters gain a crisp 1px `text-primary` outline, a faint fill and a blurred glow that stays inside each letter, all inside a 320px circle that follows the mouse and is brightest at its centre, and the light fades in and out over 500ms ease-out (`.dispatch-transition-spotlight`), the one duration outside 120/200. At 200ms it snapped on; at 500ms it reads as the letters catching the light. Away from the cursor it is a flat `subtle` fill. The class is `.dispatch-spotlight` in `tokens/tokens.css`, the fourth marketing device.
+
+It is decoration: the header already names the site, so the wordmark is hidden from screen readers, and touch input leaves it flat because a tap has no hover to follow. The exception covers this one wordmark. Every other use of the logo stays flat and still.
+
+## 10. What is still inferred
 
 Recorded in `PROVENANCE.md`, repeated here because it is the most likely source of a future wrong assumption:
 
@@ -99,6 +105,6 @@ Recorded in `PROVENANCE.md`, repeated here because it is the most likely source 
 - **Input, checkbox, radio and select** specifications were designed from the brief; the sampled pages carried no form fields.
 - **Motion** has a measured product baseline but the split above is a judgment call, not an observation.
 
-## 10. Open items
+## 11. Open items
 
 - **The auth background gradient from §6 has no token.** That entry documents the exception; nobody ever added the actual class or token to `tokens/tokens.css`, so there was nothing to build against. `/login` and `/signup` (`apps/web/app/login`, `apps/web/app/signup`) shipped flat - `canvas` background, borders carrying hierarchy - rather than inventing a recipe. Measure the real gradient and add it to `tokens.css` as a fourth `.dispatch-*` class, then apply it here.

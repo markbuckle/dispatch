@@ -289,6 +289,8 @@ a:hover { color: var(--dispatch-text-primary); }
 /* Motion: 120ms for anything small, 200ms for anything with surface area. */
 .dispatch-transition { transition: color 120ms cubic-bezier(0,0,0.2,1), background-color 120ms cubic-bezier(0,0,0.2,1), border-color 120ms cubic-bezier(0,0,0.2,1), box-shadow 120ms cubic-bezier(0,0,0.2,1); }
 .dispatch-transition-overlay { transition: opacity 200ms cubic-bezier(0.4,0,0.2,1), transform 200ms cubic-bezier(0.4,0,0.2,1); }
+/* The one exception to 120/200: the footer wordmark spotlight, see foundations/motion.md. */
+.dispatch-transition-spotlight { transition: opacity 500ms cubic-bezier(0,0,0.2,1); }
 
 /* Marketing devices. Product surfaces stay flat - see foundations/color.md. */
 
@@ -311,6 +313,35 @@ a:hover { color: var(--dispatch-text-primary); }
 .dispatch-glow {
   background: radial-gradient(ellipse 55% 100% at 50% 0%, var(--dispatch-hover), transparent 70%);
   pointer-events: none;
+}
+
+/* The footer wordmark's cursor light: a crisp outline and a glow that stays inside the letters, masked
+   to a 320px circle that stays bright near the cursor and fades out slowly. Nothing glows outside a letter.
+   The script sets --spotlight-x and --spotlight-y in px from the element's top left. The glow widths and
+   blurs are in apps/web/app/footer-wordmark.tsx, because an SVG filter cannot read a custom property. */
+.dispatch-spotlight {
+  -webkit-mask-image: radial-gradient(320px circle at var(--spotlight-x) var(--spotlight-y), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
+  mask-image: radial-gradient(320px circle at var(--spotlight-x) var(--spotlight-y), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
+  pointer-events: none;
+}
+.dispatch-spotlight-edge path {
+  fill: color-mix(in oklab, var(--dispatch-text-primary) 2%, transparent);
+  stroke: var(--dispatch-text-primary);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+.dispatch-spotlight-inner path {
+  fill: none;
+  stroke: color-mix(in oklab, var(--dispatch-text-primary) 5%, transparent);
+}
+/* A tighter, brighter band inside the edge right under the cursor, on top of the wider falloff. */
+.dispatch-spotlight-hotspot {
+  -webkit-mask-image: radial-gradient(110px circle at var(--spotlight-x) var(--spotlight-y), black, transparent);
+  mask-image: radial-gradient(110px circle at var(--spotlight-x) var(--spotlight-y), black, transparent);
+}
+.dispatch-spotlight-hotspot path {
+  fill: none;
+  stroke: color-mix(in oklab, var(--dispatch-text-primary) 80%, transparent);
 }
 
 /* Display titles only. Keep the element a real heading - the text stays readable to a screen reader. */

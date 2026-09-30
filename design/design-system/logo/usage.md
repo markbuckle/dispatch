@@ -6,8 +6,8 @@
 |---|---|---|
 | `mark.svg` | Symbol only, `#EDEEF0` | App chrome, sidebar, favicon source, anywhere the name is already present |
 | `mark-inverse.svg` | Symbol only, `#08080A` | On a light fill or a light-mode surface |
-| `wordmark.svg` | "Dispatch" only | Tight horizontal spaces where the symbol would be under 16px |
-| `lockup-horizontal.svg` | Symbol + wordmark, side by side | **The default.** Site header, email footer, deck title slide, docs. |
+| `wordmark.svg` | "Dispatch" only, drawn as outlines | **The site default.** Marketing header, auth pages, legal pages, 404 |
+| `lockup-horizontal.svg` | Symbol + wordmark, side by side | Email footer, deck title slide, docs |
 | `lockup-stacked.svg` | Symbol above wordmark | Square or portrait spaces - social avatars, sponsor slides, merch |
 | `favicon.svg` | Symbol on a rounded near-black tile | Browser tab, PWA icon, app switcher |
 
@@ -66,21 +66,21 @@ The mark is **never** in a semantic colour. Not green for "delivered", not red f
 - Don't fill the node.
 - Don't round or bevel the chevron join.
 - Don't recolour it outside the table above.
-- Don't add a shadow, glow, gradient, outline, or bevel.
-- Don't animate the mark. (The one exception: a loading state may fade the node at 120ms - no travelling, no drawing-on.)
+- Don't add a shadow, gradient, or bevel.
 - Don't place it on a busy background without a scrim.
 - Don't reconstruct it from memory - use these files.
-- Don't set the wordmark in anything but Geist Medium at -0.03em.
+- Don't set the lockup text in anything but Geist Medium at -0.03em, and don't retype the wordmark - use `wordmark.svg`.
 - Don't write it as "DISPATCH" or "dispatch". It is **Dispatch**: one word, capital D.
 
 ## Per-surface examples
 
 | Surface | Which file | Size |
 |---|---|---|
-| Marketing header | `lockup-horizontal.svg` | 132px wide |
+| Marketing header | `wordmark.svg` | 112px wide |
+| Landing page, above the footer | `wordmark.svg` in `subtle`, cropped at 244 of 323 units by the footer rule | Full viewport width, inside the page gutter |
 | Dashboard sidebar, expanded | `lockup-horizontal.svg` | 108px wide |
 | Dashboard sidebar, collapsed | `mark.svg` | 20px |
-| Auth card | `lockup-stacked.svg` | 88px wide |
+| Auth, legal and 404 pages | `wordmark.svg` | 132px wide |
 | Transactional email header | `lockup-horizontal.svg` as a 2× PNG | 120px wide |
 | Deck title slide | `lockup-horizontal.svg` | 240px wide |
 | Deck body slides | `mark.svg`, bottom-left, 40% opacity | 18px |
@@ -89,4 +89,4 @@ The mark is **never** in a semantic colour. Not green for "delivered", not red f
 
 ## Rasterising
 
-The wordmark and lockups use live `<text>` so the tracking stays editable. Before any raster export or print handoff, **convert text to outlines** - otherwise a machine without Geist installed silently substitutes a system sans and the tracking collapses.
+The lockups use live `<text>` so the tracking stays editable; `wordmark.svg` is already outlines. Before any raster export or print handoff, **convert text to outlines** - otherwise a machine without Geist installed silently substitutes a system sans and the tracking collapses.
