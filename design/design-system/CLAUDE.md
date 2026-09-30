@@ -21,11 +21,11 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 4. **Sentence case everywhere.** No Title Case. ALL CAPS only in a ≤3-word overline at 12px with +0.06em tracking.
 5. **No hype vocabulary.** Banned: revolutionary, game-changing, 10x, cutting-edge, supercharge, unleash, leverage, transform, synergy, seamless, robust, blazing-fast, AI-powered as a bare adjective.
 6. **Second person, short sentences.** Name the developer's world - request, payload, webhook, bounce, DKIM record, status code - not ours (platform, solution, ecosystem).
-7. **Gradients and glows are allowed on marketing surfaces, in three specific forms.** The display-title gradient, the section rule, and the section glow, all defined as classes in `tokens/tokens.css` (`.dispatch-display-gradient`, `.dispatch-rule`, `.dispatch-glow`). Use those classes rather than hand-rolling stops, and take every colour from a token. **Product surfaces stay flat** - a dashboard gets borders, not gradients. The one exception is `DesktopNotice`, which uses `.dispatch-glow` and `.dispatch-rule` on its top edge: it is a marketing-shaped interruption that happens to render over the product, and it is the surface telling you to leave. Still banned everywhere: glassmorphism, 3D, neumorphism, and illustration. The dialog scrim carries a `--blur-scrim` backdrop blur, which is not glassmorphism: the blur is on what sits behind the dialog, and the dialog's own surface stays fully opaque.
+7. **Gradients and glows are allowed on marketing surfaces, in four specific forms.** The display-title gradient, the section rule, the section glow, and the cursor spotlight on the footer wordmark, all defined as classes in `tokens/tokens.css` (`.dispatch-display-gradient`, `.dispatch-rule`, `.dispatch-glow`, `.dispatch-spotlight`). Use those classes rather than hand-rolling stops, and take every colour from a token. **Product surfaces stay flat** - a dashboard gets borders, not gradients. The one exception is `DesktopNotice`, which uses `.dispatch-glow` and `.dispatch-rule` on its top edge: it is a marketing-shaped interruption that happens to render over the product, and it is the surface telling you to leave. Still banned everywhere: glassmorphism, 3D, neumorphism, and illustration. The dialog scrim carries a `--blur-scrim` backdrop blur, which is not glassmorphism: the blur is on what sits behind the dialog, and the dialog's own surface stays fully opaque.
 8. **Borders over shadows.** `box-shadow` is permitted on dropdowns, dialogs and toasts. Nowhere else. The five surface fills sit within 6 points of each other, so the border carries the hierarchy.
 
 8b. **Declare `color-scheme: dark`.** Without it the native scrollbar paints light grey and becomes the brightest thing on screen. `tokens.css` handles it; any standalone page needs it too.
-9. **Motion: 120ms / 200ms only.** ease-out for the first, `cubic-bezier(.4,0,.2,1)` for the second. No bounce, spring, parallax, scroll-jacking, or entrance animation that delays reading.
+9. **Motion: 120ms / 200ms only.** ease-out for the first, `cubic-bezier(.4,0,.2,1)` for the second. The one exception is the footer wordmark spotlight's 500ms ease-out fade, `.dispatch-transition-spotlight`. No bounce, spring, parallax, scroll-jacking, or entrance animation that delays reading.
 10. **Every claim gets a number or a name.** "Fast" is banned. "p50 under 200ms" is required. "Trusted by teams" is banned; name a customer or drop the claim.
 
 ## 3. Defaults when the brief is ambiguous
@@ -71,7 +71,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 1. Did I use a value that isn't in `tokens/tokens.css`? If yes, remove it or justify it.
 2. Is there any colour on screen that isn't carrying meaning? If yes, delete it.
 3. Would a developer scanning this at 11pm find the one number they came for in under three seconds?
-4. Did I hand-roll a gradient instead of using the three `.dispatch-*` classes, or put one on a product surface? Did I add a shadow or illustration out of habit?
+4. Did I hand-roll a gradient instead of using the four `.dispatch-*` classes, or put one on a product surface? Did I add a shadow or illustration out of habit?
 5. Is every claim attached to a number or a name?
 6. Is the primary action obvious without colour doing the work?
 7. Could I remove an element and lose nothing? Then remove it.

@@ -12,7 +12,7 @@ Feature sections   96px apart, alternating layout, max 4
 Code sample        one, real, copyable
 Pricing preview    or a link to /pricing
 Final CTA          96px band, one action
-Footer             .dispatch-rule + .dispatch-glow, then 64px top padding
+Footer             wordmark cut by .dispatch-rule, .dispatch-glow, then 64px top padding
 ```
 
 Max 4 feature sections. If there's a fifth, it belongs on its own page.
@@ -66,11 +66,13 @@ Every section: `overline` (12px, uppercase, `text-muted`) → 12px → `display-
 
 ## Footer
 
+Above it, on the landing page, sits the full-width wordmark in `subtle`, cropped at 244 of its 323 units so the rule cuts through the lowercase letters, with `.dispatch-spotlight` following the cursor. See DECISIONS.md #9.
+
 Opens with a full-bleed `.dispatch-glow` at 160px, then `.dispatch-rule` on top of it. **Glow first in the DOM, rule second** - reversed, the glow eats the middle of the line. Both sit outside the 1200px container.
 
 **Four columns** for a full site: Product · Developers · Company · Legal. `caption` headers in `text-muted`, `body` links in `text-secondary`. Lockup bottom-left, status-page link with a live `success-fg` dot, copyright in `caption` `text-muted`.
 
-**One row** is the right call while the site is small: mark at 20px, three links, the status dot, copyright pushed right. Move to four columns when there is more than one page per column to put in them.
+**One row** is the right call while the site is small: links on the left, copyright pushed right, no mark. Move to four columns when there is more than one page per column to put in them.
 
 ## Product screens
 

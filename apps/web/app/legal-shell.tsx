@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { AuthHome } from './logo';
+import { Wordmark } from './logo';
 
 export const legalText = 'text-body text-text-secondary';
 
@@ -19,7 +19,7 @@ export function LegalShell({
     <div className="flex min-h-screen flex-col items-center bg-canvas px-5 py-16">
       <div className="flex w-full max-w-reading flex-col gap-10">
         <Link href="/" aria-label="Dispatch home" className="w-max rounded-xs">
-          <AuthHome />
+          <Wordmark />
         </Link>
         <header className="flex flex-col gap-2">
           <h1 className="font-display text-h1 text-text-primary">{title}</h1>

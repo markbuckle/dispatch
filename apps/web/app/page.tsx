@@ -1,6 +1,7 @@
 import { API_BASE_URL } from '../lib/api-url';
+import { FooterWordmark } from './footer-wordmark';
 import { HeaderBorder } from './header-border';
-import { Lockup, Mark } from './logo';
+import { Wordmark } from './logo';
 
 const request = `curl -X POST ${API_BASE_URL}/v1/emails \\
   -H "Authorization: Bearer $DISPATCH_API_KEY" \\
@@ -49,7 +50,7 @@ export default function Home() {
       <header className="sticky top-0 z-10 bg-canvas">
         <nav className="mx-auto flex h-16 max-w-marketing items-center px-5 lg:px-8">
           <a href="/" aria-label="Dispatch home">
-            <Lockup />
+            <Wordmark className="w-28 text-text-primary" />
           </a>
           <div className="ml-auto flex items-center gap-2">
             <a
@@ -142,11 +143,12 @@ export default function Home() {
         </section>
       </main>
 
+      <FooterWordmark />
+
       <footer className="relative">
         <span aria-hidden="true" className="dispatch-glow absolute inset-x-0 top-0 h-40" />
         <span aria-hidden="true" className="dispatch-rule absolute inset-x-0 top-0 h-px" />
         <div className="relative mx-auto flex max-w-marketing flex-wrap items-center gap-x-8 gap-y-4 px-5 pt-16 pb-16 lg:px-8">
-          <Mark />
           <div className="flex items-center gap-6">
             <a href="/terms" className={footerLink}>
               Terms

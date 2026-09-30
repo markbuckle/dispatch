@@ -82,13 +82,14 @@ The "never encode meaning in colour alone" requirement is satisfied by the word 
 
 ## Gradients, on marketing only
 
-Three sanctioned gradients, all defined as classes in `tokens/tokens.css` so nobody hand-rolls stops. Every stop is a token. **None of them appear in the product.**
+Four sanctioned gradients, all defined as classes in `tokens/tokens.css` so nobody hand-rolls stops. Every stop is a token. **None of them appear in the product.**
 
 | Class | What it is | Stops |
 |---|---|---|
 | `.dispatch-display-gradient` | The hero title | `text-primary` to 45%, then to `text-secondary` at 100%, top to bottom |
 | `.dispatch-rule` | Section rule, replaces a flat 1px border | transparent, `border-subtle` 6-34%, `text-muted` at 50%, `border-subtle` 66-94%, transparent |
 | `.dispatch-glow` | Sits under a rule | radial ellipse 55% x 100% from 50% 0%, `hover` to transparent at 70% |
+| `.dispatch-spotlight` | Lights the footer wordmark around the cursor, see DECISIONS.md #9 | 320px radial mask: black, 55% at 20%, 20% at 50%, transparent; 1px `text-primary` outline; fill `text-primary` at 2%; inner edge glow of `text-primary` at 15%, 36 units wide, blurred 25 units; hotspot of `text-primary` at 40%, 6 units wide, blurred 4 units, in a 120px mask. Both glows are clipped inside the letters, so nothing glows outside one |
 
 Notes that will bite:
 
