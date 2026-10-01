@@ -73,7 +73,7 @@ These strings appear in the product and must not be paraphrased.
 | State | Label | Semantic |
 |---|---|---|
 | Accepted, not yet sent | `Queued` | warning |
-| Handed to the receiving server | `Sent` | neutral |
+| Handed to the receiving server | `Sent` | success |
 | Confirmed at the destination | `Delivered` | success |
 | Permanently rejected | `Bounced` | danger |
 | Temporarily rejected, will retry | `Deferred` | warning |

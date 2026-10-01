@@ -8,5 +8,7 @@ export const inputField = `${focusable} h-control-lg px-3.5 text-body`;
 
 export const smallInputField = `${focusable} h-control-sm px-3 text-meta`;
 
+export const selectTrigger = `${focusable} flex h-control-lg items-center justify-between gap-2 px-3.5 text-body`;
+
 // mono because an html body is something a developer reads and copies, per foundations/typography.md
 export const textareaField = `${focusable} resize-y px-3.5 py-3 font-mono text-mono`;

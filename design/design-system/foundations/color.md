@@ -59,11 +59,11 @@ Four tokens per meaning: a **solid** background, a bright foreground, plus a 7% 
 
 | Meaning | bg | fg | Contrast |
 |---|---|---|---|
-| success · delivered | `#0B2E20` | `#3ECF8E` | 7.4:1 |
+| success · sent, delivered | `#0B2E20` | `#3ECF8E` | 7.4:1 |
 | warning · queued, deferred | `#33270A` | `#FFCA16` | 9.6:1 |
 | danger · bounced, complained, failed | `#3A1618` | `#FF9592` | 7.2:1 |
 | info · opened, clicked | `#0D2740` | `#70B8FF` | 7.0:1 |
-| neutral · sent, suppressed | `#1E1E22` | `#C0C4CA` | 9.1:1 |
+| neutral · suppressed | `#1E1E22` | `#C0C4CA` | 9.1:1 |
 | off · canceled | `#1A1A1E` | `#8C9096` | 4.8:1 |
 
 **Solid, not translucent.** An earlier draft used a 10% alpha wash with a 1px border. The measured product uses an opaque deep fill with no border, and it's the better call - twelve translucent pills in a column pick up whatever is behind them and the row starts to look striped.

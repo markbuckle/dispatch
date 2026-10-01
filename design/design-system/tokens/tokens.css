@@ -368,6 +368,20 @@ a:hover { color: var(--dispatch-text-primary); }
   color: var(--dispatch-text-inverse);
 }
 
+/* The emails table's status icon, logo/icons/dispatch-email-sent.svg in the row's tone: the one glow on a product surface.
+   A tone class on the svg sets the two colours, and each gradient stop reads them through its own class. */
+.dispatch-status-icon-success { --status-icon-fg: var(--dispatch-success-fg); --status-icon-bg: var(--dispatch-success-bg); }
+.dispatch-status-icon-warning { --status-icon-fg: var(--dispatch-warning-fg); --status-icon-bg: var(--dispatch-warning-bg); }
+.dispatch-status-icon-danger  { --status-icon-fg: var(--dispatch-danger-fg);  --status-icon-bg: var(--dispatch-danger-bg); }
+.dispatch-status-icon-frame { stroke: var(--dispatch-text-tertiary); }
+.dispatch-status-icon-core  { stop-color: var(--status-icon-fg); }
+.dispatch-status-icon-rim   { stop-color: color-mix(in oklab, var(--status-icon-fg) 60%, var(--status-icon-bg)); stop-opacity: 0.74; }
+.dispatch-status-icon-haze  { stop-color: var(--status-icon-fg); stop-opacity: 0.29; }
+.dispatch-status-icon-shade { stop-color: var(--status-icon-bg); stop-opacity: 0.78; }
+.dispatch-status-icon-ink     { stop-color: var(--dispatch-text-primary); }
+.dispatch-status-icon-ink-mid { stop-color: color-mix(in oklab, var(--dispatch-text-primary) 95%, var(--status-icon-fg)); stop-opacity: 0.9; }
+.dispatch-status-icon-ink-end { stop-color: color-mix(in oklab, var(--dispatch-text-primary) 80%, var(--status-icon-fg)); stop-opacity: 0.71; }
+
 /* Dialog open, per foundations/motion.md. The content keeps its centring transform in the keyframe. */
 @keyframes dispatch-scrim-in { from { opacity: 0 } }
 @keyframes dispatch-dialog-in { from { opacity: 0; transform: translate(-50%, -50%) scale(0.98) } }
