@@ -21,7 +21,7 @@ const tone: Record<Status, string> = {
   Failed:     'bg-danger-bg text-danger-fg',
   Opened:     'bg-info-bg text-info-fg',
   Clicked:    'bg-info-bg text-info-fg',
-  Sent:       'bg-neutral-bg text-neutral-fg',
+  Sent:       'bg-success-bg text-success-fg',
   Suppressed: 'bg-neutral-bg text-neutral-fg',
   Canceled:   'bg-off-bg text-off-fg',
 };
@@ -55,7 +55,7 @@ export function StatusTile({ status, children }: { status: Status; children: Rea
     Failed: 'bg-danger-tint border-danger-edge text-danger-fg',
     Opened: 'bg-info-tint border-info-edge text-info-fg',
     Clicked: 'bg-info-tint border-info-edge text-info-fg',
-    Sent: 'bg-white/[0.03] border-border-strong text-neutral-fg',
+    Sent: 'bg-success-tint border-success-edge text-success-fg',
     Suppressed: 'bg-white/[0.03] border-border-strong text-neutral-fg',
     Canceled: 'bg-white/[0.02] border-border-default text-off-fg',
   };

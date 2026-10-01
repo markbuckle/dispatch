@@ -2,6 +2,7 @@ import type { EmailSummary } from '@dispatch/db';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { formatRelative, formatUtc } from '../format-time';
+import { EmailStatusIcon } from './email-status-icon';
 import { EmailStatusPill } from './email-status-pill';
 
 function formatRecipients(to: string[]): string {
@@ -11,51 +12,51 @@ function formatRecipients(to: string[]): string {
   return rest.length > 0 ? `${first} +${rest.length}` : first;
 }
 
-export function EmailsTable({ emails }: { emails: EmailSummary[] }) {
-  const now = Date.now();
-
+// now comes from the server render, so a relative time cannot disagree between server and client
+export function EmailsTable({ emails, now }: { emails: EmailSummary[]; now: number }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-border-default">
-      <table className="w-full border-collapse text-body">
-        <thead className="bg-subtle">
-          <tr>
-            <Th>To</Th>
-            <Th>Subject</Th>
-            <Th>Status</Th>
-            <Th>Created</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {emails.map((email) => (
-            <tr
-              key={email.id}
-              className="dispatch-transition relative border-b border-border-subtle last:border-b-0 hover:bg-surface"
-            >
-              <td className="h-row px-5 align-middle text-text-primary">
+    <table className="w-full border-collapse text-body">
+      <thead className="bg-subtle">
+        <tr>
+          <Th>To</Th>
+          <Th>Status</Th>
+          <Th>Subject</Th>
+          <Th>Created</Th>
+        </tr>
+      </thead>
+      <tbody>
+        {emails.map((email) => (
+          <tr
+            key={email.id}
+            className="dispatch-transition relative border-b border-border-subtle last:border-b-0 hover:bg-surface"
+          >
+            <td className="h-row px-5 align-middle text-text-primary">
+              <span className="flex items-center gap-3">
+                <EmailStatusIcon status={email.status} />
                 {formatRecipients(email.to)}
-              </td>
-              <td className="h-row px-5 align-middle text-text-primary">
-                {/* stretched over the row, so the whole row is the target and this stays a real link */}
-                <Link
-                  href={`/dashboard/emails/${email.id}`}
-                  className="rounded-xs text-text-primary outline-none after:absolute after:inset-0 focus-visible:shadow-focus"
-                >
-                  {email.subject}
-                </Link>
-              </td>
-              <td className="h-row px-5 align-middle">
-                <EmailStatusPill status={email.status} />
-              </td>
-              <td className="h-row px-5 align-middle text-text-muted">
-                <time dateTime={email.createdAt.toISOString()} title={formatUtc(email.createdAt)}>
-                  {formatRelative(email.createdAt, now)}
-                </time>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+              </span>
+            </td>
+            <td className="h-row px-5 align-middle">
+              <EmailStatusPill status={email.status} />
+            </td>
+            <td className="h-row px-5 align-middle text-text-primary">
+              {/* stretched over the row, so the whole row is the target and this stays a real link */}
+              <Link
+                href={`/dashboard/emails/${email.id}`}
+                className="rounded-xs text-text-primary outline-none after:absolute after:inset-0 focus-visible:shadow-focus"
+              >
+                {email.subject}
+              </Link>
+            </td>
+            <td className="h-row px-5 align-middle text-text-muted">
+              <time dateTime={email.createdAt.toISOString()} title={formatUtc(email.createdAt)}>
+                {formatRelative(email.createdAt, now)}
+              </time>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
