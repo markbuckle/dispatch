@@ -53,7 +53,7 @@ Colour appears only in: chart series, status pills in a screenshot, one number t
 - Series colours from the semantic set, in order: `info-fg`, `success-fg`, `warning-fg`, `danger-fg`. Beyond four series, reconsider the chart.
 - No gridlines unless reading exact values matters. Then `border-subtle` only, horizontal only.
 - Label data points directly. No legends where a direct label fits.
-- No 3D, no shadows, no gradient fills, no doughnut charts.
+- No shadows, no gradient fills, no doughnut charts.
 - Axis labels 24px `text-muted`.
 
 ## What decks never contain

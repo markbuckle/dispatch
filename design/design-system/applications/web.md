@@ -35,7 +35,7 @@ The scroll state is the only thing on the header that needs the client. Keep it 
 - Two buttons, 40px below the subcopy, 12px apart:
   - Primary "Get an API key": `.dispatch-cta`, `radius-2xl` (16px), `16px 16px` padding.
   - Secondary "Read the docs": ghost, no fill and no border, `text-secondary` to `text-primary` on hover. It must not carry a border, or the two read as equal weight and neither is primary.
-- Below: a real code sample or a tight crop of the log table. **Not a hero image, not an illustration, not a floating dashboard mockup at an angle.**
+- Below: a real code sample or a tight crop of the log table. **Not a hero image, not a floating dashboard mockup at an angle.**
 - **No animation above the fold.**
 
 **Neither button is a light fill at rest.** The primary sits dark and inverts to `#EDEEF0` on hover. Weight and border carry the hierarchy instead of fill, which keeps the palette free to mean something.
