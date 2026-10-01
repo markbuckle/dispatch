@@ -25,7 +25,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 8. **Borders over shadows.** `box-shadow` is permitted on dropdowns, dialogs and toasts. Nowhere else. The five surface fills sit within 6 points of each other, so the border carries the hierarchy.
 
 8b. **Declare `color-scheme: dark`.** Without it the native scrollbar paints light grey and becomes the brightest thing on screen. `tokens.css` handles it; any standalone page needs it too.
-9. **Motion: 120ms / 200ms only.** ease-out for the first, `cubic-bezier(.4,0,.2,1)` for the second. The one exception is the footer wordmark spotlight's 500ms ease-out fade, `.dispatch-transition-spotlight`. No bounce, spring, parallax, scroll-jacking, or entrance animation that delays reading.
+9. **Motion: 120ms / 200ms only.** ease-out for the first, `cubic-bezier(.4,0,.2,1)` for the second. Two exceptions: the footer wordmark spotlight's 500ms ease-out fade, `.dispatch-transition-spotlight`, and the sidebar icon gestures, 650ms to 1200ms, `dispatch-icon-*`. No bounce, spring, parallax, scroll-jacking, or entrance animation that delays reading.
 10. **Every claim gets a number or a name.** "Fast" is banned. "p50 under 200ms" is required. "Trusted by teams" is banned; name a customer or drop the claim.
 
 ## 3. Defaults when the brief is ambiguous

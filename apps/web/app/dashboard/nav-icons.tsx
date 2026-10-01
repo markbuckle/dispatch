@@ -30,7 +30,7 @@ export function EmailIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Emails" {...props}>
       <rect x="4" y="7" width="24" height="18" rx="2.5" />
-      <path d="M6 10 L16 18 L26 10" strokeLinejoin="miter" />
+      <path className="dispatch-icon-flap" d="M6 10 L16 18 L26 10" strokeLinejoin="miter" />
     </NavIconBase>
   );
 }
@@ -38,8 +38,15 @@ export function EmailIcon(props: SVGProps<SVGSVGElement>) {
 export function TemplateIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Templates" {...props}>
-      <rect x="4" y="5" width="24" height="22" rx="2.5" />
-      <path d="M4 12.5 H28" />
+      <g className="dispatch-icon-drum-out">
+        <rect x="4" y="5" width="24" height="22" rx="2.5" />
+        <path d="M4 12.5 H28" />
+      </g>
+      {/* the next face on the drum, hidden at rest */}
+      <g className="dispatch-icon-drum-in">
+        <rect x="4" y="5" width="24" height="22" rx="2.5" />
+        <path d="M4 12.5 H28" />
+      </g>
     </NavIconBase>
   );
 }
@@ -47,9 +54,9 @@ export function TemplateIcon(props: SVGProps<SVGSVGElement>) {
 export function ChartIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Metrics" {...props}>
-      <path d="M7 26 V17" />
-      <path d="M16 26 V8" />
-      <path d="M25 26 V13" />
+      <path className="dispatch-icon-bar" d="M7 26 V17" />
+      <path className="dispatch-icon-bar" d="M16 26 V8" />
+      <path className="dispatch-icon-bar" d="M25 26 V13" />
     </NavIconBase>
   );
 }
@@ -58,7 +65,7 @@ export function GlobeIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Domains" {...props}>
       <circle cx="16" cy="16" r="12" />
-      <path d="M16 4 C11.5 8 11.5 24 16 28 C20.5 24 20.5 8 16 4" />
+      <path className="dispatch-icon-spin" d="M16 4 C11.5 8 11.5 24 16 28 C20.5 24 20.5 8 16 4" />
       <path d="M4 16 H28" />
     </NavIconBase>
   );
@@ -67,12 +74,31 @@ export function GlobeIcon(props: SVGProps<SVGSVGElement>) {
 export function ListIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Logs" {...props}>
-      <circle cx="6" cy="9.5" r="1.4" fill="currentColor" stroke="none" />
-      <circle cx="6" cy="16" r="1.4" fill="currentColor" stroke="none" />
-      <circle cx="6" cy="22.5" r="1.4" fill="currentColor" stroke="none" />
-      <path d="M11.5 9.5 H27" />
-      <path d="M11.5 16 H27" />
-      <path d="M11.5 22.5 H27" />
+      <g className="dispatch-icon-row">
+        <circle cx="6" cy="9.5" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11.5 9.5 H27" />
+      </g>
+      <g className="dispatch-icon-row">
+        <circle cx="6" cy="16" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11.5 16 H27" />
+      </g>
+      <g className="dispatch-icon-row">
+        <circle cx="6" cy="22.5" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11.5 22.5 H27" />
+      </g>
+      {/* the same rows 26 units lower, below the icon's edge until the feed scrolls them in */}
+      <g className="dispatch-icon-row">
+        <circle cx="6" cy="35.5" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11.5 35.5 H27" />
+      </g>
+      <g className="dispatch-icon-row">
+        <circle cx="6" cy="42" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11.5 42 H27" />
+      </g>
+      <g className="dispatch-icon-row">
+        <circle cx="6" cy="48.5" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11.5 48.5 H27" />
+      </g>
     </NavIconBase>
   );
 }
@@ -80,10 +106,12 @@ export function ListIcon(props: SVGProps<SVGSVGElement>) {
 export function KeyIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="API keys" {...props}>
-      <circle cx="10" cy="10" r="5.5" />
-      <path d="M14 14 L26 26" strokeLinecap="butt" />
-      <path d="M20 20 L17 23" />
-      <path d="M23 23 L20 26" />
+      <g className="dispatch-icon-turn">
+        <circle cx="10" cy="10" r="5.5" />
+        <path d="M14 14 L26 26" strokeLinecap="butt" />
+        <path d="M20 20 L17 23" />
+        <path d="M23 23 L20 26" />
+      </g>
     </NavIconBase>
   );
 }
@@ -91,9 +119,24 @@ export function KeyIcon(props: SVGProps<SVGSVGElement>) {
 export function WebhookIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Webhooks" {...props}>
-      <circle cx="7" cy="9" r="3.25" />
-      <circle cx="25" cy="23" r="3.25" />
-      <path d="M9.5 11.5 L22.5 20.5" strokeLinecap="butt" />
+      {/* one hook drawn three times, 120 degrees apart: each wraps its node and throws a line into the next one's gap */}
+      <g className="dispatch-icon-whirl">
+        <path
+          className="dispatch-icon-hook"
+          pathLength={1}
+          d="M21 9 A5 5 0 1 0 13.5 13.33 L9.07 21"
+        />
+        <path
+          className="dispatch-icon-hook dispatch-icon-hook-third"
+          pathLength={1}
+          d="M20.43 25.33 A5 5 0 1 0 20.43 16.67 L16 9"
+        />
+        <path
+          className="dispatch-icon-hook dispatch-icon-hook-second"
+          pathLength={1}
+          d="M6.57 16.67 A5 5 0 1 0 14.07 21 L22.93 21"
+        />
+      </g>
     </NavIconBase>
   );
 }
@@ -101,13 +144,16 @@ export function WebhookIcon(props: SVGProps<SVGSVGElement>) {
 export function GearIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <NavIconBase label="Settings" {...props}>
-      <circle cx="16" cy="16" r="7" />
-      <path d="M16 4 V7.5" />
-      <path d="M16 24.5 V28" />
-      <path d="M26.4 10 L23.4 11.75" />
-      <path d="M8.6 20.25 L5.6 22" />
-      <path d="M26.4 22 L23.4 20.25" />
-      <path d="M8.6 11.75 L5.6 10" />
+      <g className="dispatch-icon-tick">
+        <circle cx="16" cy="16" r="7" />
+        {/* every spoke runs from the hub outward, so shortening its dash pulls it in toward the hub */}
+        <path className="dispatch-icon-spoke" pathLength={1} d="M16 7.5 V4" />
+        <path className="dispatch-icon-spoke" pathLength={1} d="M16 24.5 V28" />
+        <path className="dispatch-icon-spoke" pathLength={1} d="M23.4 11.75 L26.4 10" />
+        <path className="dispatch-icon-spoke" pathLength={1} d="M8.6 20.25 L5.6 22" />
+        <path className="dispatch-icon-spoke" pathLength={1} d="M23.4 20.25 L26.4 22" />
+        <path className="dispatch-icon-spoke" pathLength={1} d="M8.6 11.75 L5.6 10" />
+      </g>
     </NavIconBase>
   );
 }

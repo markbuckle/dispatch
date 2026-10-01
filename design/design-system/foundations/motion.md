@@ -38,6 +38,7 @@ The practical benefit is that Radix Primitives keep their default 200ms, so nobo
 | Spinner | `rotate` 360°, 640ms linear, infinite |
 | Row expand (logs) | `height`, 200ms standard |
 | Copy confirmation | Label swap, no animation. 1400ms then revert. |
+| Sidebar nav icon | One gesture when the row is hovered or focused, plays once, and the icon always comes to rest exactly as drawn. Emails: the flap flips up open and back down, 650ms. Templates: the template turns away to the right on a drum while the next turns in from the left, 900ms. Metrics: the bars drop and regrow left to right, 100ms apart, 650ms each. Domains: the globe spins once, building speed and settling, 1200ms. Logs: the rows scroll up out of view as the same rows scroll in from below, each row 70ms behind the one above, 900ms each. API keys: the key turns over on its shaft 180° and back, 650ms. Webhooks: a third of a turn clockwise while the three hooks pull back and fire into the next node in turn, 200ms apart, 1000ms. Settings: half a turn, building speed and settling, the spokes pulling in toward the hub and back out, 1000ms. See DECISIONS.md #10. |
 
 ## We do not do
 
@@ -51,7 +52,7 @@ The practical benefit is that Radix Primitives keep their default 200ms, so nobo
 - Confetti, celebration, or any animation on success
 - Animating the logo mark. The footer wordmark's cursor spotlight is the one exception, see Marketing exceptions
 - Animation on data. A chart draws instantly. A number that changes, changes.
-- Anything over 300ms, except the footer wordmark spotlight's 500ms fade
+- Anything over 300ms, except the footer wordmark spotlight's 500ms fade and the sidebar icon gestures (650ms to 1200ms)
 
 ## Marketing exceptions
 

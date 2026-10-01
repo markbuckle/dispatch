@@ -45,7 +45,7 @@ Nine glyphs, in sidebar order. Each is drawn from the same vocabulary: a contain
 | Globe | Circle, one vertical ellipse, one horizontal chord. Three strokes, no more. |
 | List | Three horizontal strokes, each with a 3-unit leading dot. |
 | Key | Circle plus a shaft with two teeth. Teeth are perpendicular, not angled. |
-| Webhook | Two nodes joined by an angled line - the mark's node vocabulary, doubled. |
+| Webhook | Three nodes in a triangle. Each is wrapped by a 240° hook that throws a straight line into the next node, entering through that node's gap - the recognised webhook symbol, drawn on our grid. |
 | Gear | Circle plus six radial ticks. **Not** a toothed cog outline. |
 | Avatar | Circle plus a shoulder arc. Open at the bottom. |
 
@@ -57,6 +57,10 @@ All nine are drawn: `../logo/icons/`. Each uses `stroke="currentColor"` so it in
 - Active nav item: icon goes `text-primary`, the row gets a `subtle` background. The icon does not change colour to the accent.
 - **Never a semantic colour on a nav or action icon.** Semantic colour means status; an icon in the chrome has no status.
 - Status icons inside a pill inherit the pill's `fg`.
+
+## Motion
+
+Sidebar icons move once when their row is hovered or focused: a gesture of 650ms to 1200ms built from the glyph's own construction, never a different drawing. Only the moving part is tagged in `nav-icons.tsx`, and the keyframes live in `tokens/tokens.css` as `dispatch-icon-*`. All eight move: Emails, Templates, Metrics, Domains, Logs, API keys, Webhooks and Settings. See `motion.md` and DECISIONS.md #10.
 
 ## The library question
 
