@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray, sql } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type EmailStatus, statusesBehind } from '../schema/email-status-rank';
 import { type Email, emails, type NewEmail } from '../schema/emails';
@@ -9,7 +9,12 @@ export type EmailSummary = Pick<Email, 'id' | 'to' | 'subject' | 'status' | 'cre
 // capped rather than paginated, so a busy account sees its newest 100 and nothing older
 const LIST_LIMIT = 100;
 
-export async function listEmailsForUser(userId: string): Promise<EmailSummary[]> {
+export type EmailListFilters = { status?: EmailStatus; since?: Date };
+
+export async function listEmailsForUser(
+  userId: string,
+  { status, since }: EmailListFilters,
+): Promise<EmailSummary[]> {
   return getDb()
     .select({
       id: emails.id,
@@ -19,9 +24,26 @@ export async function listEmailsForUser(userId: string): Promise<EmailSummary[]>
       createdAt: emails.createdAt,
     })
     .from(emails)
-    .where(eq(emails.userId, userId))
+    .where(
+      and(
+        eq(emails.userId, userId),
+        status ? eq(emails.status, status) : undefined,
+        since ? gte(emails.createdAt, since) : undefined,
+      ),
+    )
     .orderBy(desc(emails.createdAt))
     .limit(LIST_LIMIT);
+}
+
+// an empty filtered list cannot tell a quiet fortnight from an account that has never sent
+export async function hasAnyEmailForUser(userId: string): Promise<boolean> {
+  const [email] = await getDb()
+    .select({ id: emails.id })
+    .from(emails)
+    .where(eq(emails.userId, userId))
+    .limit(1);
+
+  return email !== undefined;
 }
 
 // the owner is part of the match, so a guessed id from another account finds nothing

@@ -35,6 +35,14 @@ Nine icons, the sidebar set. Drawn on the same 32-unit grid and 2.25 stroke as t
 
 Thicken as it shrinks - a 2.25 stroke at 16px renders at 1.125 device px and goes mushy. Check every glyph at 16px before accepting it.
 
+## Status icon
+
+`dispatch-email-sent.svg` is not a nav glyph. It sits before the recipient in the emails table, at 32px, and is the one icon that glows: a framed tile, a radial fill and an envelope, drawn on a 598-unit grid.
+
+The file is the green source drawing. The product never uses its hex values: `apps/web/app/dashboard/emails/email-status-icon.tsx` redraws it with every stop on a `.dispatch-status-icon-*` class from `tokens/tokens.css`, tinted by the same tone as the status pill - success, warning or danger, per `foundations/vocabulary.md`. A green tile beside a Bounced pill would contradict it.
+
+The source's blurred grid lines are left out of the product drawing. At 32px they render under a third of a pixel wide and add nothing but markup.
+
 ## Everything else
 
 Chevrons, close, plus, search, external-link, copy, filter, calendar, sort: **Lucide** at `strokeWidth={2.25}` with `absoluteStrokeWidth`. Don't mix in a second library.
