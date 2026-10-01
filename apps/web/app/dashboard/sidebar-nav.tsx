@@ -39,8 +39,8 @@ export function SidebarNav() {
               aria-current={isActive ? 'page' : undefined}
               className={
                 isActive
-                  ? 'flex h-nav-item items-center gap-2 rounded-md border border-border-default bg-hover px-3 text-body text-text-primary'
-                  : 'dispatch-transition flex h-nav-item items-center gap-2 rounded-md border border-transparent px-3 text-body text-text-secondary hover:bg-subtle hover:text-text-primary'
+                  ? 'dispatch-icon-trigger flex h-nav-item items-center gap-2 rounded-md border border-border-default bg-hover px-3 text-body text-text-primary'
+                  : 'dispatch-icon-trigger dispatch-transition flex h-nav-item items-center gap-2 rounded-md border border-transparent px-3 text-body text-text-secondary hover:bg-subtle hover:text-text-primary'
               }
             >
               <Icon />

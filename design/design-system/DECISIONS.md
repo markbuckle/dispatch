@@ -97,7 +97,13 @@ The logo rules used to ban a glow, an outline and animation, and the marketing r
 
 It is decoration: the header already names the site, so the wordmark is hidden from screen readers, and touch input leaves it flat because a tap has no hover to follow. The exception covers this one wordmark. Every other use of the logo stays flat and still.
 
-## 10. What is still inferred
+## 10. Sidebar icons move on hover
+
+Resend's sidebar icons animate when hovered, and a still icon set read as flat beside it. Lordicon and Lottie were the reference's route, and were set aside for a first pass: they add a player library to every dashboard page, Lordicon's free icons need an attribution link, and their drawings are not ours, while the nav set shares the logo's grid and stroke on purpose (#8).
+
+Instead each glyph moves part of itself once per hover, in CSS, over 650ms to 1200ms: long enough to read as a gesture, which 200ms is not. It began at 400ms and every icon was slowed after seeing it move. Only the moving part is tagged, every icon rests exactly as drawn, and reduced motion turns it off. It started with four icons - Emails, Metrics, API keys, Settings - to judge before doing the rest. If it falls short, Lottie with our own glyphs is the next step.
+
+## 11. What is still inferred
 
 Recorded in `PROVENANCE.md`, repeated here because it is the most likely source of a future wrong assumption:
 
@@ -105,6 +111,6 @@ Recorded in `PROVENANCE.md`, repeated here because it is the most likely source 
 - **Input, checkbox, radio and select** specifications were designed from the brief; the sampled pages carried no form fields.
 - **Motion** has a measured product baseline but the split above is a judgment call, not an observation.
 
-## 11. Open items
+## 12. Open items
 
 - **The auth background gradient from §6 has no token.** That entry documents the exception; nobody ever added the actual class or token to `tokens/tokens.css`, so there was nothing to build against. `/login` and `/signup` (`apps/web/app/login`, `apps/web/app/signup`) shipped flat - `canvas` background, borders carrying hierarchy - rather than inventing a recipe. Measure the real gradient and add it to `tokens.css` as a fourth `.dispatch-*` class, then apply it here.

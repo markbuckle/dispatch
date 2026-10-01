@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Webhooks">
-  <circle cx="7" cy="9" r="3.25"></circle>
-  <circle cx="25" cy="23" r="3.25"></circle>
-  <path d="M9.5 11.5 L22.5 20.5" stroke-linecap="butt"></path>
+  <path d="M21 9 A5 5 0 1 0 13.5 13.33 L9.07 21"></path>
+  <path d="M20.43 25.33 A5 5 0 1 0 20.43 16.67 L16 9"></path>
+  <path d="M6.57 16.67 A5 5 0 1 0 14.07 21 L22.93 21"></path>
 </svg>
