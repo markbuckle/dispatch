@@ -32,7 +32,7 @@ canvas #08080A, 72px padding
 └────────────────────────┘
 ```
 
-Type-led, always. The brand has no illustration system and Instagram is not the place to invent one.
+Type-led, always.
 
 ## What actually works here
 

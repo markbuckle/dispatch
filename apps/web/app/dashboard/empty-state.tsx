@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-// One line of what's missing, one action. No illustration, ever.
+// One line of what's missing, one action.
 export function EmptyState({
   title,
   body,

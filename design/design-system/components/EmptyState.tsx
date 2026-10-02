@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 /**
- * One line of what's missing, one action. No illustration, ever.
+ * One line of what's missing, one action.
  * See foundations/imagery.md - this is the most frequently violated rule in the system.
  */
 export function EmptyState({

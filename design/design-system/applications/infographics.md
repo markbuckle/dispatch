@@ -1,6 +1,6 @@
 # Infographics and diagrams
 
-Diagrams are drawn with the system's own primitives - surfaces, hairlines, monoline icons, mono labels. **There is no separate illustration style**, and inventing one is the failure mode here.
+Diagrams are drawn with the system's own primitives - surfaces, hairlines, monoline icons, mono labels.
 
 ## Canvas sizes
 
@@ -55,7 +55,7 @@ Left to right for a process. Top to bottom for a hierarchy. Never radial, never 
 | Sparkline | A trend inside a table row or metric tile |
 | Table | **Usually the right answer.** If there are fewer than 8 data points, a table beats a chart. |
 
-**Never:** pie, doughnut, radar, gauge, treemap, word cloud, 3D anything, dual-axis.
+**Never:** pie, doughnut, radar, gauge, treemap, word cloud, dual-axis.
 
 Series colours in order: `info-fg #70B8FF`, `success-fg #3DD68C`, `warning-fg #FFCA16`, `danger-fg #FF9592`. A single-series chart uses `text-secondary`, not a colour - one series needs no colour coding.
 

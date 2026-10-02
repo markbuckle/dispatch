@@ -81,7 +81,7 @@ Under 50 words. One bold lead-in, one specific mechanism, one number, one link.
 - Max two type sizes per ad.
 - Mark always present, never larger than 24px in a banner.
 - No animation in display ads. A static ad in this category reads as more trustworthy, and animated ads get blocked anyway.
-- **No stock photography, no illustration, no gradient, no product screenshot** (unreadable at these sizes).
+- **No stock photography, no gradient, no product screenshot** (unreadable at these sizes).
 - Legible at 50% scale - check it.
 
 ## Podcast read

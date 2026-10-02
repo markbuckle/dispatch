@@ -6,7 +6,7 @@ Dispatch's primary imagery is **its own interface**. That's not a fallback posit
 
 1. **Product UI.** A real screen, real data, dark mode, at true resolution. Cropped tight to the thing being discussed.
 2. **Code.** A real request or response, syntax-highlighted, in Commit Mono. Short enough to read in three seconds.
-3. **Diagram.** A flow drawn with the system's own primitives - surfaces, hairlines, monoline icons, semantic status colours. No illustration style, no isometric.
+3. **Diagram.** A flow drawn with the system's own primitives - surfaces, hairlines, monoline icons, semantic status colours.
 4. **Photography.** Only for the team, careers, and about pages. Real people at real desks.
 5. **Nothing.** A section with strong type and no image is better than a section with a stock image.
 
@@ -37,9 +37,7 @@ Dispatch's primary imagery is **its own interface**. That's not a fallback posit
 - AI-generated humans
 - A photo of an office that isn't ours
 
-## Illustration - we don't
-
-No illustration system. No mascot. No spot illustrations for empty states.
+## Clichés
 
 **Categorically never:** glowing orbs, neural network meshes, wireframe globes, circuit-board motifs, floating 3D geometry, isometric city scenes, Memphis shapes, corporate-Memphis blob people, hand-drawn arrows, robots, anything that says "AI" visually.
 
