@@ -1,7 +1,13 @@
 import type { RequestLog } from '@dispatch/db';
 import type { ReactNode } from 'react';
 import { formatRelative, formatUtc } from '../format-time';
+import { LogStatusIcon } from './log-status-icon';
 import { StatusPill } from './status-pill';
+
+// every public route sits under /v1, so the prefix repeats on every row; the full path stays on hover
+function withoutVersion(path: string): string {
+  return path.replace(/^\/v1(?=\/)/, '');
+}
 
 export function LogsTable({ logs }: { logs: RequestLog[] }) {
   const now = Date.now();
@@ -11,8 +17,8 @@ export function LogsTable({ logs }: { logs: RequestLog[] }) {
       <table className="w-full border-collapse text-body">
         <thead className="bg-subtle">
           <tr>
-            <Th>Method</Th>
             <Th>Path</Th>
+            <Th>Method</Th>
             <Th>Status</Th>
             <Th>Duration</Th>
             <Th>Created</Th>
@@ -24,11 +30,14 @@ export function LogsTable({ logs }: { logs: RequestLog[] }) {
               key={log.id}
               className="dispatch-transition border-b border-border-subtle last:border-b-0 hover:bg-surface"
             >
+              <td className="h-row px-5 align-middle font-mono text-mono text-text-primary">
+                <span className="flex items-center gap-3">
+                  <LogStatusIcon status={log.status} />
+                  <span title={log.path}>{withoutVersion(log.path)}</span>
+                </span>
+              </td>
               <td className="h-row px-5 align-middle font-mono text-mono text-text-secondary">
                 {log.method}
-              </td>
-              <td className="h-row px-5 align-middle font-mono text-mono text-text-primary">
-                {log.path}
               </td>
               <td className="h-row px-5 align-middle">
                 <StatusPill status={log.status} />

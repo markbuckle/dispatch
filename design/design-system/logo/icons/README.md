@@ -35,13 +35,23 @@ Nine icons, the sidebar set. Drawn on the same 32-unit grid and 2.25 stroke as t
 
 Thicken as it shrinks - a 2.25 stroke at 16px renders at 1.125 device px and goes mushy. Check every glyph at 16px before accepting it.
 
-## Status icon
+## Status tiles
 
-`dispatch-email-sent.svg` is not a nav glyph. It sits before the recipient in the emails table, at 32px, and is the one icon that glows: a framed tile, a radial fill and an envelope, drawn on a 598-unit grid.
+`dispatch-email-sent.svg` is not a nav glyph. It is the source drawing for the status tile that leads a dashboard table row, at 32px, and the one icon that glows: a framed tile, a radial fill and an envelope, drawn on a 598-unit grid.
 
-The file is the green source drawing. The product never uses its hex values: `apps/web/app/dashboard/emails/email-status-icon.tsx` redraws it with every stop on a `.dispatch-status-icon-*` class from `tokens/tokens.css`, tinted by the same tone as the status pill - success, warning or danger, per `foundations/vocabulary.md`. A green tile beside a Bounced pill would contradict it.
+The file is the green source. The product never uses its hex values: `apps/web/app/dashboard/status-tile.tsx` redraws the tile with every stop on a `.dispatch-status-icon-*` class from `tokens/tokens.css`, tinted by the same tone as the row's pill - success, warning, danger, neutral or off, per `foundations/vocabulary.md`. A green tile beside a Bounced pill would contradict it.
 
-The source's blurred grid lines are left out of the product drawing. At 32px they render under a third of a pixel wide and add nothing but markup.
+| Table | Glyph | Tone follows |
+|---|---|---|
+| Emails | the source's own envelope | email status |
+| Domains | `globe.svg` | domain status |
+| Logs | `list.svg` | status code class |
+| API keys | `key.svg` | active or revoked |
+| Webhooks | `webhook.svg` | always success, since nothing disables a webhook yet; disabling would bring a visible label with its tone |
+
+A sidebar glyph is scaled into the tile at the envelope's 30-unit stroke, so the nav and the tables read as one set, and takes the envelope's light-to-tinted ink.
+
+The source's grid is redrawn rather than copied. Its five lines a side at 5 units render a quarter of a pixel wide at 32px and disappear, so the product draws three a side at the quarters, 19 units wide - about a pixel. They sit at 17% rather than the source's 20%, because a pixel-wide line at 20% reads as a hard grid rather than a texture. A radial mask keeps them faint behind the glyph and at full strength in the band around it, fading out to nothing just inside the tile's edge.
 
 ## Everything else
 

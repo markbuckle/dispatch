@@ -9,6 +9,7 @@ import { eventLabels } from '../event-labels';
 import { formatRelative, formatUtc } from '../format-time';
 import { revealWebhookSecret } from './actions';
 import { DeleteWebhookButton } from './delete-webhook-button';
+import { WebhookIcon } from './webhook-icon';
 
 function omit(source: Record<string, string>, key: string): Record<string, string> {
   const next = { ...source };
@@ -75,14 +76,17 @@ export function WebhooksTable({ webhooks }: { webhooks: WebhookSummary[] }) {
               <Fragment key={webhook.id}>
                 <tr className="dispatch-transition border-b border-border-subtle last:border-b-0 hover:bg-surface">
                   <td className="h-row px-5 align-middle font-mono text-mono text-text-primary">
-                    <Link
-                      href={`/dashboard/webhooks/${webhook.id}`}
-                      className="dispatch-transition rounded-xs text-text-primary outline-none hover:text-text-secondary focus-visible:shadow-focus"
-                    >
-                      {webhook.url}
-                    </Link>
+                    <span className="flex items-center gap-3">
+                      <WebhookIcon />
+                      <Link
+                        href={`/dashboard/webhooks/${webhook.id}`}
+                        className="dispatch-transition rounded-xs text-text-primary outline-none hover:text-text-secondary focus-visible:shadow-focus"
+                      >
+                        {webhook.url}
+                      </Link>
+                    </span>
                   </td>
-                  <td className="h-row px-5 align-middle text-text-secondary">
+                  <td className="h-row px-5 align-middle text-detail text-text-secondary">
                     {webhook.events.map((event) => eventLabels[event]).join(', ')}
                   </td>
                   <td className="h-row px-5 align-middle text-text-muted">

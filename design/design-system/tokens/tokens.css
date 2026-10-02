@@ -181,6 +181,8 @@
   --text-h4: 16px; --text-h4--line-height: 1.40; --text-h4--letter-spacing: -0.005em; --text-h4--font-weight: 600;
   --text-body:  16px;   --text-body--line-height:  1.50;
   --text-meta:  15px;   --text-meta--line-height:  1.50;
+  /* a step under meta, for a list of values inside a table cell, so it wraps less and sits back from the row's lead column */
+  --text-detail: 14px;  --text-detail--line-height: 1.45;
   --text-mono:  13.5px; --text-mono--line-height:  1.50;
   --text-micro:    11px;   --text-micro--line-height: 1.20; --text-micro--letter-spacing: 0.02em; --text-micro--font-weight: 500;
   --text-pill:     14.5px; --text-pill--line-height: 1.30; --text-pill--font-weight: 500;
@@ -368,12 +370,15 @@ a:hover { color: var(--dispatch-text-primary); }
   color: var(--dispatch-text-inverse);
 }
 
-/* The emails table's status icon, logo/icons/dispatch-email-sent.svg in the row's tone: the one glow on a product surface.
+/* The status tile that leads a dashboard table row, logo/icons/dispatch-email-sent.svg in the row's tone: the one glow on a product surface.
    A tone class on the svg sets the two colours, and each gradient stop reads them through its own class. */
 .dispatch-status-icon-success { --status-icon-fg: var(--dispatch-success-fg); --status-icon-bg: var(--dispatch-success-bg); }
 .dispatch-status-icon-warning { --status-icon-fg: var(--dispatch-warning-fg); --status-icon-bg: var(--dispatch-warning-bg); }
 .dispatch-status-icon-danger  { --status-icon-fg: var(--dispatch-danger-fg);  --status-icon-bg: var(--dispatch-danger-bg); }
+.dispatch-status-icon-neutral { --status-icon-fg: var(--dispatch-neutral-fg); --status-icon-bg: var(--dispatch-neutral-bg); }
+.dispatch-status-icon-off     { --status-icon-fg: var(--dispatch-off-fg);     --status-icon-bg: var(--dispatch-off-bg); }
 .dispatch-status-icon-frame { stroke: var(--dispatch-text-tertiary); }
+.dispatch-status-icon-grid  { stroke: var(--dispatch-text-primary); stroke-opacity: 0.17; }
 .dispatch-status-icon-core  { stop-color: var(--status-icon-fg); }
 .dispatch-status-icon-rim   { stop-color: color-mix(in oklab, var(--status-icon-fg) 60%, var(--status-icon-bg)); stop-opacity: 0.74; }
 .dispatch-status-icon-haze  { stop-color: var(--status-icon-fg); stop-opacity: 0.29; }
