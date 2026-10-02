@@ -1,9 +1,8 @@
 import type { EmailStatus } from '@dispatch/db';
-
-export type EmailStatusTone = 'success' | 'warning' | 'danger';
+import type { StatusTone } from '../status-tone';
 
 // labels and tones are fixed in foundations/vocabulary.md, so they are never paraphrased here
-const statuses: Record<EmailStatus, { label: string; tone: EmailStatusTone }> = {
+const statuses: Record<EmailStatus, { label: string; tone: StatusTone }> = {
   queued: { label: 'Queued', tone: 'warning' },
   sent: { label: 'Sent', tone: 'success' },
   failed: { label: 'Failed', tone: 'danger' },
@@ -18,6 +17,6 @@ export function emailStatusLabel(status: EmailStatus): string {
   return statuses[status].label;
 }
 
-export function emailStatusTone(status: EmailStatus): EmailStatusTone {
+export function emailStatusTone(status: EmailStatus): StatusTone {
   return statuses[status].tone;
 }

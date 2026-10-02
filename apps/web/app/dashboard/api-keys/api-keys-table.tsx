@@ -1,5 +1,6 @@
 import type { ApiKeySummary } from '@dispatch/db';
 import type { ReactNode } from 'react';
+import { ApiKeyIcon } from './api-key-icon';
 import { permissionLabels } from './permissions';
 import { RevokeApiKeyButton } from './revoke-api-key-button';
 
@@ -44,7 +45,10 @@ export function ApiKeysTable({ keys }: { keys: ApiKeySummary[] }) {
               <td
                 className={`h-row px-5 align-middle ${key.revokedAt ? 'text-text-muted' : 'text-text-primary'}`}
               >
-                {key.name}
+                <span className="flex items-center gap-3">
+                  <ApiKeyIcon isRevoked={key.revokedAt !== null} />
+                  {key.name}
+                </span>
               </td>
               <td className="h-row px-5 align-middle font-mono text-mono text-text-secondary">
                 {key.keyPrefix}…

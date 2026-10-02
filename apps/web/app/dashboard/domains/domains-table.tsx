@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { formatRelative, formatUtc } from '../format-time';
 import { CheckDomainButton } from './check-domain-button';
 import { DnsRecordsButton } from './dns-records-button';
+import { DomainStatusIcon } from './domain-status-icon';
 import { DomainStatusPill } from './domain-status-pill';
 import { RemoveDomainButton } from './remove-domain-button';
 
@@ -28,7 +29,12 @@ export function DomainsTable({ domains }: { domains: Domain[] }) {
               key={domain.id}
               className="dispatch-transition border-b border-border-subtle last:border-b-0 hover:bg-surface"
             >
-              <td className="h-row px-5 align-middle text-text-primary">{domain.name}</td>
+              <td className="h-row px-5 align-middle text-text-primary">
+                <span className="flex items-center gap-3">
+                  <DomainStatusIcon status={domain.status} />
+                  {domain.name}
+                </span>
+              </td>
               <td className="h-row px-5 align-middle">
                 <DomainStatusPill status={domain.status} />
               </td>

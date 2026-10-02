@@ -27,6 +27,7 @@ Four faces, each with one job. **Inter does almost all the work.**
 | `h4` | 16px | 600 | 1.40 | -0.005em | Inter |
 | `body` | **16px** | 400 | 1.50 | 0 | Inter |
 | `meta` | **15px** | 400 | 1.50 | 0 | Inter |
+| `detail` | 14px | 400 | 1.45 | 0 | Inter |
 | `mono` | 13.5px | 450 | 1.50 | 0 | Commit Mono |
 | `pill` | 14.5px | 500 | 1.30 | 0 | Inter |
 | `micro` | 11px | 500 | 1.20 | +0.02em | Inter / Commit Mono |
@@ -37,7 +38,7 @@ Four faces, each with one job. **Inter does almost all the work.**
 
 **Corrected.** The light-mode capture measured 14px dominant, and this file said so - including the claim that no 13px tier existed. Measuring the product **rendered in dark mode** gave a different answer: **15px** is the most-used content size, with **13px** carrying mono metadata and dense secondary rows, and the page title at **32px**, not 24px.
 
-So the product scale is: page title **36** · card title 17 · body and table cells **16** · table headers and secondary metadata **15** · mono **13.5** · captions and overlines 12.
+So the product scale is: page title **36** · card title 17 · body and table cells **16** · table headers and secondary metadata **15** · a list of values inside a cell 14 · mono **13.5** · captions and overlines 12.
 
 **Corrected twice.** The light-mode capture measured 14px dominant; the dark-mode measurement gave 15px; matching the rebuilt screens against the reference moved it to 16px with a distinct 15px metadata tier. Each correction went the same direction, which is the tell: a dark theme at a larger optical size needs more, not less.
 
