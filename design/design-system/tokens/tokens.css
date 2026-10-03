@@ -66,6 +66,9 @@
   /* Dims the page behind a dialog. The only full-screen fill in the system. */
   --dispatch-scrim: rgba(0,0,0,0.6);
 
+  /* The grey the auth backdrop fades into at its foot. Decoration only, never a surface or a status. */
+  --dispatch-backdrop-lift: #1C1C20;
+
   /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
@@ -105,6 +108,7 @@
   --dispatch-neutral-bg: #F0F0F3; --dispatch-neutral-fg: #60646C;
   --dispatch-off-bg: #F9F9FB; --dispatch-off-fg: #80838D;
   --dispatch-scrim: rgba(0,0,0,0.4);
+  --dispatch-backdrop-lift: #ECECEF;
 
   --dispatch-ring:    inset 0 1px 0 rgba(0,0,0,0.02);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
@@ -157,6 +161,7 @@
   --color-off-bg: var(--dispatch-off-bg);
   --color-off-fg: var(--dispatch-off-fg);
   --color-scrim: var(--dispatch-scrim);
+  --color-backdrop-lift: var(--dispatch-backdrop-lift);
   /* Softens what sits behind a dialog without the dialog itself going translucent. */
   --blur-scrim: 4px;
 
@@ -370,25 +375,12 @@ a:hover { color: var(--dispatch-text-primary); }
   color: var(--dispatch-text-inverse);
 }
 
-/* Auth pages: a canvas lit from the top centre, where the monogram sits, with a faint lift at the foot. */
+/* Auth pages: solid canvas through the top third, easing into grey at the foot, brightest at the centre
+   so the bottom corners stay dark. The top stays black so the monogram tile is what catches the eye. */
 .dispatch-auth-backdrop {
   background:
-    radial-gradient(ellipse 60% 420px at 50% 0%, var(--dispatch-hover), transparent 70%),
-    radial-gradient(ellipse 90% 320px at 50% 100%, var(--dispatch-surface), transparent 75%),
-    var(--dispatch-canvas);
-}
-/* Rings sent out from the monogram's centre, 56px down the page, fading out well before the edges.
-   Each ring is a 3px soft band rather than a hard 1px stop, so it does not alias into a moire. */
-.dispatch-auth-arcs {
-  background: repeating-radial-gradient(
-    circle at 50% 56px,
-    transparent 0 117px,
-    color-mix(in oklab, var(--dispatch-text-primary) 4%, transparent) 118.5px,
-    transparent 120px
-  );
-  -webkit-mask-image: radial-gradient(circle 640px at 50% 56px, black, transparent);
-  mask-image: radial-gradient(circle 640px at 50% 56px, black, transparent);
-  pointer-events: none;
+    radial-gradient(ellipse 80% 60% at 50% 100%, var(--dispatch-backdrop-lift), transparent 100%),
+    linear-gradient(to bottom in oklab, var(--dispatch-canvas) 35%, color-mix(in oklab, var(--dispatch-backdrop-lift) 60%, var(--dispatch-canvas)) 100%);
 }
 /* The monogram's tile: lit from above like the page behind it, so it reads as raised without a shadow. */
 .dispatch-monogram-tile {
