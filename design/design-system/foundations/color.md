@@ -16,7 +16,7 @@ Most systems have a primary brand colour. Dispatch doesn't. Reasons:
 2. Emphasis is available for free through weight and contrast on a dark canvas.
 3. Restraint is the brand. A tool that doesn't decorate itself reads as confident.
 
-Blue `#0090FF` is the **focus ring** and the **info state**. It is not a brand colour. Never use it as a hero fill, a gradient stop, an icon tint, or a decorative accent.
+Blue `#0090FF` is the **focus ring** on buttons and links, and the **info state**. A text field signals focus with a white glow instead, see `focus-field` in `shadow.md`. It is not a brand colour. Never use it as a hero fill, a gradient stop, an icon tint, or a decorative accent.
 
 ## Surfaces - five steps
 

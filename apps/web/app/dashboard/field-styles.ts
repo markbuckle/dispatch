@@ -1,6 +1,6 @@
 // every field composes from here, so the focus wash is defined once rather than per dialog
 const focusable =
-  'dispatch-transition rounded-md border border-border-default bg-surface text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field';
+  'dispatch-transition rounded-md border border-border-default bg-surface text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-focus-field-edge focus-visible:shadow-focus-field';
 
 export const fieldLabel = 'text-caption font-medium text-text-secondary';
 

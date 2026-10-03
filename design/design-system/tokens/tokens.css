@@ -29,7 +29,7 @@
   --dispatch-text-placeholder: #696E77;
   --dispatch-text-inverse:     #08080A;
 
-  /* Accent - focus rings and the info state only. Not a brand colour. */
+  /* Accent - the button and link focus ring and the info state only. Not a brand colour. */
   --dispatch-accent: #0090FF;
 
   /* Semantics - solid fill, bright foreground. Measured off the product. */
@@ -73,8 +73,10 @@
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
   --dispatch-focus:   0 0 0 2px var(--dispatch-canvas), 0 0 0 4px var(--dispatch-accent);
-  /* A field signals focus on its own border, so it takes a wash tight to the edge rather than the offset ring. */
-  --dispatch-focus-field: 0 0 0 3px rgba(0,144,255,0.22);
+  /* A field signals focus on its own border, so it takes a wash tight to the edge rather than the offset ring.
+     White at 14% matches the brightness the old blue wash had at 22%, and the edge matches #0090FF's lightness. */
+  --dispatch-focus-field: 0 0 0 3px color-mix(in oklab, var(--dispatch-text-primary) 14%, transparent);
+  --dispatch-focus-field-edge: var(--dispatch-text-tertiary);
 }
 
 [data-theme="light"] {
@@ -112,7 +114,8 @@
 
   --dispatch-ring:    inset 0 1px 0 rgba(0,0,0,0.02);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
-  --dispatch-focus-field: 0 0 0 3px rgba(13,116,206,0.22);
+  --dispatch-focus-field: 0 0 0 3px color-mix(in oklab, var(--dispatch-text-primary) 14%, transparent);
+  --dispatch-focus-field-edge: var(--dispatch-text-tertiary);
 }
 
 /* ── Tailwind v4 theme ───────────────────────────────────────────── */
@@ -136,6 +139,7 @@
   --color-text-inverse:     var(--dispatch-text-inverse);
 
   --color-accent: var(--dispatch-accent);
+  --color-focus-field-edge: var(--dispatch-focus-field-edge);
 
   --color-success-bg: var(--dispatch-success-bg);
   --color-success-fg: var(--dispatch-success-fg);
