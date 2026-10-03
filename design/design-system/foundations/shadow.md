@@ -10,7 +10,7 @@
 | `ring` | `inset 0 0 0 1px rgba(255,255,255,0.03)` | Cards, panels. Pairs with `border-default`. |
 | `overlay` | `0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)` | Dropdowns, dialogs, popovers, toasts. **The only permitted drop shadow.** |
 | `focus` | `0 0 0 2px var(--canvas), 0 0 0 4px #0090FF` | Focus ring on any interactive element |
-| `focus-field` | `0 0 0 3px rgba(0,144,255,0.22)` | Text inputs, textareas and selects, paired with a border that moves to `accent`. The offset ring would sit outside that border and read as two rings. |
+| `focus-field` | `0 0 0 3px` of `text-primary` at 14% | Text inputs, textareas and selects, paired with a border that moves to `focus-field-edge` (`text-tertiary`). A white wash rather than blue, at the brightness the blue had. The offset ring would sit outside that border and read as two rings. |
 
 ## The three elevation levels
 

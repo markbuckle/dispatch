@@ -34,7 +34,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             'placeholder:text-text-placeholder',
             error
               ? 'border-[rgba(255,149,146,0.55)] focus:border-danger-fg focus:shadow-[0_0_0_3px_rgba(255,149,146,0.18)]'
-              : 'border-border-default hover:border-border-strong focus:border-accent focus:shadow-[0_0_0_3px_rgba(0,144,255,0.22)]',
+              : 'border-border-default hover:border-border-strong focus:border-focus-field-edge focus:shadow-focus-field',
             'disabled:cursor-not-allowed disabled:bg-off-bg disabled:border-border-subtle disabled:text-text-placeholder',
             mono && 'font-mono text-[13px]',
             className,

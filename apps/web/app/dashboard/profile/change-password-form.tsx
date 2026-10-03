@@ -1,8 +1,9 @@
 'use client';
 
 import { type FormEvent, useId, useState, useTransition } from 'react';
+import { PasswordInput } from '../../password-input';
 import { primaryButton, secondaryButton } from '../button-styles';
-import { fieldLabel, inputField } from '../field-styles';
+import { fieldLabel } from '../field-styles';
 import { changePassword } from './actions';
 
 export function ChangePasswordForm() {
@@ -65,14 +66,12 @@ export function ChangePasswordForm() {
         <label htmlFor={passwordId} className={fieldLabel}>
           New password
         </label>
-        <input
+        <PasswordInput
           id={passwordId}
-          type="password"
           minLength={12}
           autoComplete="new-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className={inputField}
         />
         <span className="text-caption text-text-muted">At least 12 characters.</span>
       </div>
@@ -81,14 +80,12 @@ export function ChangePasswordForm() {
         <label htmlFor={confirmPasswordId} className={fieldLabel}>
           Confirm password
         </label>
-        <input
+        <PasswordInput
           id={confirmPasswordId}
-          type="password"
           minLength={12}
           autoComplete="new-password"
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
-          className={inputField}
         />
       </div>
 

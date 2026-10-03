@@ -29,7 +29,7 @@
   --dispatch-text-placeholder: #696E77;
   --dispatch-text-inverse:     #08080A;
 
-  /* Accent - focus rings and the info state only. Not a brand colour. */
+  /* Accent - the button and link focus ring and the info state only. Not a brand colour. */
   --dispatch-accent: #0090FF;
 
   /* Semantics - solid fill, bright foreground. Measured off the product. */
@@ -66,12 +66,17 @@
   /* Dims the page behind a dialog. The only full-screen fill in the system. */
   --dispatch-scrim: rgba(0,0,0,0.6);
 
+  /* The grey the auth backdrop fades into at its foot. Decoration only, never a surface or a status. */
+  --dispatch-backdrop-lift: #1C1C20;
+
   /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
   --dispatch-focus:   0 0 0 2px var(--dispatch-canvas), 0 0 0 4px var(--dispatch-accent);
-  /* A field signals focus on its own border, so it takes a wash tight to the edge rather than the offset ring. */
-  --dispatch-focus-field: 0 0 0 3px rgba(0,144,255,0.22);
+  /* A field signals focus on its own border, so it takes a wash tight to the edge rather than the offset ring.
+     White at 14% matches the brightness the old blue wash had at 22%, and the edge matches #0090FF's lightness. */
+  --dispatch-focus-field: 0 0 0 3px color-mix(in oklab, var(--dispatch-text-primary) 14%, transparent);
+  --dispatch-focus-field-edge: var(--dispatch-text-tertiary);
 }
 
 [data-theme="light"] {
@@ -105,10 +110,12 @@
   --dispatch-neutral-bg: #F0F0F3; --dispatch-neutral-fg: #60646C;
   --dispatch-off-bg: #F9F9FB; --dispatch-off-fg: #80838D;
   --dispatch-scrim: rgba(0,0,0,0.4);
+  --dispatch-backdrop-lift: #ECECEF;
 
   --dispatch-ring:    inset 0 1px 0 rgba(0,0,0,0.02);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
-  --dispatch-focus-field: 0 0 0 3px rgba(13,116,206,0.22);
+  --dispatch-focus-field: 0 0 0 3px color-mix(in oklab, var(--dispatch-text-primary) 14%, transparent);
+  --dispatch-focus-field-edge: var(--dispatch-text-tertiary);
 }
 
 /* ── Tailwind v4 theme ───────────────────────────────────────────── */
@@ -132,6 +139,7 @@
   --color-text-inverse:     var(--dispatch-text-inverse);
 
   --color-accent: var(--dispatch-accent);
+  --color-focus-field-edge: var(--dispatch-focus-field-edge);
 
   --color-success-bg: var(--dispatch-success-bg);
   --color-success-fg: var(--dispatch-success-fg);
@@ -157,6 +165,7 @@
   --color-off-bg: var(--dispatch-off-bg);
   --color-off-fg: var(--dispatch-off-fg);
   --color-scrim: var(--dispatch-scrim);
+  --color-backdrop-lift: var(--dispatch-backdrop-lift);
   /* Softens what sits behind a dialog without the dialog itself going translucent. */
   --blur-scrim: 4px;
 
@@ -368,6 +377,18 @@ a:hover { color: var(--dispatch-text-primary); }
   border-color: var(--dispatch-text-primary);
   background: var(--dispatch-text-primary);
   color: var(--dispatch-text-inverse);
+}
+
+/* Auth pages: solid canvas through the top third, easing into grey at the foot, brightest at the centre
+   so the bottom corners stay dark. The top stays black so the monogram tile is what catches the eye. */
+.dispatch-auth-backdrop {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, var(--dispatch-backdrop-lift), transparent 100%),
+    linear-gradient(to bottom in oklab, var(--dispatch-canvas) 35%, color-mix(in oklab, var(--dispatch-backdrop-lift) 60%, var(--dispatch-canvas)) 100%);
+}
+/* The monogram's tile: lit from above like the page behind it, so it reads as raised without a shadow. */
+.dispatch-monogram-tile {
+  background: linear-gradient(to bottom, var(--dispatch-hover), var(--dispatch-canvas));
 }
 
 /* The status tile that leads a dashboard table row, logo/icons/dispatch-email-sent.svg in the row's tone: the one glow on a product surface.

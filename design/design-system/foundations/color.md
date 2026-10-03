@@ -16,7 +16,7 @@ Most systems have a primary brand colour. Dispatch doesn't. Reasons:
 2. Emphasis is available for free through weight and contrast on a dark canvas.
 3. Restraint is the brand. A tool that doesn't decorate itself reads as confident.
 
-Blue `#0090FF` is the **focus ring** and the **info state**. It is not a brand colour. Never use it as a hero fill, a gradient stop, an icon tint, or a decorative accent.
+Blue `#0090FF` is the **focus ring** on buttons and links, and the **info state**. A text field signals focus with a white glow instead, see `focus-field` in `shadow.md`. It is not a brand colour. Never use it as a hero fill, a gradient stop, an icon tint, or a decorative accent.
 
 ## Surfaces - five steps
 
@@ -82,7 +82,7 @@ The "never encode meaning in colour alone" requirement is satisfied by the word 
 
 ## Gradients, on marketing only
 
-Four sanctioned gradients, all defined as classes in `tokens/tokens.css` so nobody hand-rolls stops. Every stop is a token. **None of them appear in the product.**
+Five sanctioned gradients, all defined as classes in `tokens/tokens.css` so nobody hand-rolls stops. Every stop is a token. **None of them appear in the product.**
 
 | Class | What it is | Stops |
 |---|---|---|
@@ -90,6 +90,7 @@ Four sanctioned gradients, all defined as classes in `tokens/tokens.css` so nobo
 | `.dispatch-rule` | Section rule, replaces a flat 1px border | transparent, `border-subtle` 6-34%, `text-muted` at 50%, `border-subtle` 66-94%, transparent |
 | `.dispatch-glow` | Sits under a rule | radial ellipse 55% x 100% from 50% 0%, `hover` to transparent at 70% |
 | `.dispatch-spotlight` | Lights the footer wordmark around the cursor, see DECISIONS.md #9 | 320px radial mask: black, 55% at 20%, 20% at 50%, transparent; 1px `text-primary` outline; fill `text-primary` at 2%; inner edge glow of `text-primary` at 5%, 26 units wide, blurred 15 units; hotspot of `text-primary` at 80%, 6 units wide, blurred 5 units, in a 110px mask. Both glows are clipped inside the letters, so nothing glows outside one |
+| `.dispatch-auth-backdrop`, `.dispatch-monogram-tile` | The auth pages' backdrop and the monogram tile above the title | backdrop: `canvas` to 35%, then to `backdrop-lift` mixed 60% into `canvas` at the foot, top to bottom, under a `backdrop-lift` ellipse 80% x 60% from 50% 100% to transparent; tile: `hover` to `canvas`, top to bottom |
 
 Notes that will bite:
 

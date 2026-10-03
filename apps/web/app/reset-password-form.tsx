@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { type FormEvent, useEffect, useState } from 'react';
 import { createClient } from '../lib/supabase/client';
 import { AuthShell } from './auth-shell';
+import { PasswordInput } from './password-input';
 
 export function ResetPasswordForm() {
   const [ready, setReady] = useState(false);
@@ -40,71 +41,61 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <AuthShell>
-      <div className="rounded-lg border border-border-default bg-surface p-6 shadow-ring">
-        <h1 className="text-h3 text-text-primary">Set a new password</h1>
+    <AuthShell
+      title="Set a new password"
+      subtitle={ready && !hasSession ? 'This link is invalid or has expired.' : undefined}
+    >
+      {!ready ? null : !hasSession ? (
+        <p className="text-center text-caption text-text-secondary">
+          <Link href="/forgot-password" className="text-text-primary hover:underline">
+            Request a new link
+          </Link>
+        </p>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <div className="flex flex-col gap-[7px]">
+            <label htmlFor="password" className="text-caption font-medium text-text-secondary">
+              New password
+            </label>
+            <PasswordInput
+              id="password"
+              required
+              minLength={12}
+              autoComplete="new-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <span className="text-caption text-text-muted">At least 12 characters.</span>
+          </div>
 
-        {!ready ? null : !hasSession ? (
-          <>
-            <p className="mt-1.5 text-caption text-text-secondary">
-              This link is invalid or has expired.
-            </p>
-            <p className="mt-5 text-center text-caption text-text-secondary">
-              <Link href="/forgot-password" className="text-text-primary hover:underline">
-                Request a new link
-              </Link>
-            </p>
-          </>
-        ) : (
-          <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
-            <div className="flex flex-col gap-[7px]">
-              <label htmlFor="password" className="text-caption font-medium text-text-secondary">
-                New password
-              </label>
-              <input
-                id="password"
-                type="password"
-                required
-                minLength={12}
-                autoComplete="new-password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
-              />
-              <span className="text-caption text-text-muted">At least 12 characters.</span>
-            </div>
-
-            <div className="flex flex-col gap-[7px]">
-              <label
-                htmlFor="confirmPassword"
-                className="text-caption font-medium text-text-secondary"
-              >
-                Confirm password
-              </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                required
-                minLength={12}
-                autoComplete="new-password"
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
-              />
-            </div>
-
-            {error && <p className="text-caption text-danger-fg">{error}</p>}
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="dispatch-transition flex h-control items-center justify-center rounded-md bg-text-primary text-body font-medium text-text-inverse outline-none hover:bg-white focus-visible:shadow-focus active:bg-[#C8CACD] disabled:cursor-not-allowed disabled:bg-border-default disabled:text-text-muted"
+          <div className="flex flex-col gap-[7px]">
+            <label
+              htmlFor="confirmPassword"
+              className="text-caption font-medium text-text-secondary"
             >
-              {submitting ? 'Saving' : 'Save new password'}
-            </button>
-          </form>
-        )}
-      </div>
+              Confirm password
+            </label>
+            <PasswordInput
+              id="confirmPassword"
+              required
+              minLength={12}
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+            />
+          </div>
+
+          {error && <p className="text-caption text-danger-fg">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="dispatch-transition flex h-control items-center justify-center rounded-md bg-text-primary text-body font-medium text-text-inverse outline-none hover:bg-white focus-visible:shadow-focus active:bg-[#C8CACD] disabled:cursor-not-allowed disabled:bg-border-default disabled:text-text-muted"
+          >
+            {submitting ? 'Saving' : 'Save new password'}
+          </button>
+        </form>
+      )}
     </AuthShell>
   );
 }

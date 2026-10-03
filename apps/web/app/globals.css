@@ -12,3 +12,21 @@
 body {
   font-family: var(--font-inter), var(--font-sans);
 }
+
+/* Edge hides its own reveal button whenever a field is refocused; PasswordInput's toggle replaces it */
+input::-ms-reveal {
+  display: none;
+}
+
+/* Chrome paints autofilled fields its own blue, which the design system keeps for focus. Its background
+   cannot be overridden, so an inset shadow wide enough to cover any field paints the surface over it */
+input:-webkit-autofill {
+  box-shadow: inset 0 0 0 1000px var(--dispatch-surface);
+  -webkit-text-fill-color: var(--dispatch-text-primary);
+  caret-color: var(--dispatch-text-primary);
+}
+input:-webkit-autofill:focus-visible {
+  box-shadow:
+    inset 0 0 0 1000px var(--dispatch-surface),
+    var(--dispatch-focus-field);
+}
