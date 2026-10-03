@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { generateSigningSecret, signPayload, verifySignature } from './sign';
 
 // from standardwebhooks 1.1.1, so a construction Svix and Resend would reject fails here
@@ -73,6 +73,10 @@ describe('signPayload', () => {
 });
 
 describe('verifySignature', () => {
+  // verifySignature reads the clock again, and a second ticking over between reads lands exactly on the window edge
+  beforeEach(() => vi.useFakeTimers({ now: Date.now() }));
+  afterEach(() => vi.useRealTimers());
+
   it('accepts a signature it produced for the same payload', () => {
     const timestampSeconds = currentTimestamp();
     const { secret, payload, header } = signedAt(timestampSeconds);
