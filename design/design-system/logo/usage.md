@@ -6,10 +6,11 @@
 |---|---|---|
 | `mark.svg` | Symbol only, `#EDEEF0` | App chrome, sidebar, favicon source, anywhere the name is already present |
 | `mark-inverse.svg` | Symbol only, `#08080A` | On a light fill or a light-mode surface |
-| `wordmark.svg` | "Dispatch" only, drawn as outlines | **The site default.** Marketing header, auth pages, legal pages, 404 |
+| `wordmark.svg` | "Dispatch" only, drawn as outlines | **The site default.** Marketing header, legal pages, 404 |
 | `lockup-horizontal.svg` | Symbol + wordmark, side by side | Email footer, deck title slide, docs |
 | `lockup-stacked.svg` | Symbol above wordmark | Square or portrait spaces - social avatars, sponsor slides, merch |
 | `favicon.svg` | Symbol on a rounded near-black tile | Browser tab, PWA icon, app switcher |
+| `monogram-tile.svg` | The wordmark's D, cut out and set on a raised 64px tile | Auth pages, above the page title |
 
 ## The concept
 
@@ -80,7 +81,8 @@ The mark is **never** in a semantic colour. Not green for "delivered", not red f
 | Landing page, above the footer | `wordmark.svg` in `subtle`, cropped at 244 of 323 units by the footer rule | Full viewport width, inside the page gutter |
 | Dashboard sidebar, expanded | `lockup-horizontal.svg` | 108px wide |
 | Dashboard sidebar, collapsed | `mark.svg` | 20px |
-| Auth, legal and 404 pages | `wordmark.svg` | 132px wide |
+| Auth pages | `monogram-tile.svg`, as `Monogram` in `apps/web/app/logo.tsx` | 48px tile, D 24px wide |
+| Legal and 404 pages | `wordmark.svg` | 132px wide |
 | Transactional email header | `lockup-horizontal.svg` as a 2× PNG | 120px wide |
 | Deck title slide | `lockup-horizontal.svg` | 240px wide |
 | Deck body slides | `mark.svg`, bottom-left, 40% opacity | 18px |

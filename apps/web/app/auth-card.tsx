@@ -4,8 +4,12 @@ import Link from 'next/link';
 import { type FormEvent, useState } from 'react';
 import { createClient } from '../lib/supabase/client';
 import { AuthShell } from './auth-shell';
+import { PasswordInput } from './password-input';
 
 type Mode = 'login' | 'signup';
+
+// Every form that sets a password requires 12, so log in holds its button to the same floor
+const MIN_PASSWORD_LENGTH = 12;
 
 export type AuthNotice = { tone: 'neutral' | 'danger'; text: string };
 
@@ -71,165 +75,151 @@ export function AuthCard({ mode, notice: urlNotice }: { mode: Mode; notice?: Aut
   }
 
   const disabled = submitting || oauthProvider !== null;
+  const isPasswordReady = password.length >= MIN_PASSWORD_LENGTH;
 
   return (
-    <AuthShell>
-      <div className="mb-4 flex h-control w-full items-center gap-0.5 rounded-md border border-border-default bg-subtle p-0.5">
-        <Link
-          href="/login"
-          className={`dispatch-transition flex h-7 flex-1 items-center justify-center rounded-sm text-caption font-medium ${
-            isSignup ? 'text-text-muted hover:text-text-secondary' : 'bg-hover text-text-primary'
-          }`}
+    <AuthShell
+      title={isSignup ? 'Create your Dispatch account' : 'Log in to Dispatch'}
+      subtitle={
+        isSignup ? (
+          <>
+            Already have an account?{' '}
+            <Link href="/login" className="font-medium text-text-primary hover:underline">
+              Log in
+            </Link>
+            .
+          </>
+        ) : (
+          <>
+            Don&apos;t have an account?{' '}
+            <Link href="/signup" className="font-medium text-text-primary hover:underline">
+              Sign up
+            </Link>
+            .
+          </>
+        )
+      }
+    >
+      {urlNotice && (
+        <p
+          className={`mb-5 text-center text-caption ${urlNotice.tone === 'danger' ? 'text-danger-fg' : 'text-text-secondary'}`}
         >
-          Log in
-        </Link>
-        <Link
-          href="/signup"
-          className={`dispatch-transition flex h-7 flex-1 items-center justify-center rounded-sm text-caption font-medium ${
-            isSignup ? 'bg-hover text-text-primary' : 'text-text-muted hover:text-text-secondary'
-          }`}
+          {urlNotice.text}
+        </p>
+      )}
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <button
+          type="button"
+          onClick={() => handleOAuth('google')}
+          disabled={disabled}
+          className="dispatch-transition flex h-control items-center justify-center gap-2.5 rounded-md border border-border-default bg-subtle text-body font-medium text-text-primary outline-none hover:border-border-strong hover:bg-hover focus-visible:shadow-focus disabled:cursor-not-allowed disabled:text-text-placeholder"
         >
-          Sign up
-        </Link>
+          <GoogleLogo />
+          {isSignup ? 'Sign up with Google' : 'Continue with Google'}
+        </button>
+        <button
+          type="button"
+          onClick={() => handleOAuth('github')}
+          disabled={disabled}
+          className="dispatch-transition flex h-control items-center justify-center gap-2.5 rounded-md border border-border-default bg-subtle text-body font-medium text-text-primary outline-none hover:border-border-strong hover:bg-hover focus-visible:shadow-focus disabled:cursor-not-allowed disabled:text-text-placeholder"
+        >
+          <GitHubLogo />
+          {isSignup ? 'Sign up with GitHub' : 'Continue with GitHub'}
+        </button>
       </div>
 
-      <div className="rounded-lg border border-border-default bg-surface p-6 shadow-ring">
-        {urlNotice && (
-          <p
-            className={`mb-5 text-caption ${urlNotice.tone === 'danger' ? 'text-danger-fg' : 'text-text-secondary'}`}
-          >
-            {urlNotice.text}
-          </p>
-        )}
+      <div aria-hidden="true" className="my-4 flex items-center gap-3">
+        <span className="h-px flex-1 bg-border-subtle" />
+        <span className="text-caption text-text-muted">or</span>
+        <span className="h-px flex-1 bg-border-subtle" />
+      </div>
 
-        <div className="flex flex-col gap-3">
-          <button
-            type="button"
-            onClick={() => handleOAuth('google')}
-            disabled={disabled}
-            className="dispatch-transition flex h-control items-center justify-center gap-2.5 rounded-md border border-border-default bg-subtle text-body font-medium text-text-primary outline-none hover:border-border-strong hover:bg-hover focus-visible:shadow-focus disabled:cursor-not-allowed disabled:text-text-placeholder"
-          >
-            <GoogleLogo />
-            {isSignup ? 'Sign up with Google' : 'Continue with Google'}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleOAuth('github')}
-            disabled={disabled}
-            className="dispatch-transition flex h-control items-center justify-center gap-2.5 rounded-md border border-border-default bg-subtle text-body font-medium text-text-primary outline-none hover:border-border-strong hover:bg-hover focus-visible:shadow-focus disabled:cursor-not-allowed disabled:text-text-placeholder"
-          >
-            <GitHubLogo />
-            {isSignup ? 'Sign up with GitHub' : 'Continue with GitHub'}
-          </button>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-[7px]">
+          <label htmlFor="email" className="text-caption font-medium text-text-secondary">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
+          />
         </div>
 
-        <div aria-hidden="true" className="my-5 flex items-center gap-3">
-          <span className="h-px flex-1 bg-border-subtle" />
-          <span className="text-caption text-text-muted">or</span>
-          <span className="h-px flex-1 bg-border-subtle" />
-        </div>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-[7px]">
-            <label htmlFor="email" className="text-caption font-medium text-text-secondary">
-              Email
+        <div className="flex flex-col gap-[7px]">
+          <div className="flex items-baseline justify-between">
+            <label htmlFor="password" className="text-caption font-medium text-text-secondary">
+              Password
             </label>
-            <input
-              id="email"
-              type="email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
-            />
-          </div>
-
-          <div className="flex flex-col gap-[7px]">
-            <div className="flex items-baseline justify-between">
-              <label htmlFor="password" className="text-caption font-medium text-text-secondary">
-                Password
-              </label>
-              {!isSignup && (
-                <a
-                  href="/forgot-password"
-                  className="dispatch-transition text-caption text-text-muted hover:text-text-primary"
-                >
-                  Forgot password?
-                </a>
-              )}
-            </div>
-            <input
-              id="password"
-              type="password"
-              required
-              minLength={isSignup ? 12 : undefined}
-              autoComplete={isSignup ? 'new-password' : 'current-password'}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="dispatch-transition h-control-lg rounded-md border border-border-default bg-surface px-3.5 text-body text-text-primary outline-none placeholder:text-text-placeholder hover:border-border-strong focus-visible:border-accent focus-visible:shadow-focus-field"
-            />
-            {isSignup && (
-              <span className="text-caption text-text-muted">At least 12 characters.</span>
+            {!isSignup && (
+              <a
+                href="/forgot-password"
+                className="dispatch-transition text-caption text-text-muted hover:text-text-primary"
+              >
+                Forgot password?
+              </a>
             )}
           </div>
-
-          {error && <p className="text-caption text-danger-fg">{error}</p>}
-          {notice && <p className="text-caption text-success-fg">{notice}</p>}
-
-          <button
-            type="submit"
-            disabled={disabled}
-            className="dispatch-transition flex h-control items-center justify-center rounded-md bg-text-primary text-body font-medium text-text-inverse outline-none hover:bg-white focus-visible:shadow-focus active:bg-[#C8CACD] disabled:cursor-not-allowed disabled:bg-border-default disabled:text-text-muted"
-          >
-            {submitting
-              ? isSignup
-                ? 'Creating account'
-                : 'Logging in'
-              : isSignup
-                ? 'Create account'
-                : 'Log in'}
-          </button>
-        </form>
-
-        {isSignup && (
-          <p className="mt-5 text-caption text-text-muted">
-            By signing up, you agree to the{' '}
-            <a
-              href="/terms"
-              className="dispatch-transition text-text-secondary hover:text-text-primary"
-            >
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a
-              href="/privacy"
-              className="dispatch-transition text-text-secondary hover:text-text-primary"
-            >
-              Privacy Policy
-            </a>
-            .
-          </p>
-        )}
-
-        <p className="mt-5 text-center text-caption text-text-secondary">
-          {isSignup ? (
-            <>
-              Already have an account?{' '}
-              <Link href="/login" className="text-text-primary hover:underline">
-                Log in
-              </Link>
-            </>
-          ) : (
-            <>
-              Don&apos;t have an account?{' '}
-              <Link href="/signup" className="text-text-primary hover:underline">
-                Sign up
-              </Link>
-            </>
+          <PasswordInput
+            id="password"
+            required
+            minLength={MIN_PASSWORD_LENGTH}
+            autoComplete={isSignup ? 'new-password' : 'current-password'}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          {isSignup && (
+            <span className="text-caption text-text-muted">At least 12 characters.</span>
           )}
+        </div>
+
+        {error && <p className="text-caption text-danger-fg">{error}</p>}
+        {notice && <p className="text-caption text-success-fg">{notice}</p>}
+
+        <button
+          type="submit"
+          disabled={disabled || !isPasswordReady}
+          // stays white while submitting, so a sent form never looks like it went dead
+          className={`dispatch-transition mt-2 flex h-control items-center justify-center rounded-md border text-body font-medium outline-none focus-visible:shadow-focus ${
+            isPasswordReady
+              ? 'border-transparent bg-text-primary text-text-inverse hover:bg-white active:bg-[#C8CACD] disabled:cursor-wait'
+              : 'cursor-not-allowed border-border-default bg-hover text-text-muted'
+          }`}
+        >
+          {submitting
+            ? isSignup
+              ? 'Creating account'
+              : 'Logging in'
+            : isSignup
+              ? 'Create account'
+              : 'Log in'}
+        </button>
+      </form>
+
+      {isSignup && (
+        <p className="mt-8 text-center text-caption text-text-muted">
+          By signing up, you agree to the{' '}
+          <a
+            href="/terms"
+            className="dispatch-transition text-text-secondary hover:text-text-primary"
+          >
+            Terms of Service
+          </a>{' '}
+          and{' '}
+          <a
+            href="/privacy"
+            className="dispatch-transition text-text-secondary hover:text-text-primary"
+          >
+            Privacy Policy
+          </a>
+          .
         </p>
-      </div>
+      )}
     </AuthShell>
   );
 }

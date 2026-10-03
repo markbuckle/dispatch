@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" role="img" aria-label="Dispatch">
+  <defs>
+    <linearGradient id="monogram-tile-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16161A"></stop>
+      <stop offset="1" stop-color="#08080A"></stop>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="url(#monogram-tile-fill)" stroke="#26262A"></rect>
+  <path transform="translate(16 15) scale(0.13333)" fill="#EDEEF0" d="M240 127.5C240 57.0837 179.111 0 104 0H0L32.4902 66H103V66.0156C103.499 66.0057 103.999 66 104.5 66C141.779 66 172 93.5345 172 127.5C172 161.466 141.779 189 104.5 189C103.999 189 103.499 188.993 103 188.983V189H89.0508L117.203 254.402C186.118 248.178 240 193.74 240 127.5Z"></path>
+</svg>

@@ -370,6 +370,31 @@ a:hover { color: var(--dispatch-text-primary); }
   color: var(--dispatch-text-inverse);
 }
 
+/* Auth pages: a canvas lit from the top centre, where the monogram sits, with a faint lift at the foot. */
+.dispatch-auth-backdrop {
+  background:
+    radial-gradient(ellipse 60% 420px at 50% 0%, var(--dispatch-hover), transparent 70%),
+    radial-gradient(ellipse 90% 320px at 50% 100%, var(--dispatch-surface), transparent 75%),
+    var(--dispatch-canvas);
+}
+/* Rings sent out from the monogram's centre, 56px down the page, fading out well before the edges.
+   Each ring is a 3px soft band rather than a hard 1px stop, so it does not alias into a moire. */
+.dispatch-auth-arcs {
+  background: repeating-radial-gradient(
+    circle at 50% 56px,
+    transparent 0 117px,
+    color-mix(in oklab, var(--dispatch-text-primary) 4%, transparent) 118.5px,
+    transparent 120px
+  );
+  -webkit-mask-image: radial-gradient(circle 640px at 50% 56px, black, transparent);
+  mask-image: radial-gradient(circle 640px at 50% 56px, black, transparent);
+  pointer-events: none;
+}
+/* The monogram's tile: lit from above like the page behind it, so it reads as raised without a shadow. */
+.dispatch-monogram-tile {
+  background: linear-gradient(to bottom, var(--dispatch-hover), var(--dispatch-canvas));
+}
+
 /* The status tile that leads a dashboard table row, logo/icons/dispatch-email-sent.svg in the row's tone: the one glow on a product surface.
    A tone class on the svg sets the two colours, and each gradient stop reads them through its own class. */
 .dispatch-status-icon-success { --status-icon-fg: var(--dispatch-success-fg); --status-icon-bg: var(--dispatch-success-bg); }
