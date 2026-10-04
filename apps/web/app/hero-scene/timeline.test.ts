@@ -1,0 +1,164 @@
+import { Quaternion, Vector3, type Vector3Tuple } from 'three';
+import { describe, expect, it } from 'vitest';
+import { type Folds, foldPoint } from './folds';
+import {
+  ENVELOPE_FACE_ON,
+  ENVELOPE_FOLDS,
+  ENVELOPE_PIVOT,
+  PLANE_FOLDS,
+  PLANE_PIVOT,
+  PLANE_TOP_QUATERNION,
+} from './poses';
+import { outlineSamples } from './sheet-geometry';
+import { CAMERA_FOV, CAMERA_POSITION, FOG_FAR } from './stage';
+import {
+  FLAP_START,
+  FOLD_END,
+  LOOP_SECONDS,
+  OPEN_END,
+  RETURN_END,
+  RETURN_START,
+  type SceneState,
+  sampleTimeline,
+  TAKE_OFF,
+  TOP_TURN_END,
+  UNTURN_START,
+} from './timeline';
+
+const STEP = 0.001;
+
+function largestDifference(a: readonly number[], b: readonly number[]): number {
+  return Math.max(...a.map((value, index) => Math.abs(value - (b[index] ?? Number.NaN))));
+}
+
+function foldValues(folds: Folds): number[] {
+  return [folds.flap, folds.keel, folds.wing];
+}
+
+function distance(a: Vector3Tuple, b: Vector3Tuple): number {
+  return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+}
+
+// q and -q are the same rotation, so this compares the turn between two frames rather than their raw components
+function rotationBetween(a: readonly number[], b: readonly number[]): number {
+  const dot = Math.abs(a.reduce((sum, value, index) => sum + value * (b[index] ?? 0), 0));
+  return 2 * Math.acos(Math.min(dot, 1));
+}
+
+// The folded outline's farthest reach from the point it turns about, which is what has to fit in frame
+function reach(state: SceneState): number {
+  return Math.max(
+    ...outlineSamples.map((point) => distance(foldPoint(point, state.folds), state.pivot)),
+  );
+}
+
+function isHidden(state: SceneState): boolean {
+  return distance(state.position, CAMERA_POSITION) - reach(state) > FOG_FAR;
+}
+
+function expectPose(
+  state: SceneState,
+  folds: Folds,
+  quaternion: Quaternion,
+  pivot: Vector3Tuple,
+): void {
+  expect(largestDifference(foldValues(state.folds), foldValues(folds))).toBeLessThan(1e-9);
+  expect(rotationBetween(state.quaternion, quaternion.toArray())).toBeLessThan(1e-6);
+  expect(distance(state.position, [0, 0, 0])).toBeLessThan(1e-9);
+  expect(distance(state.pivot, pivot)).toBeLessThan(1e-9);
+}
+
+describe('hero timeline', () => {
+  it('ends on exactly the frame it starts on', () => {
+    const first = sampleTimeline(0);
+    const last = sampleTimeline(LOOP_SECONDS);
+
+    expect(largestDifference(foldValues(last.folds), foldValues(first.folds))).toBeLessThan(1e-9);
+    expect(rotationBetween(last.quaternion, first.quaternion)).toBeLessThan(1e-6);
+    expect(distance(last.position, first.position)).toBeLessThan(1e-9);
+    expect(distance(last.pivot, first.pivot)).toBeLessThan(1e-9);
+  });
+
+  it('never jumps between frames a millisecond apart, except at the cut it makes while hidden', () => {
+    let previous = sampleTimeline(0);
+    for (let time = STEP; time <= LOOP_SECONDS; time += STEP) {
+      const current = sampleTimeline(time);
+
+      if (time - STEP < RETURN_START && time >= RETURN_START) {
+        expect(isHidden(previous)).toBe(true);
+        expect(isHidden(current)).toBe(true);
+      } else {
+        // the fastest moment is the end of the take-off, at about 0.08 units a millisecond
+        expect(distance(current.position, previous.position)).toBeLessThan(0.12);
+        expect(distance(current.pivot, previous.pivot)).toBeLessThan(0.01);
+        expect(
+          largestDifference(foldValues(current.folds), foldValues(previous.folds)),
+        ).toBeLessThan(0.02);
+        expect(rotationBetween(current.quaternion, previous.quaternion)).toBeLessThan(0.03);
+      }
+
+      previous = current;
+    }
+  });
+
+  // Faster than this, a turn reads as a snap rather than a paper plane changing its mind
+  it('never turns faster than 150 degrees a second', () => {
+    const limit = (150 * Math.PI) / 180;
+    let previous = sampleTimeline(0);
+    for (let time = STEP; time <= LOOP_SECONDS; time += STEP) {
+      const current = sampleTimeline(time);
+      const isCut = time - STEP < RETURN_START && time >= RETURN_START;
+      if (!isCut) {
+        const speed = rotationBetween(current.quaternion, previous.quaternion) / STEP;
+        expect(speed, `at ${time.toFixed(3)}s`).toBeLessThan(limit);
+      }
+      previous = current;
+    }
+  });
+
+  it('starts and ends each phase on its exact pose', () => {
+    expectPose(sampleTimeline(0), ENVELOPE_FOLDS, ENVELOPE_FACE_ON, ENVELOPE_PIVOT);
+    // the turn is still finishing as the flap starts, so only the shape and the pivot are pinned here
+    const flapStart = sampleTimeline(FLAP_START);
+    expect(largestDifference(foldValues(flapStart.folds), foldValues(ENVELOPE_FOLDS))).toBeLessThan(
+      1e-9,
+    );
+    expect(distance(flapStart.pivot, ENVELOPE_PIVOT)).toBeLessThan(1e-9);
+    expect(sampleTimeline(OPEN_END).folds.flap).toBeLessThan(1e-9);
+    expect(sampleTimeline(OPEN_END).folds.keel).toBeLessThan(1e-9);
+    // the turn to the top view is already under way as the fold finishes, so only the shape and the pivot are pinned
+    const foldEnd = sampleTimeline(FOLD_END);
+    expect(largestDifference(foldValues(foldEnd.folds), foldValues(PLANE_FOLDS))).toBeLessThan(
+      1e-9,
+    );
+    expect(distance(foldEnd.pivot, PLANE_PIVOT)).toBeLessThan(1e-9);
+    expectPose(sampleTimeline(TOP_TURN_END), PLANE_FOLDS, PLANE_TOP_QUATERNION, PLANE_PIVOT);
+    expectPose(sampleTimeline(TAKE_OFF), PLANE_FOLDS, PLANE_TOP_QUATERNION, PLANE_PIVOT);
+    expectPose(sampleTimeline(RETURN_END), PLANE_FOLDS, PLANE_TOP_QUATERNION, PLANE_PIVOT);
+    expectPose(sampleTimeline(UNTURN_START), PLANE_FOLDS, PLANE_TOP_QUATERNION, PLANE_PIVOT);
+    expectPose(sampleTimeline(LOOP_SECONDS), ENVELOPE_FOLDS, ENVELOPE_FACE_ON, ENVELOPE_PIVOT);
+  });
+
+  // Flying into depth only avoids clipping if the plane fades out before reaching an edge, even in a square canvas
+  it('keeps every visible frame inside a square canvas', () => {
+    const halfAngle = Math.tan((CAMERA_FOV * Math.PI) / 360);
+    const [cameraX, cameraY, cameraZ] = CAMERA_POSITION;
+
+    for (let time = 0; time <= LOOP_SECONDS; time += 0.01) {
+      const state = sampleTimeline(time);
+      if (isHidden(state)) continue;
+
+      const rotation = new Quaternion(...state.quaternion);
+      const pivot = new Vector3(...state.pivot);
+      for (const point of outlineSamples) {
+        const world = new Vector3(...foldPoint(point, state.folds))
+          .sub(pivot)
+          .applyQuaternion(rotation)
+          .add(new Vector3(...state.position));
+        const halfFrame = (cameraZ - world.z) * halfAngle;
+        expect(Math.abs(world.x - cameraX) / halfFrame, `x at ${time.toFixed(2)}s`).toBeLessThan(1);
+        expect(Math.abs(world.y - cameraY) / halfFrame, `y at ${time.toFixed(2)}s`).toBeLessThan(1);
+      }
+    }
+  });
+});
