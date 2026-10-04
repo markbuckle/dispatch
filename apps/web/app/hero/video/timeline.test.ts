@@ -79,40 +79,62 @@ describe('hero timeline', () => {
     expect(distance(last.pivot, first.pivot)).toBeLessThan(1e-9);
   });
 
+  // Asserted once per measure at the end, because an assertion every millisecond of the loop outlasts the test's time limit
   it('never jumps between frames a millisecond apart, except at the cut it makes while hidden', () => {
+    const worst = { position: 0, pivot: 0, folds: 0, rotation: 0 };
+    let isCutHidden = true;
     let previous = sampleTimeline(0);
     for (let time = STEP; time <= LOOP_SECONDS; time += STEP) {
       const current = sampleTimeline(time);
 
       if (time - STEP < RETURN_START && time >= RETURN_START) {
-        expect(isHidden(previous)).toBe(true);
-        expect(isHidden(current)).toBe(true);
+        isCutHidden = isCutHidden && isHidden(previous) && isHidden(current);
       } else {
-        // the fastest moment is the end of the take-off, at about 0.08 units a millisecond
-        expect(distance(current.position, previous.position)).toBeLessThan(0.12);
-        expect(distance(current.pivot, previous.pivot)).toBeLessThan(0.01);
-        expect(
+        worst.position = Math.max(worst.position, distance(current.position, previous.position));
+        worst.pivot = Math.max(worst.pivot, distance(current.pivot, previous.pivot));
+        worst.folds = Math.max(
+          worst.folds,
           largestDifference(foldValues(current.folds), foldValues(previous.folds)),
-        ).toBeLessThan(0.02);
-        expect(rotationBetween(current.quaternion, previous.quaternion)).toBeLessThan(0.03);
+        );
+        worst.rotation = Math.max(
+          worst.rotation,
+          rotationBetween(current.quaternion, previous.quaternion),
+        );
       }
 
       previous = current;
     }
+
+    expect(isCutHidden).toBe(true);
+    // the fastest moment is the end of the take-off, at about 0.08 units a millisecond
+    expect(worst.position).toBeLessThan(0.12);
+    expect(worst.pivot).toBeLessThan(0.01);
+    expect(worst.folds).toBeLessThan(0.02);
+    expect(worst.rotation).toBeLessThan(0.03);
   });
 
   // Faster than this, a turn reads as a snap rather than a paper plane changing its mind
   it('never turns faster than 150 degrees a second', () => {
     const limit = (150 * Math.PI) / 180;
+    let worst = { speed: 0, where: 'nowhere' };
     let previous = sampleTimeline(0);
     for (let time = STEP; time <= LOOP_SECONDS; time += STEP) {
       const current = sampleTimeline(time);
       const isCut = time - STEP < RETURN_START && time >= RETURN_START;
       if (!isCut) {
         const speed = rotationBetween(current.quaternion, previous.quaternion) / STEP;
-        expect(speed, `at ${time.toFixed(3)}s`).toBeLessThan(limit);
+        if (speed > worst.speed) worst = { speed, where: `at ${time.toFixed(3)}s` };
       }
       previous = current;
+    }
+    expect(worst.speed, worst.where).toBeLessThan(limit);
+  });
+
+  // A loop that ends partway through a frame repeats or drops that frame at every pass, which shows as a stutter at the seam
+  it('lasts a whole number of frames at 30 and 60 frames a second', () => {
+    for (const framesPerSecond of [30, 60]) {
+      const frames = LOOP_SECONDS * framesPerSecond;
+      expect(Math.abs(frames - Math.round(frames)), `at ${framesPerSecond}fps`).toBeLessThan(1e-9);
     }
   });
 

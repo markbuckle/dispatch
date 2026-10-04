@@ -19,24 +19,25 @@ import {
   PLANE_TOP_QUATERNION,
 } from './poses';
 
-export const LOOP_SECONDS = 13.7;
+export const LOOP_SECONDS = 15.7;
 
-const FACE_ON_END = 1.5;
+// The envelope is the brand's own mark, so it holds face-on long enough to be read before anything moves
+const FACE_ON_END = 3.5;
 // The flap starts lifting while the turn is still easing out, so motion carries straight through instead of stopping
-export const FLAP_START = 2.2;
-const TURN_END = 2.5;
-export const OPEN_END = 3.2;
-const WING_FOLD_START = 3.6;
-const CENTRE_FOLD_END = 4.1;
-export const FOLD_END = 4.5;
+export const FLAP_START = 4.2;
+const TURN_END = 4.5;
+export const OPEN_END = 5.2;
+const WING_FOLD_START = 5.6;
+const CENTRE_FOLD_END = 6.1;
+export const FOLD_END = 6.5;
 // The turn to the top view starts while the wings are still settling, for the same reason the flap overlaps the turn
-const TOP_TURN_START = 4.25;
-export const TOP_TURN_END = 5;
-export const TAKE_OFF = 5.5;
-const FLY_END = 8;
-export const RETURN_START = 8.25;
-export const RETURN_END = 10.5;
-export const UNTURN_START = 11;
+const TOP_TURN_START = 6.25;
+export const TOP_TURN_END = 7;
+export const TAKE_OFF = 7.5;
+const FLY_END = 10;
+export const RETURN_START = 10.25;
+export const RETURN_END = 12.5;
+export const UNTURN_START = 13;
 
 // The return half replays everything from face-on to the top view backwards at one steady speed, 3.5 seconds into 2.7
 const REVERSE_SPEED = (TOP_TURN_END - FACE_ON_END) / (LOOP_SECONDS - UNTURN_START);
@@ -44,9 +45,9 @@ const REVERSE_SPEED = (TOP_TURN_END - FACE_ON_END) / (LOOP_SECONDS - UNTURN_STAR
 const FLIGHT_BLEND_SECONDS = 1;
 
 const FLUTTER_ANGLE = 0.18;
-// Flutter around two cycles a second, the float a slow drift
-const FLUTTER_CYCLES = 30;
-const FLOAT_CYCLES = 4;
+// Wiggles a second rather than a count per loop, so a change to the loop's length never changes how fast anything moves
+const FLUTTER_RATE = 2.2;
+const FLOAT_RATE = 0.3;
 const FLOAT_HEIGHT = 0.12;
 const FLOAT_DRIFT = 0.05;
 const WOBBLE_ANGLE = 0.03;
@@ -56,7 +57,7 @@ const FLARE_PITCH = (8 * Math.PI) / 180;
 // Paper never flies dead steady, so roll and pitch wander a little, most at speed and not at all at rest
 const FLIGHT_WOBBLE_ROLL = (4 * Math.PI) / 180;
 const FLIGHT_WOBBLE_PITCH = (2 * Math.PI) / 180;
-const FLIGHT_WOBBLE_CYCLES = 20;
+const FLIGHT_WOBBLE_RATE = 1.5;
 // The holds hover rather than float: the same motion at a third of the size, so the plane looks alive but poised
 const HOVER_SCALE = 0.35;
 
@@ -116,8 +117,8 @@ const reshapeRotation = PLANE_QUATERNION.clone().multiply(ENVELOPE_QUATERNION.cl
 // The turn from the plane's three-quarter angle to the top view, applied on top of the fold as it finishes
 const topRotation = PLANE_TOP_QUATERNION.clone().multiply(PLANE_QUATERNION.clone().invert());
 
-function noiseAt(time: number, cycles: number, channel: number): number {
-  return Math.min(Math.max(loopNoise(time, LOOP_SECONDS, cycles, channel), -1), 1);
+function noiseAt(time: number, rate: number, channel: number): number {
+  return Math.min(Math.max(loopNoise(time, LOOP_SECONDS, rate * LOOP_SECONDS, channel), -1), 1);
 }
 
 // Zero with zero slope at both ends of a span, so motion faded by it starts and stops without a jolt
@@ -129,16 +130,16 @@ function fadeWindow(time: number, start: number, end: number): number {
 function float(state: SceneState, time: number, strength: number): SceneState {
   const wobble = new Quaternion().setFromEuler(
     new Euler(
-      WOBBLE_ANGLE * strength * noiseAt(time, FLOAT_CYCLES, 3),
-      WOBBLE_ANGLE * strength * noiseAt(time, FLOAT_CYCLES, 4),
+      WOBBLE_ANGLE * strength * noiseAt(time, FLOAT_RATE, 3),
+      WOBBLE_ANGLE * strength * noiseAt(time, FLOAT_RATE, 4),
       0,
     ),
   );
   return {
     ...state,
     position: [
-      state.position[0] + FLOAT_DRIFT * strength * noiseAt(time, FLOAT_CYCLES, 1),
-      state.position[1] + FLOAT_HEIGHT * strength * noiseAt(time, FLOAT_CYCLES, 2),
+      state.position[0] + FLOAT_DRIFT * strength * noiseAt(time, FLOAT_RATE, 1),
+      state.position[1] + FLOAT_HEIGHT * strength * noiseAt(time, FLOAT_RATE, 2),
       state.position[2],
     ],
     quaternion: toTuple(new Quaternion(...state.quaternion).multiply(wobble)),
@@ -187,8 +188,8 @@ function flight(
   { blend, pitch, wobble }: FlightMotion,
 ): SceneState {
   const attitude = flightAttitude(path, distanceFraction, {
-    pitch: pitch + FLIGHT_WOBBLE_PITCH * wobble * noiseAt(time, FLIGHT_WOBBLE_CYCLES, 6),
-    roll: FLIGHT_WOBBLE_ROLL * wobble * noiseAt(time, FLIGHT_WOBBLE_CYCLES, 5),
+    pitch: pitch + FLIGHT_WOBBLE_PITCH * wobble * noiseAt(time, FLIGHT_WOBBLE_RATE, 6),
+    roll: FLIGHT_WOBBLE_ROLL * wobble * noiseAt(time, FLIGHT_WOBBLE_RATE, 5),
     bankWeight: smoothstep(blend),
   });
   return {
@@ -202,7 +203,7 @@ function flight(
 function rest(time: number): SceneState {
   // the ruffle spans the face-on rest and most of the turn, and has died away by the time the flap starts to open
   const window = fadeWindow(time, 0, FLAP_START);
-  const flutter = FLUTTER_ANGLE * window * (0.5 + 0.5 * noiseAt(time, FLUTTER_CYCLES, 0));
+  const flutter = FLUTTER_ANGLE * window * (0.5 + 0.5 * noiseAt(time, FLUTTER_RATE, 0));
   const pose = formation(time);
   return float(
     // the flutter only ever lifts the flap, because a closed flap has the body behind it
