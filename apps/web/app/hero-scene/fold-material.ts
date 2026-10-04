@@ -1,4 +1,4 @@
-import { type Color, MeshStandardMaterial } from 'three';
+import type { WebGLProgramParametersWithUniforms } from 'three';
 import type { Folds } from './folds';
 import {
   CREASE_BAND,
@@ -16,7 +16,7 @@ function float(value: number): string {
 }
 
 // Mirrors foldPoint in folds.ts line for line, and also turns each normal by the same rotations so the rounded creases light correctly
-const foldChunk = /* glsl */ `
+const foldChunk = `
 uniform float uFlap;
 uniform float uKeel;
 uniform float uWing;
@@ -61,31 +61,43 @@ export type FoldUniforms = {
   uWing: { value: number };
 };
 
+export function createFoldUniforms(): FoldUniforms {
+  return { uFlap: { value: 0 }, uKeel: { value: 0 }, uWing: { value: 0 } };
+}
+
 export function setFolds(uniforms: FoldUniforms, folds: Folds): void {
   uniforms.uFlap.value = folds.flap;
   uniforms.uKeel.value = folds.keel;
   uniforms.uWing.value = folds.wing;
 }
 
+// The flat sheet's position and normal, which say which side, which panel and whether a fragment sits on the rounded edge
+export const sheetVaryings = `varying vec2 vSheetPosition;
+varying vec3 vRestNormal;`;
+
 // The flat sheet never leaves the GPU; each frame sends three angles instead of rewriting every vertex on the CPU
-export function createFoldMaterial(color: Color): {
-  material: MeshStandardMaterial;
-  uniforms: FoldUniforms;
-} {
-  const uniforms: FoldUniforms = { uFlap: { value: 0 }, uKeel: { value: 0 }, uWing: { value: 0 } };
-  const material = new MeshStandardMaterial({ color, roughness: 0.6 });
-
-  material.onBeforeCompile = (shader) => {
-    Object.assign(shader.uniforms, uniforms);
-    shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', `#include <common>\n${foldChunk}`)
-      // three computes the normal before the position, so both are folded here and the position is handed on below
-      .replace(
-        '#include <beginnormal_vertex>',
-        'vec3 objectNormal = vec3( normal );\nvec3 foldedPosition = vec3( position );\nfoldSheet( foldedPosition, objectNormal );',
-      )
-      .replace('#include <begin_vertex>', 'vec3 transformed = foldedPosition;');
-  };
-
-  return { material, uniforms };
+export function injectFold(
+  shader: WebGLProgramParametersWithUniforms,
+  uniforms: FoldUniforms,
+): void {
+  Object.assign(shader.uniforms, uniforms);
+  shader.vertexShader = shader.vertexShader
+    .replace(
+      '#include <common>',
+      `#include <common>
+${sheetVaryings}
+${foldChunk}`,
+    )
+    // three computes the normal before the position, so both are folded here and the position is handed on below
+    .replace(
+      '#include <beginnormal_vertex>',
+      [
+        'vSheetPosition = position.xy;',
+        'vRestNormal = normal;',
+        'vec3 objectNormal = vec3( normal );',
+        'vec3 foldedPosition = vec3( position );',
+        'foldSheet( foldedPosition, objectNormal );',
+      ].join('\n'),
+    )
+    .replace('#include <begin_vertex>', 'vec3 transformed = foldedPosition;');
 }

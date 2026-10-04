@@ -217,6 +217,7 @@ export const outlineSamples: readonly Vector3Tuple[] = resample(capOutline, OUTL
 export function createSheetGeometry(): BufferGeometry {
   const positions: number[] = [];
   const normals: number[] = [];
+  const uvs: number[] = [];
   const indices: number[] = [];
   const halfDepth = SHEET_DEPTH / 2;
 
@@ -230,6 +231,8 @@ export function createSheetGeometry(): BufferGeometry {
   ) => {
     positions.push(x, y, z);
     normals.push(normalX, normalY, normalZ);
+    // taken from the flat sheet and scaled the same both ways, so textures fold with the paper and never stretch
+    uvs.push(x / SHEET_WIDTH, y / SHEET_WIDTH);
     return positions.length / 3 - 1;
   };
 
@@ -305,6 +308,7 @@ export function createSheetGeometry(): BufferGeometry {
   const geometry = new BufferGeometry();
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
   geometry.setAttribute('normal', new Float32BufferAttribute(normals, 3));
+  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
   geometry.setIndex(indices);
   return geometry;
 }

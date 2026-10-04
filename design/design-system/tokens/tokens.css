@@ -69,6 +69,15 @@
   /* The grey the auth backdrop fades into at its foot. Decoration only, never a surface or a status. */
   --dispatch-backdrop-lift: #1C1C20;
 
+  /* Hero scene paper: the outside of the folded sheet. Aliases --dispatch-subtle. */
+  --dispatch-paper: var(--dispatch-subtle);
+  /* Hero scene paper: the inside of the envelope flap, under the @ tint. Aliases --dispatch-hover. */
+  --dispatch-paper-inside: var(--dispatch-hover);
+  /* Hero scene paper: the lighter rounded edges and the @ tint's ink. Aliases --dispatch-border-strong. */
+  --dispatch-paper-edge: var(--dispatch-border-strong);
+  /* Hero scene paper: the satin sheen at grazing angles. Aliases --dispatch-text-tertiary. */
+  --dispatch-paper-sheen: var(--dispatch-text-tertiary);
+
   /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);

@@ -143,22 +143,30 @@ describe('hero timeline', () => {
   it('keeps every visible frame inside a square canvas', () => {
     const halfAngle = Math.tan((CAMERA_FOV * Math.PI) / 360);
     const [cameraX, cameraY, cameraZ] = CAMERA_POSITION;
+    const rotation = new Quaternion();
+    const world = new Vector3();
+    let worst = { use: 0, where: 'nowhere' };
 
+    // one assertion at the end, because an assertion per point costs far more than the projection it checks
     for (let time = 0; time <= LOOP_SECONDS; time += 0.01) {
       const state = sampleTimeline(time);
       if (isHidden(state)) continue;
 
-      const rotation = new Quaternion(...state.quaternion);
-      const pivot = new Vector3(...state.pivot);
+      rotation.set(...state.quaternion);
       for (const point of outlineSamples) {
-        const world = new Vector3(...foldPoint(point, state.folds))
-          .sub(pivot)
+        const [x, y, z] = foldPoint(point, state.folds);
+        world
+          .set(x - state.pivot[0], y - state.pivot[1], z - state.pivot[2])
           .applyQuaternion(rotation)
-          .add(new Vector3(...state.position));
+          .add({ x: state.position[0], y: state.position[1], z: state.position[2] });
         const halfFrame = (cameraZ - world.z) * halfAngle;
-        expect(Math.abs(world.x - cameraX) / halfFrame, `x at ${time.toFixed(2)}s`).toBeLessThan(1);
-        expect(Math.abs(world.y - cameraY) / halfFrame, `y at ${time.toFixed(2)}s`).toBeLessThan(1);
+        const horizontal = Math.abs(world.x - cameraX) / halfFrame;
+        const vertical = Math.abs(world.y - cameraY) / halfFrame;
+        if (horizontal > worst.use) worst = { use: horizontal, where: `x at ${time.toFixed(2)}s` };
+        if (vertical > worst.use) worst = { use: vertical, where: `y at ${time.toFixed(2)}s` };
       }
     }
+
+    expect(worst.use, worst.where).toBeLessThan(1);
   });
 });
