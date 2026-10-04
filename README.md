@@ -111,7 +111,7 @@ Sixteen phases, each shipped as a series of small pull requests merged to `main`
 | 12 | Settings and Profile | done |
 | 13 | Deployment: both apps live, env verified, SNS on a permanent endpoint | done |
 | 14 | Polish, Playwright E2E, request log retention, README | done |
-| 15 | Landing hero: a 3D envelope that folds into a paper plane, pre-rendered to video, behind a PostHog flag | in progress |
+| 15 | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | in progress |
 
 Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md), and lessons from deployment in [decisions-and-learnings.md](decisions-and-learnings.md).
 
