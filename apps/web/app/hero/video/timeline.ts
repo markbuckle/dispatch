@@ -21,19 +21,19 @@ import {
 
 export const LOOP_SECONDS = 13.7;
 
-export const FACE_ON_END = 1.5;
+const FACE_ON_END = 1.5;
 // The flap starts lifting while the turn is still easing out, so motion carries straight through instead of stopping
 export const FLAP_START = 2.2;
-export const TURN_END = 2.5;
+const TURN_END = 2.5;
 export const OPEN_END = 3.2;
 const WING_FOLD_START = 3.6;
 const CENTRE_FOLD_END = 4.1;
 export const FOLD_END = 4.5;
 // The turn to the top view starts while the wings are still settling, for the same reason the flap overlaps the turn
-export const TOP_TURN_START = 4.25;
+const TOP_TURN_START = 4.25;
 export const TOP_TURN_END = 5;
 export const TAKE_OFF = 5.5;
-export const FLY_END = 8;
+const FLY_END = 8;
 export const RETURN_START = 8.25;
 export const RETURN_END = 10.5;
 export const UNTURN_START = 11;

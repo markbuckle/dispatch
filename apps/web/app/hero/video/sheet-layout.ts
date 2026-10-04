@@ -22,11 +22,11 @@ export const HINGE_CORNER_RADIUS = 0.45;
 export const FLAP_TIP_RADIUS = 0.3;
 
 // Folded layers sit this far apart, so two surfaces never share a plane and z-fight
-export const FOLD_GAP = 0.04;
+const FOLD_GAP = 0.04;
 // Half the width a crease bends over; about one sheet depth gives a rounded paper fold rather than a hinge
 export const CREASE_BAND = 0.18;
 // Each wing crease runs from the flap tip to this far either side of centre at the tail, so the keel deepens toward the tail as a dart's does
-export const KEEL_TAIL_DEPTH = 1.5;
+const KEEL_TAIL_DEPTH = 1.5;
 
 // Each hinge sits half a border's depth plus half a gap off the mid-plane, so folded borders rest on each other, never through
 export const FLAP_HINGE_Z = (BORDER_DEPTH + FOLD_GAP) / 2;

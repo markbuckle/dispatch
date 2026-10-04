@@ -5,15 +5,8 @@ const FIBRE_SIZE = 256;
 const FIBRE_COUNT = 1400;
 // How steeply a height step tilts the normal; the material's normal scale does the real tuning
 const FIBRE_RELIEF = 2.5;
-const PATTERN_SIZE = 128;
-// The tint is four glyphs to a tile, the way security tint repeats a small mark in a tight lattice
-export const PATTERN_GLYPHS_PER_TILE = 4;
 
-export type PaperTextures = {
-  fibre: CanvasTexture;
-  pattern: CanvasTexture;
-  generationMilliseconds: number;
-};
+export type PaperTextures = { fibre: CanvasTexture };
 
 // A fixed seed, so every visitor gets the same sheet and a screenshot can be compared with the last one
 function seededRandom(seed: number): () => number {
@@ -88,29 +81,6 @@ function fibreNormals(): HTMLCanvasElement {
   return context.canvas;
 }
 
-function atLattice(): HTMLCanvasElement {
-  const context = drawingSurface(PATTERN_SIZE);
-  const cell = PATTERN_SIZE / PATTERN_GLYPHS_PER_TILE;
-  context.fillStyle = 'rgb(0, 0, 0)';
-  context.fillRect(0, 0, PATTERN_SIZE, PATTERN_SIZE);
-  context.fillStyle = 'rgb(255, 255, 255)';
-  context.font = `500 ${Math.round(cell * 0.6)}px ui-monospace, monospace`;
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-
-  for (let row = 0; row < PATTERN_GLYPHS_PER_TILE; row++) {
-    // alternate rows shift half a cell, a brick lattice like printed tint, and the shifted glyph wraps onto both edges
-    const shift = (row % 2) * (cell / 2);
-    for (let column = 0; column <= PATTERN_GLYPHS_PER_TILE; column++) {
-      const x = column * cell + cell / 2 + shift;
-      const y = row * cell + cell / 2;
-      context.fillText('@', x, y);
-      context.fillText('@', x - PATTERN_SIZE, y);
-    }
-  }
-  return context.canvas;
-}
-
 function asRepeatingTexture(canvas: HTMLCanvasElement, anisotropy: number): CanvasTexture {
   const texture = new CanvasTexture(canvas);
   texture.wrapS = RepeatWrapping;
@@ -120,10 +90,7 @@ function asRepeatingTexture(canvas: HTMLCanvasElement, anisotropy: number): Canv
   return texture;
 }
 
-// Generated once per mount, in the browser, because a canvas is the only thing that can draw the glyphs
+// Generated once per mount, in the browser, because the grain is drawn on a canvas
 export function createPaperTextures(anisotropy: number): PaperTextures {
-  const started = performance.now();
-  const fibre = asRepeatingTexture(fibreNormals(), anisotropy);
-  const pattern = asRepeatingTexture(atLattice(), anisotropy);
-  return { fibre, pattern, generationMilliseconds: performance.now() - started };
+  return { fibre: asRepeatingTexture(fibreNormals(), anisotropy) };
 }

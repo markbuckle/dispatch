@@ -6,7 +6,6 @@ import { Color, type Group, type Mesh, SRGBColorSpace } from 'three';
 import { CaptureDriver } from './capture-driver';
 import { DEFAULT_EFFECTS, type EffectSettings, SceneEffects } from './effects';
 import { setFolds } from './fold-material';
-import { FrameTimer, type FrameTimingSource } from './frame-timer';
 import { DEFAULT_LIGHTING, type LightingSettings, SceneLighting } from './lighting';
 import {
   applyPaperSettings,
@@ -27,7 +26,6 @@ export type LoopClock = { time: number; isPlaying: boolean };
 const PAPER_TOKENS = {
   paper: '--dispatch-paper',
   inside: '--dispatch-paper-inside',
-  edge: '--dispatch-paper-edge',
   sheen: '--dispatch-paper-sheen',
   border: '--dispatch-paper-border',
 } as const;
@@ -45,10 +43,9 @@ type SheetProps = {
   paper: PaperSettings;
   clock: RefObject<LoopClock>;
   onTick?: (time: number) => void;
-  onTexturesGenerated?: (milliseconds: number) => void;
 };
 
-function Sheet({ colors, paper, clock, onTick, onTexturesGenerated }: SheetProps) {
+function Sheet({ colors, paper, clock, onTick }: SheetProps) {
   const renderer = useThree((state) => state.gl);
   const geometry = useMemo(() => createSheetGeometry(), []);
   const textures = useMemo(
@@ -67,19 +64,9 @@ function Sheet({ colors, paper, clock, onTick, onTexturesGenerated }: SheetProps
     applyPaperSettings(material, paperUniforms, paper);
   }, [material, paperUniforms, paper]);
 
-  useEffect(() => {
-    onTexturesGenerated?.(textures.generationMilliseconds);
-  }, [textures, onTexturesGenerated]);
-
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => () => material.dispose(), [material]);
-  useEffect(
-    () => () => {
-      textures.fibre.dispose();
-      textures.pattern.dispose();
-    },
-    [textures],
-  );
+  useEffect(() => () => textures.fibre.dispose(), [textures]);
 
   useFrame((_, delta) => {
     const loop = clock.current;
@@ -107,8 +94,8 @@ function Sheet({ colors, paper, clock, onTick, onTexturesGenerated }: SheetProps
 
 // Canvas pixels beyond this buy little on a soft, dark object and cost every postprocessing pass
 const MAX_PIXEL_RATIO = 1.5;
-// Alpha stays available for the transparent comparison; the composer multisamples its own buffers, so canvas antialiasing would only cost memory
-const CANVAS_OPTIONS = { alpha: true, antialias: false };
+// The composer multisamples its own buffers, so canvas antialiasing would only cost memory
+const CANVAS_OPTIONS = { alpha: false, antialias: false };
 
 type HeroSceneProps = {
   clock?: RefObject<LoopClock>;
@@ -116,10 +103,6 @@ type HeroSceneProps = {
   paper?: PaperSettings;
   lighting?: LightingSettings;
   effects?: EffectSettings;
-  // opaque by default: on a transparent canvas bloom blurs alpha too and darkens a ring of page around the plane
-  isOpaque?: boolean;
-  onTexturesGenerated?: (milliseconds: number) => void;
-  onFrameTiming?: (milliseconds: number, source: FrameTimingSource) => void;
   // the video render: frames on request only, one pixel per pixel, and black where the page would be for screen blending
   isCapture?: boolean;
 };
@@ -130,9 +113,6 @@ export function HeroScene({
   paper = DEFAULT_PAPER,
   lighting = DEFAULT_LIGHTING,
   effects = DEFAULT_EFFECTS,
-  isOpaque = true,
-  onTexturesGenerated,
-  onFrameTiming,
   isCapture = false,
 }: HeroSceneProps) {
   const ownClock = useRef<LoopClock>({ time: 0, isPlaying: true });
@@ -144,7 +124,6 @@ export function HeroScene({
       paper: {
         paper: readTokenColor(PAPER_TOKENS.paper),
         inside: readTokenColor(PAPER_TOKENS.inside),
-        edge: readTokenColor(PAPER_TOKENS.edge),
         sheen: readTokenColor(PAPER_TOKENS.sheen),
         border: readTokenColor(PAPER_TOKENS.border),
       },
@@ -176,17 +155,10 @@ export function HeroScene({
       {colors && fogColor && (
         <>
           <fog attach="fog" args={[fogColor, FOG_NEAR, FOG_FAR]} />
-          {isOpaque && <color attach="background" args={[fogColor]} />}
+          <color attach="background" args={[fogColor]} />
           <SceneLighting settings={lighting} lightColor={colors.light} />
-          <Sheet
-            colors={colors.paper}
-            paper={paper}
-            clock={clock ?? ownClock}
-            onTick={onTick}
-            onTexturesGenerated={onTexturesGenerated}
-          />
+          <Sheet colors={colors.paper} paper={paper} clock={clock ?? ownClock} onTick={onTick} />
           <SceneEffects settings={effects} />
-          {onFrameTiming && <FrameTimer onTiming={onFrameTiming} />}
           {isCapture && <CaptureDriver clock={clock ?? ownClock} />}
         </>
       )}

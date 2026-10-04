@@ -1,12 +1,11 @@
-import { type Color, MeshPhysicalMaterial, ShaderChunk, type Texture, Vector2 } from 'three';
+import { type Color, MeshPhysicalMaterial, ShaderChunk, Vector2 } from 'three';
 import { createFoldUniforms, type FoldUniforms, injectFold, sheetVaryings } from './fold-material';
-import { PATTERN_GLYPHS_PER_TILE, type PaperTextures } from './paper-textures';
+import type { PaperTextures } from './paper-textures';
 import { FLAP_HEIGHT, FLAP_TIP_RADIUS, SHEET_WIDTH } from './sheet-layout';
 
 export type PaperColors = {
   paper: Color;
   inside: Color;
-  edge: Color;
   sheen: Color;
   border: Color;
 };
@@ -16,12 +15,6 @@ export type PaperSettings = {
   sheen: number;
   sheenRoughness: number;
   normalStrength: number;
-  // how much lighter the rounded edges read, as a paler colour and a faint glow in the edge colour
-  edgeLift: number;
-  // how strongly each @ mark shows, as a lighter colour and a glossier finish than the card around it
-  patternContrast: number;
-  // sheet units between neighbouring @ marks
-  patternPitch: number;
   // how much the grain's normal variance between neighbouring pixels roughens the mirror; 0 turns it off
   specularAntialiasing: number;
   // how dark the shadow the closed flap casts on the body gets
@@ -40,9 +33,6 @@ export const DEFAULT_PAPER: PaperSettings = {
   sheen: 0.37,
   sheenRoughness: 0.92,
   normalStrength: 1,
-  edgeLift: 0,
-  patternContrast: 0,
-  patternPitch: 0.1,
   specularAntialiasing: 0.12,
   contactShading: 0.59,
   borderRoughness: 0.79,
@@ -50,8 +40,6 @@ export const DEFAULT_PAPER: PaperSettings = {
   grooveShade: 1,
 };
 
-// How much of the card's roughness an @ mark keeps at full contrast
-const INK_ROUGHNESS = 0.35;
 // Kaplanyan's cap on the roughness the anti-aliasing can add, so a fold never turns fully matte
 const SPECULAR_ANTIALIASING_CAP = 0.18;
 // Below this three's sheen spikes far past white wherever an edge is seen edge-on against a light, and bloom turns it into discs
@@ -83,15 +71,10 @@ const GRAIN_FADE_END = 40;
 type PaperUniforms = {
   uPaper: { value: Color };
   uPaperInside: { value: Color };
-  uPaperEdge: { value: Color };
   uPaperBorder: { value: Color };
   uBorderRoughness: { value: number };
   uFrameShade: { value: number };
   uGrooveShade: { value: number };
-  uEdgeLift: { value: number };
-  uPatternContrast: { value: number };
-  uPatternTile: { value: number };
-  uPattern: { value: Texture };
   uSpecularAntialiasing: { value: number };
   uContactShading: { value: number };
 };
@@ -103,11 +86,8 @@ float border = vSurface.x;
 float groove = vSurface.z;
 float edge = vSurface.y * clamp( ( 1.0 - abs( vRestNormal.z ) ) * 5.0, 0.0, 1.0 );
 float isInside = isFront * step( 0.0, vSheetPosition.y ) * ( 1.0 - border );
-float inkMark = texture2D( uPattern, vSheetPosition / uPatternTile ).r * uPatternContrast * isInside;
 vec3 paperColor = mix( uPaper, uPaperInside, isInside );
-paperColor = mix( paperColor, uPaperEdge, inkMark );
-paperColor = mix( paperColor, uPaperBorder, border );
-diffuseColor.rgb = mix( paperColor, uPaperEdge, edge * uEdgeLift );
+diffuseColor.rgb = mix( paperColor, uPaperBorder, border );
 
 float flapClosed = smoothstep( 0.8 * PI, PI, uFlap );
 vec2 castFrom = vSheetPosition - ${vec2(FLAP_SHADOW_OFFSET)};
@@ -120,15 +100,9 @@ float inFlapShadow = 1.0 - smoothstep( -${FLAP_SHADOW_SOFTNESS.toFixed(4)}, ${FL
 float contactShade = uContactShading * flapClosed * onBody * inFlapShadow;
 `;
 
-// Printed ink is glossier than the card under it, which is what makes the tint readable where the paper catches the light
-const inkGlossChunk = `
-roughnessFactor = mix( roughnessFactor, roughnessFactor * ${INK_ROUGHNESS.toFixed(2)}, inkMark );
+// The frame is a separate piece in the design, so it takes its own finish rather than the panels' satin
+const borderRoughnessChunk = `
 roughnessFactor = mix( roughnessFactor, uBorderRoughness, border );
-`;
-
-// Halfway round the bevel the satin faces away from camera and light alike, so only a faint glow can lift it whatever the lighting
-const edgeGlowChunk = `
-totalEmissiveRadiance += uPaperEdge * edge * uEdgeLift;
 `;
 
 // Where the grain bends the normal faster than a pixel can resolve, a mirror sparkles, so roughness rises to cover the spread
@@ -151,15 +125,10 @@ const paperUniformsChunk = `
 uniform float uFlap;
 uniform vec3 uPaper;
 uniform vec3 uPaperInside;
-uniform vec3 uPaperEdge;
 uniform vec3 uPaperBorder;
 uniform float uBorderRoughness;
 uniform float uFrameShade;
 uniform float uGrooveShade;
-uniform float uEdgeLift;
-uniform float uPatternContrast;
-uniform float uPatternTile;
-uniform sampler2D uPattern;
 uniform float uSpecularAntialiasing;
 uniform float uContactShading;
 `;
@@ -183,9 +152,6 @@ export function applyPaperSettings(
   material.sheen = settings.sheen;
   material.sheenRoughness = Math.max(settings.sheenRoughness, SHEEN_ROUGHNESS_FLOOR);
   material.normalScale.set(settings.normalStrength, settings.normalStrength);
-  uniforms.uEdgeLift.value = settings.edgeLift;
-  uniforms.uPatternContrast.value = settings.patternContrast;
-  uniforms.uPatternTile.value = settings.patternPitch * PATTERN_GLYPHS_PER_TILE;
   uniforms.uSpecularAntialiasing.value = settings.specularAntialiasing;
   uniforms.uContactShading.value = settings.contactShading;
   uniforms.uBorderRoughness.value = settings.borderRoughness;
@@ -212,15 +178,10 @@ export function createPaperMaterial(
   const paperUniforms: PaperUniforms = {
     uPaper: { value: colors.paper },
     uPaperInside: { value: colors.inside },
-    uPaperEdge: { value: colors.edge },
     uPaperBorder: { value: colors.border },
     uBorderRoughness: { value: 0 },
     uFrameShade: { value: 1 },
     uGrooveShade: { value: 0 },
-    uEdgeLift: { value: 0 },
-    uPatternContrast: { value: 0 },
-    uPatternTile: { value: 1 },
-    uPattern: { value: textures.pattern },
     uSpecularAntialiasing: { value: 0 },
     uContactShading: { value: 0 },
   };
@@ -234,11 +195,7 @@ export function createPaperMaterial(
       .replace('#include <color_fragment>', `#include <color_fragment>\n${paperColorChunk}`)
       .replace(
         '#include <roughnessmap_fragment>',
-        `#include <roughnessmap_fragment>\n${inkGlossChunk}`,
-      )
-      .replace(
-        '#include <emissivemap_fragment>',
-        `#include <emissivemap_fragment>\n${edgeGlowChunk}`,
+        `#include <roughnessmap_fragment>\n${borderRoughnessChunk}`,
       )
       .replace(
         '#include <normal_fragment_maps>',

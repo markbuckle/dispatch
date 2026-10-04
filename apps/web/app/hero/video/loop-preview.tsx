@@ -4,7 +4,6 @@ import { useControls } from 'leva';
 import { type ChangeEvent, useCallback, useRef, useState } from 'react';
 import { smallButton } from '../../dashboard/button-styles';
 import { DEFAULT_EFFECTS } from './effects';
-import type { FrameTimingSource } from './frame-timer';
 import { HeroScene, type LoopClock } from './hero-scene';
 import { DEFAULT_LIGHTING } from './lighting';
 import { DEFAULT_PAPER } from './paper-material';
@@ -15,8 +14,6 @@ export function LoopPreview() {
   const [isPlaying, setIsPlaying] = useState(true);
   const slider = useRef<HTMLInputElement>(null);
   const readout = useRef<HTMLSpanElement>(null);
-  const frameReadout = useRef<HTMLSpanElement>(null);
-  const [textureMilliseconds, setTextureMilliseconds] = useState<number>();
 
   // leva lives only in this dev route, so the shipped scene takes plain props and never imports it
   const paper = useControls('Paper', {
@@ -24,9 +21,6 @@ export function LoopPreview() {
     sheen: { value: DEFAULT_PAPER.sheen, min: 0, max: 1, step: 0.01 },
     sheenRoughness: { value: DEFAULT_PAPER.sheenRoughness, min: 0.3, max: 1, step: 0.01 },
     normalStrength: { value: DEFAULT_PAPER.normalStrength, min: 0, max: 1, step: 0.01 },
-    edgeLift: { value: DEFAULT_PAPER.edgeLift, min: 0, max: 1, step: 0.01 },
-    patternContrast: { value: DEFAULT_PAPER.patternContrast, min: 0, max: 1, step: 0.01 },
-    patternPitch: { value: DEFAULT_PAPER.patternPitch, min: 0.1, max: 0.8, step: 0.01 },
     specularAntialiasing: {
       value: DEFAULT_PAPER.specularAntialiasing,
       min: 0,
@@ -40,7 +34,6 @@ export function LoopPreview() {
   });
   const lighting = useControls('Lights', {
     key: { value: DEFAULT_LIGHTING.key, min: 0, max: 5, step: 0.05 },
-    rim: { value: DEFAULT_LIGHTING.rim, min: 0, max: 10, step: 0.1 },
     rimFill: { value: DEFAULT_LIGHTING.rimFill, min: 0, max: 5, step: 0.05 },
     environment: { value: DEFAULT_LIGHTING.environment, min: 0, max: 3, step: 0.05 },
   });
@@ -53,19 +46,12 @@ export function LoopPreview() {
   const output = useControls('Output', {
     exposure: { value: DEFAULT_EFFECTS.exposure, min: 0.3, max: 2, step: 0.01 },
     multisampling: DEFAULT_EFFECTS.multisampling,
-    opaqueCanvas: true,
   });
 
   // written straight to the DOM every frame, because a state update 60 times a second would re-render the page with it
   const showTime = useCallback((time: number) => {
     if (slider.current) slider.current.value = String(time);
     if (readout.current) readout.current.textContent = `${time.toFixed(2)}s`;
-  }, []);
-
-  const showFrameTiming = useCallback((milliseconds: number, source: FrameTimingSource) => {
-    if (frameReadout.current) {
-      frameReadout.current.textContent = `${source} ${milliseconds.toFixed(2)}ms`;
-    }
   }, []);
 
   function togglePlaying() {
@@ -102,13 +88,6 @@ export function LoopPreview() {
         >
           0.00s
         </span>
-        <span className="w-32 font-mono text-mono text-text-muted tabular-nums">
-          {textureMilliseconds === undefined ? '' : `textures ${textureMilliseconds.toFixed(1)}ms`}
-        </span>
-        <span
-          ref={frameReadout}
-          className="w-48 font-mono text-mono text-text-muted tabular-nums"
-        />
       </div>
       <div className="flex-1">
         <HeroScene
@@ -117,9 +96,6 @@ export function LoopPreview() {
           paper={paper}
           lighting={lighting}
           effects={{ ...bloom, exposure: output.exposure, multisampling: output.multisampling }}
-          isOpaque={output.opaqueCanvas}
-          onTexturesGenerated={setTextureMilliseconds}
-          onFrameTiming={showFrameTiming}
         />
       </div>
     </main>
