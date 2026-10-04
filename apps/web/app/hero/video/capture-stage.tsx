@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { HeroScene, type LoopClock } from '../../hero-scene/hero-scene';
+import { HeroScene, type LoopClock } from './hero-scene';
 
 // The render script sets the size, so the video's pixel dimensions live in one place
 export function CaptureStage({ size }: { size: number }) {

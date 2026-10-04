@@ -2,7 +2,7 @@ import { API_BASE_URL } from '../lib/api-url';
 import { HERO_VIDEO, isFeatureEnabledForVisitors } from '../lib/flags/is-feature-enabled';
 import { FooterWordmark } from './footer-wordmark';
 import { HeaderBorder } from './header-border';
-import { HeroVideo } from './hero-video';
+import { HeroVideo } from './hero/video/hero-video';
 import { Wordmark } from './logo';
 
 // The hero flag is read on the server, so the page is rebuilt this often and a flag change reaches visitors within five minutes

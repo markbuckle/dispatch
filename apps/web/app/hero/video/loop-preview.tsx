@@ -3,12 +3,12 @@
 import { useControls } from 'leva';
 import { type ChangeEvent, useCallback, useRef, useState } from 'react';
 import { smallButton } from '../../dashboard/button-styles';
-import { DEFAULT_EFFECTS } from '../../hero-scene/effects';
-import type { FrameTimingSource } from '../../hero-scene/frame-timer';
-import { HeroScene, type LoopClock } from '../../hero-scene/hero-scene';
-import { DEFAULT_LIGHTING } from '../../hero-scene/lighting';
-import { DEFAULT_PAPER } from '../../hero-scene/paper-material';
-import { LOOP_SECONDS } from '../../hero-scene/timeline';
+import { DEFAULT_EFFECTS } from './effects';
+import type { FrameTimingSource } from './frame-timer';
+import { HeroScene, type LoopClock } from './hero-scene';
+import { DEFAULT_LIGHTING } from './lighting';
+import { DEFAULT_PAPER } from './paper-material';
+import { LOOP_SECONDS } from './timeline';
 
 export function LoopPreview() {
   const clock = useRef<LoopClock>({ time: 0, isPlaying: true });

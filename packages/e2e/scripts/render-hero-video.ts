@@ -38,7 +38,7 @@ async function renderFrames(): Promise<number> {
     viewport: { width: SIZE, height: SIZE },
     deviceScaleFactor: 1,
   });
-  await page.goto(`${BASE_URL}/dev/hero-scene?capture=${SIZE}`, { timeout: 180_000 });
+  await page.goto(`${BASE_URL}/hero/video?capture=${SIZE}`, { timeout: 180_000 });
   await page.waitForFunction(() => typeof window.renderHeroFrame === 'function', undefined, {
     timeout: 180_000,
   });

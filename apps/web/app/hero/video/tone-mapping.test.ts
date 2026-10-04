@@ -7,7 +7,7 @@ import { inverseNeutralToneMap, type LinearColor, neutralToneMap } from './tone-
 // Read from the token file itself, so a change to the page colour is checked without editing this test
 function canvasToken(): string {
   const tokens = readFileSync(
-    join(import.meta.dirname, '../../../../design/design-system/tokens/tokens.css'),
+    join(import.meta.dirname, '../../../../../design/design-system/tokens/tokens.css'),
     'utf8',
   );
   const match = tokens.match(/--dispatch-canvas:\s*(#[0-9A-Fa-f]{6})/);
