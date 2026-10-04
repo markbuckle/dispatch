@@ -11,10 +11,10 @@ export type LightingSettings = {
 };
 
 export const DEFAULT_LIGHTING: LightingSettings = {
-  key: 1.8,
+  key: 2.1,
   rim: 0,
   rimFill: 0.25,
-  environment: 2.35,
+  environment: 1.9,
 };
 
 // Low-key, as on the Resend cube: a dim key from the upper left for the faces, and light from behind for every edge

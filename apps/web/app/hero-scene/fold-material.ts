@@ -71,9 +71,10 @@ export function setFolds(uniforms: FoldUniforms, folds: Folds): void {
   uniforms.uWing.value = folds.wing;
 }
 
-// The flat sheet's position and normal, which say which side, which panel and whether a fragment sits on the rounded edge
+// The flat sheet's position, normal and border marks, which say which side, which panel and whether a fragment is border or rim
 export const sheetVaryings = `varying vec2 vSheetPosition;
-varying vec3 vRestNormal;`;
+varying vec3 vRestNormal;
+varying vec3 vSurface;`;
 
 // The flat sheet never leaves the GPU; each frame sends three angles instead of rewriting every vertex on the CPU
 export function injectFold(
@@ -85,6 +86,7 @@ export function injectFold(
     .replace(
       '#include <common>',
       `#include <common>
+attribute vec3 surface;
 ${sheetVaryings}
 ${foldChunk}`,
     )
@@ -94,6 +96,7 @@ ${foldChunk}`,
       [
         'vSheetPosition = position.xy;',
         'vRestNormal = normal;',
+        'vSurface = surface;',
         'vec3 objectNormal = vec3( normal );',
         'vec3 foldedPosition = vec3( position );',
         'foldSheet( foldedPosition, objectNormal );',

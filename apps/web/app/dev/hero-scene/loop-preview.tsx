@@ -34,6 +34,9 @@ export function LoopPreview() {
       step: 0.01,
     },
     contactShading: { value: DEFAULT_PAPER.contactShading, min: 0, max: 1, step: 0.01 },
+    borderRoughness: { value: DEFAULT_PAPER.borderRoughness, min: 0.05, max: 1, step: 0.01 },
+    frameShade: { value: DEFAULT_PAPER.frameShade, min: 0, max: 1, step: 0.01 },
+    grooveShade: { value: DEFAULT_PAPER.grooveShade, min: 0, max: 1, step: 0.01 },
   });
   const lighting = useControls('Lights', {
     key: { value: DEFAULT_LIGHTING.key, min: 0, max: 5, step: 0.05 },

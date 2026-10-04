@@ -3,10 +3,23 @@ export const SHEET_WIDTH = 6;
 export const BODY_HEIGHT = 4;
 // Long enough that the closed flap's tip lands just past the middle of the body, as on a real envelope
 export const FLAP_HEIGHT = 2.4;
+// The paper of the recessed panels
 export const SHEET_DEPTH = 0.12;
-// Just under half the sheet's depth, so every edge is almost fully rounded and catches a soft highlight
-export const EDGE_RADIUS = 0.05;
-export const CORNER_RADIUS = 0.14;
+// The raised frame round the outline, a bezel like an app icon's, standing well proud of the panels on both faces
+export const BORDER_DEPTH = 0.16;
+// From the outline inward: a rounded outer edge, a wide flat crown, then a steep inner wall
+export const BORDER_CROWN = 0.24;
+export const BORDER_DROP = 0.06;
+// The wall drops past the panel into this groove before the panel rises on its own lip, so the frame reads as a separate piece
+export const GROOVE_WIDTH = 0.05;
+export const GROOVE_DEPTH = 0.035;
+export const GROOVE_LIP = 0.05;
+// Small next to the border's depth, so the outer edge reads as a rounded frame with a wall rather than a tube
+export const EDGE_RADIUS = 0.08;
+// Large on the body and at the top, for the soft icon corners, smaller at the flap tip so the plane keeps a point
+export const BODY_CORNER_RADIUS = 0.6;
+export const HINGE_CORNER_RADIUS = 0.45;
+export const FLAP_TIP_RADIUS = 0.3;
 
 // Folded layers sit this far apart, so two surfaces never share a plane and z-fight
 export const FOLD_GAP = 0.04;
@@ -15,10 +28,10 @@ export const CREASE_BAND = 0.18;
 // Each wing crease runs from the flap tip to this far either side of centre at the tail, so the keel deepens toward the tail as a dart's does
 export const KEEL_TAIL_DEPTH = 1.5;
 
-// Each hinge sits on the inside face of its fold, half a gap clear, so the layers it brings together never meet
-export const FLAP_HINGE_Z = (SHEET_DEPTH + FOLD_GAP) / 2;
-export const KEEL_HINGE_Z = (SHEET_DEPTH + FOLD_GAP) / 2;
-export const WING_HINGE_Z = -(SHEET_DEPTH + FOLD_GAP) / 2;
+// Each hinge sits half a border's depth plus half a gap off the mid-plane, so folded borders rest on each other, never through
+export const FLAP_HINGE_Z = (BORDER_DEPTH + FOLD_GAP) / 2;
+export const KEEL_HINGE_Z = (BORDER_DEPTH + FOLD_GAP) / 2;
+export const WING_HINGE_Z = -(BORDER_DEPTH + FOLD_GAP) / 2;
 
 const wingCreaseLength = Math.hypot(KEEL_TAIL_DEPTH, FLAP_HEIGHT + BODY_HEIGHT);
 // The right wing crease's direction, tail toward flap tip; the left one mirrors it in x

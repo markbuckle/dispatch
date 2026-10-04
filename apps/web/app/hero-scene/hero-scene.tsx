@@ -28,6 +28,7 @@ const PAPER_TOKENS = {
   inside: '--dispatch-paper-inside',
   edge: '--dispatch-paper-edge',
   sheen: '--dispatch-paper-sheen',
+  border: '--dispatch-paper-border',
 } as const;
 const BACKGROUND_TOKEN = '--dispatch-canvas';
 const LIGHT_TOKEN = '--dispatch-text-primary';
@@ -141,6 +142,7 @@ export function HeroScene({
         inside: readTokenColor(PAPER_TOKENS.inside),
         edge: readTokenColor(PAPER_TOKENS.edge),
         sheen: readTokenColor(PAPER_TOKENS.sheen),
+        border: readTokenColor(PAPER_TOKENS.border),
       },
       page: readTokenColor(BACKGROUND_TOKEN),
       light: readTokenColor(LIGHT_TOKEN),

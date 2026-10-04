@@ -77,6 +77,8 @@
   --dispatch-paper-edge: var(--dispatch-border-strong);
   /* Hero scene paper: the satin sheen at grazing angles. Aliases --dispatch-text-tertiary. */
   --dispatch-paper-sheen: var(--dispatch-text-tertiary);
+  /* Hero scene paper: the raised frame round the sheet's outline, darker than the panels. Aliases --dispatch-surface. */
+  --dispatch-paper-border: var(--dispatch-surface);
 
   /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
