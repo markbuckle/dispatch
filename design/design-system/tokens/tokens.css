@@ -255,6 +255,8 @@
   --container-email:     600px;
   /* the floor components/DropdownMenu.tsx sets, so a short menu is not narrower than its trigger reads */
   --container-menu:      180px;
+  /* the landing hero's video once it stacks under the copy below lg: big enough to read the fold, small enough not to push the code cards off screen */
+  --container-hero-video-stacked: 360px;
 }
 
 /* ── Fonts ───────────────────────────────────────────────────────── */
@@ -400,6 +402,14 @@ a:hover { color: var(--dispatch-text-primary); }
 /* The monogram's tile: lit from above like the page behind it, so it reads as raised without a shadow. */
 .dispatch-monogram-tile {
   background: linear-gradient(to bottom, var(--dispatch-hover), var(--dispatch-canvas));
+}
+/* The landing hero's video: fades to nothing over its outer 8% on every side, a safety net so no frame can ever show a box edge.
+   The mask is alpha only, so the colour keywords here are opacity, not colour. */
+.dispatch-video-feather {
+  mask-image:
+    linear-gradient(to right, transparent, black 8%, black 92%, transparent),
+    linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+  mask-composite: intersect;
 }
 
 /* The status tile that leads a dashboard table row, logo/icons/dispatch-email-sent.svg in the row's tone: the one glow on a product surface.

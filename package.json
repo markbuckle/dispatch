@@ -13,7 +13,8 @@
     "lint": "biome check apps packages biome.json tsconfig.json package.json .claude",
     "format": "biome check --write apps packages biome.json tsconfig.json package.json .claude",
     "typecheck": "tsc --noEmit",
-    "e2e": "pnpm --filter @dispatch/e2e e2e"
+    "e2e": "pnpm --filter @dispatch/e2e e2e",
+    "hero:render": "pnpm --filter @dispatch/e2e exec node scripts/render-hero-video.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",

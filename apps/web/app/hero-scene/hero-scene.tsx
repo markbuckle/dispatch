@@ -3,6 +3,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { type RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Color, type Group, type Mesh, SRGBColorSpace } from 'three';
+import { CaptureDriver } from './capture-driver';
 import { DEFAULT_EFFECTS, type EffectSettings, SceneEffects } from './effects';
 import { setFolds } from './fold-material';
 import { FrameTimer, type FrameTimingSource } from './frame-timer';
@@ -119,6 +120,8 @@ type HeroSceneProps = {
   isOpaque?: boolean;
   onTexturesGenerated?: (milliseconds: number) => void;
   onFrameTiming?: (milliseconds: number, source: FrameTimingSource) => void;
+  // the video render: frames on request only, one pixel per pixel, and black where the page would be for screen blending
+  isCapture?: boolean;
 };
 
 export function HeroScene({
@@ -130,6 +133,7 @@ export function HeroScene({
   isOpaque = true,
   onTexturesGenerated,
   onFrameTiming,
+  isCapture = false,
 }: HeroSceneProps) {
   const ownClock = useRef<LoopClock>({ time: 0, isPlaying: true });
   // the server has no stylesheet to read, so the scene waits for the first client render
@@ -144,10 +148,11 @@ export function HeroScene({
         sheen: readTokenColor(PAPER_TOKENS.sheen),
         border: readTokenColor(PAPER_TOKENS.border),
       },
-      page: readTokenColor(BACKGROUND_TOKEN),
+      // a captured video is screen blended onto the page, which leaves the page untouched only where the video is black
+      page: isCapture ? new Color(0, 0, 0) : readTokenColor(BACKGROUND_TOKEN),
       light: readTokenColor(LIGHT_TOKEN),
     });
-  }, []);
+  }, [isCapture]);
 
   // tone mapping runs after the fog, so the fog has to be the colour that tone maps back onto the page, not the page itself
   const fogColor = useMemo(() => {
@@ -164,7 +169,8 @@ export function HeroScene({
     <Canvas
       flat
       camera={{ position: CAMERA_POSITION, fov: CAMERA_FOV }}
-      dpr={[1, MAX_PIXEL_RATIO]}
+      dpr={isCapture ? 1 : [1, MAX_PIXEL_RATIO]}
+      frameloop={isCapture ? 'never' : 'always'}
       gl={CANVAS_OPTIONS}
     >
       {colors && fogColor && (
@@ -181,6 +187,7 @@ export function HeroScene({
           />
           <SceneEffects settings={effects} />
           {onFrameTiming && <FrameTimer onTiming={onFrameTiming} />}
+          {isCapture && <CaptureDriver clock={clock ?? ownClock} />}
         </>
       )}
     </Canvas>

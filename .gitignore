@@ -16,3 +16,4 @@ apps/api/api/server.js
 test-results/
 playwright-report/
 docs/case-study.md
+.hero-frames/
