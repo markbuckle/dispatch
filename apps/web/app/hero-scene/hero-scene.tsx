@@ -3,7 +3,10 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { type RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Color, type Group, type Mesh, SRGBColorSpace } from 'three';
+import { DEFAULT_EFFECTS, type EffectSettings, SceneEffects } from './effects';
 import { setFolds } from './fold-material';
+import { FrameTimer, type FrameTimingSource } from './frame-timer';
+import { DEFAULT_LIGHTING, type LightingSettings, SceneLighting } from './lighting';
 import {
   applyPaperSettings,
   createPaperMaterial,
@@ -14,8 +17,8 @@ import {
 import { createPaperTextures } from './paper-textures';
 import { createSheetGeometry } from './sheet-geometry';
 import { CAMERA_FOV, CAMERA_POSITION, FOG_FAR, FOG_NEAR } from './stage';
-import { StudioEnvironment } from './studio-environment';
 import { LOOP_SECONDS, sampleTimeline } from './timeline';
+import { inverseNeutralToneMap } from './tone-mapping';
 
 export type LoopClock = { time: number; isPlaying: boolean };
 
@@ -27,6 +30,7 @@ const PAPER_TOKENS = {
   sheen: '--dispatch-paper-sheen',
 } as const;
 const BACKGROUND_TOKEN = '--dispatch-canvas';
+const LIGHT_TOKEN = '--dispatch-text-primary';
 
 // Tokens are written in sRGB and three lights in linear, so a token used as-is would render a shade off
 function readTokenColor(name: string): Color {
@@ -99,25 +103,36 @@ function Sheet({ colors, paper, clock, onTick, onTexturesGenerated }: SheetProps
   );
 }
 
+// Canvas pixels beyond this buy little on a soft, dark object and cost every postprocessing pass
+const MAX_PIXEL_RATIO = 1.5;
+// Alpha stays available for the transparent comparison; the composer multisamples its own buffers, so canvas antialiasing would only cost memory
+const CANVAS_OPTIONS = { alpha: true, antialias: false };
+
 type HeroSceneProps = {
   clock?: RefObject<LoopClock>;
   onTick?: (time: number) => void;
   paper?: PaperSettings;
-  // set, the studio replaces the placeholder lights rather than adding to them, so materials are judged under one rig
-  studioIntensity?: number;
+  lighting?: LightingSettings;
+  effects?: EffectSettings;
+  // opaque by default: on a transparent canvas bloom blurs alpha too and darkens a ring of page around the plane
+  isOpaque?: boolean;
   onTexturesGenerated?: (milliseconds: number) => void;
+  onFrameTiming?: (milliseconds: number, source: FrameTimingSource) => void;
 };
 
 export function HeroScene({
   clock,
   onTick,
   paper = DEFAULT_PAPER,
-  studioIntensity,
+  lighting = DEFAULT_LIGHTING,
+  effects = DEFAULT_EFFECTS,
+  isOpaque = true,
   onTexturesGenerated,
+  onFrameTiming,
 }: HeroSceneProps) {
   const ownClock = useRef<LoopClock>({ time: 0, isPlaying: true });
   // the server has no stylesheet to read, so the scene waits for the first client render
-  const [colors, setColors] = useState<{ paper: PaperColors; background: Color }>();
+  const [colors, setColors] = useState<{ paper: PaperColors; page: Color; light: Color }>();
 
   useEffect(() => {
     setColors({
@@ -127,29 +142,34 @@ export function HeroScene({
         edge: readTokenColor(PAPER_TOKENS.edge),
         sheen: readTokenColor(PAPER_TOKENS.sheen),
       },
-      background: readTokenColor(BACKGROUND_TOKEN),
+      page: readTokenColor(BACKGROUND_TOKEN),
+      light: readTokenColor(LIGHT_TOKEN),
     });
   }, []);
 
+  // tone mapping runs after the fog, so the fog has to be the colour that tone maps back onto the page, not the page itself
+  const fogColor = useMemo(() => {
+    if (!colors) return undefined;
+    const [r, g, b] = inverseNeutralToneMap(
+      [colors.page.r, colors.page.g, colors.page.b],
+      effects.exposure,
+    );
+    return new Color(r, g, b);
+  }, [colors, effects.exposure]);
+
   return (
-    // flat turns tone mapping off, which would otherwise shift the fog's far colour away from the page and leave an outline
+    // flat leaves the renderer untoned, because the effect chain tone maps once at the end
     <Canvas
       flat
       camera={{ position: CAMERA_POSITION, fov: CAMERA_FOV }}
-      dpr={[1, 2]}
-      gl={{ alpha: true, antialias: true }}
+      dpr={[1, MAX_PIXEL_RATIO]}
+      gl={CANVAS_OPTIONS}
     >
-      {colors && (
+      {colors && fogColor && (
         <>
-          <fog attach="fog" args={[colors.background, FOG_NEAR, FOG_FAR]} />
-          {studioIntensity === undefined ? (
-            <>
-              <ambientLight intensity={0.9} />
-              <directionalLight position={[-3, 5, 9]} intensity={2.4} />
-            </>
-          ) : (
-            <StudioEnvironment intensity={studioIntensity} />
-          )}
+          <fog attach="fog" args={[fogColor, FOG_NEAR, FOG_FAR]} />
+          {isOpaque && <color attach="background" args={[fogColor]} />}
+          <SceneLighting settings={lighting} lightColor={colors.light} />
           <Sheet
             colors={colors.paper}
             paper={paper}
@@ -157,6 +177,8 @@ export function HeroScene({
             onTick={onTick}
             onTexturesGenerated={onTexturesGenerated}
           />
+          <SceneEffects settings={effects} />
+          {onFrameTiming && <FrameTimer onTiming={onFrameTiming} />}
         </>
       )}
     </Canvas>

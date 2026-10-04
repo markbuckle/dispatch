@@ -3,9 +3,9 @@ export const SHEET_WIDTH = 6;
 export const BODY_HEIGHT = 4;
 // Long enough that the closed flap's tip lands just past the middle of the body, as on a real envelope
 export const FLAP_HEIGHT = 2.4;
-export const SHEET_DEPTH = 0.16;
-// The tiles' edge radius, so the single sheet keeps the soft highlight the tiles had on every edge
-export const EDGE_RADIUS = 0.06;
+export const SHEET_DEPTH = 0.12;
+// Just under half the sheet's depth, so every edge is almost fully rounded and catches a soft highlight
+export const EDGE_RADIUS = 0.05;
 export const CORNER_RADIUS = 0.14;
 
 // Folded layers sit this far apart, so two surfaces never share a plane and z-fight
