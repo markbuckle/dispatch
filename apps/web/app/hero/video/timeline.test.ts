@@ -10,7 +10,7 @@ import {
   PLANE_TOP_QUATERNION,
 } from './poses';
 import { outlineSamples } from './sheet-geometry';
-import { CAMERA_FOV, CAMERA_POSITION, FOG_FAR } from './stage';
+import { CAMERA_FOV, CAMERA_POSITION, FOG_FAR, FRAME_SAFE_USE } from './stage';
 import {
   FLAP_START,
   FOLD_END,
@@ -162,7 +162,7 @@ describe('hero timeline', () => {
   });
 
   // Flying into depth only avoids clipping if the plane fades out before reaching an edge, even in a square canvas
-  it('keeps every visible frame inside a square canvas', () => {
+  it('keeps every visible frame inside the safe area of a square canvas', () => {
     const halfAngle = Math.tan((CAMERA_FOV * Math.PI) / 360);
     const [cameraX, cameraY, cameraZ] = CAMERA_POSITION;
     const rotation = new Quaternion();
@@ -189,6 +189,8 @@ describe('hero timeline', () => {
       }
     }
 
-    expect(worst.use, worst.where).toBeLessThan(1);
+    expect(worst.use, `${worst.use.toFixed(4)} of the half frame, ${worst.where}`).toBeLessThan(
+      FRAME_SAFE_USE,
+    );
   });
 });

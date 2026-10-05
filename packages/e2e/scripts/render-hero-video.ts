@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { chromium } from '@playwright/test';
 
 // Twice the largest size the hero shows the video at, so it stays sharp on a retina screen
-const SIZE = 1120;
+const SIZE = 1216;
 const RENDER_FPS = 60;
 // 30fps was tried and dropped: halving the frames doubled the jump between them in the fast turns, visibly stepping
 const OUTPUT_FPS = [60];

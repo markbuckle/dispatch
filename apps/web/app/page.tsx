@@ -39,8 +39,8 @@ const events = [
   },
 ];
 
-// Lifted at lg so the envelope sits level with the headline rather than the paragraph below it
-const heroVideoPlacement = 'mx-auto max-w-hero-video-stacked lg:max-w-none lg:-translate-y-20';
+// Under xl the copy column would leave the video too narrow to read, so it stacks below instead
+const heroVideoPlacement = 'mx-auto max-w-hero-video-stacked xl:max-w-hero-video';
 const footerLink = 'dispatch-transition text-meta text-text-secondary hover:text-text-primary';
 const overline = 'text-overline text-text-muted uppercase';
 
@@ -50,16 +50,16 @@ export default async function Home() {
   // the paragraph's break suits the full-width hero; beside the video the column is narrow enough to wrap on its own
   const heroCopy = (
     <div>
-      <h1 className="dispatch-display-gradient font-serif text-display-2xl-s sm:text-display-2xl-m lg:text-display-2xl">
+      <h1 className="dispatch-display-gradient dispatch-display-stretch font-serif text-display-2xl-m lg:text-display-2xl">
         Email for developers
       </h1>
-      <p className="mt-6 max-w-reading text-body text-text-secondary">
+      <p className="mt-2 max-w-reading text-body text-text-secondary">
         The best way to reach humans instead of spam folders other than Resend.
         {!hasHeroVideo && <br className="hidden lg:inline" />} A portfolio project to deliver emails
         like the pros.
       </p>
 
-      <div className="mt-10 flex flex-wrap items-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <a
           href="/signup"
           className="dispatch-transition dispatch-cta flex items-center rounded-2xl px-4 py-2 text-body font-medium"
@@ -80,7 +80,7 @@ export default async function Home() {
       </a>
 
       <header className="sticky top-0 z-10 bg-canvas">
-        <nav className="mx-auto flex h-16 max-w-marketing items-center px-5 lg:px-8">
+        <nav className="mx-auto flex h-16 max-w-marketing-wide items-center px-5 lg:px-6">
           <a href="/" aria-label="Dispatch home">
             <Wordmark className="w-28 text-text-primary" />
           </a>
@@ -103,9 +103,11 @@ export default async function Home() {
       </header>
 
       <main id="main">
-        <section className="mx-auto max-w-marketing px-5 pt-24 pb-24 lg:px-8 lg:pt-32">
+        <section
+          className={`mx-auto max-w-marketing-wide px-5 pb-24 lg:px-8 xl:px-22 ${hasHeroVideo ? 'pt-6 xl:pt-0' : 'pt-24 lg:pt-32'}`}
+        >
           {hasHeroVideo ? (
-            <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div className="grid items-center gap-12 xl:min-h-hero xl:grid-cols-hero xl:py-6">
               {heroCopy}
               <HeroVideo className={heroVideoPlacement} />
             </div>
@@ -172,7 +174,7 @@ export default async function Home() {
       <footer className="relative">
         <span aria-hidden="true" className="dispatch-glow absolute inset-x-0 top-0 h-40" />
         <span aria-hidden="true" className="dispatch-rule absolute inset-x-0 top-0 h-px" />
-        <div className="relative mx-auto flex max-w-marketing flex-wrap items-center gap-x-8 gap-y-4 px-5 pt-16 pb-16 lg:px-8">
+        <div className="relative mx-auto flex max-w-marketing-wide flex-wrap items-center gap-x-8 gap-y-4 px-5 pt-16 pb-16 lg:px-6">
           <div className="flex items-center gap-6">
             <a href="/terms" className={footerLink}>
               Terms

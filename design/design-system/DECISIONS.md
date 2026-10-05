@@ -103,7 +103,23 @@ Resend's sidebar icons animate when hovered, and a still icon set read as flat b
 
 Instead each glyph moves part of itself once per hover, in CSS, over 650ms to 1200ms: long enough to read as a gesture, which 200ms is not. It began at 400ms and every icon was slowed after seeing it move. Only the moving part is tagged, every icon rests exactly as drawn, and reduced motion turns it off. It started with four icons - Emails, Metrics, API keys, Settings - to judge before doing the rest. If it falls short, Lottie with our own glyphs is the next step.
 
-## 11. What is still inferred
+## 11. The hero serif is stretched, not swapped
+
+Side by side with the reference at the same viewport, the hero read wrong in two ways: the headline was condensed, tall narrow letters with loose lines, and the first screen held 300px of empty space above it, which pushed the call to action below the fold.
+
+The reference sets its headline in Domaine, a commercial face, at 96px / 1.0 / -0.01em. Its files are licensed to the reference's site, so copying them was never an option, and three open faces were tried in its place: Newsreader matched its weight and colour but ran 13% wide, Fraunces matched its width but with hairlines far finer, and Source Serif 4 read too light. None was close enough to justify a second serif in the system, so **Instrument Serif stayed, and CSS moved it toward the reference's proportions**:
+
+- **92px**, because that gives Instrument Serif the reference's cap height at 96px. The old 116px was bigger than the reference without being any wider.
+- **Line height 1.04**, the reference's 96px line pitch at 92px.
+- **Stretched 1.2 wide** through `.dispatch-display-stretch`, which is what makes it stop reading as condensed. At that width "developers" lands on the reference's measure, so **tracking is 0** rather than negative.
+
+Overlaid on the reference, baselines, cap height and line length coincide. The stretch is a geometric distortion: vertical stems thicken by the factor and horizontal hairlines do not. That is a cost, and the reason it was accepted is that the result moves the stroke weight toward the reference's heavier face rather than away from it. It is one fixed factor, a token, applied to this one face and nowhere else - `typography.md` rule 4b still bans every other way of faking a font the system does not have.
+
+The hero went from three size steps to two, matching the reference: `display-2xl` at 92px and `display-2xl-m` at 61px below `lg`, which is the reference's 64px step converted the same way. `display-2xl-s` was retired, because "developers" at 61px stretched is 264px and a 375px phone has 335px.
+
+The layout moved with it: the hero fills the first screen below the header and centres the copy and the video together, the copy sits in a 480px column, and the title, subtitle and call to action tightened to 8px and 32px, the reference's rhythm.
+
+## 12. What is still inferred
 
 Recorded in `PROVENANCE.md`, repeated here because it is the most likely source of a future wrong assumption:
 
@@ -111,6 +127,6 @@ Recorded in `PROVENANCE.md`, repeated here because it is the most likely source 
 - **Input, checkbox, radio and select** specifications were designed from the brief; the sampled pages carried no form fields.
 - **Motion** has a measured product baseline but the split above is a judgment call, not an observation.
 
-## 12. Open items
+## 13. Open items
 
 - **The auth background gradient from §6 has no token.** That entry documents the exception; nobody ever added the actual class or token to `tokens/tokens.css`, so there was nothing to build against. `/login` and `/signup` (`apps/web/app/login`, `apps/web/app/signup`) shipped flat - `canvas` background, borders carrying hierarchy - rather than inventing a recipe. Measure the real gradient and add it to `tokens.css` as a fourth `.dispatch-*` class, then apply it here.

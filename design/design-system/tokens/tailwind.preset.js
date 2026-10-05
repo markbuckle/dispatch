@@ -39,7 +39,7 @@ module.exports = {
         serif: ['Instrument Serif', 'ui-serif', 'Georgia', 'serif'],
       },
       fontSize: {
-        'display-2xl':['116px',{ lineHeight: '1.00', letterSpacing: '-0.02em',  fontWeight: '400' }],
+        'display-2xl':['92px', { lineHeight: '1.04', letterSpacing: '0',       fontWeight: '400' }],
         'display-xl': ['76px', { lineHeight: '1.00', letterSpacing: '-0.02em',  fontWeight: '500' }],
         'display-l':  ['56px', { lineHeight: '1.05', letterSpacing: '-0.03em',  fontWeight: '500' }],
         'display-m':  ['36px', { lineHeight: '1.10', letterSpacing: '-0.025em', fontWeight: '500' }],

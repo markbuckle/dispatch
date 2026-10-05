@@ -30,11 +30,12 @@ The scroll state is the only thing on the header that needs the client. Keep it 
 
 ## Hero
 
-- **`display-2xl` at 116px in Instrument Serif with `.dispatch-display-gradient`**, one line if possible, two maximum. Sentence case. See `foundations/typography.md`.
-- Subcopy `body` `text-secondary`, max 2 lines, max 680px. 24px below the title.
-- Two buttons, 40px below the subcopy, 12px apart:
+- **`display-2xl` at 92px in Instrument Serif with `.dispatch-display-gradient` and `.dispatch-display-stretch`**, one line if possible, two maximum. Sentence case. See `foundations/typography.md`.
+- Subcopy `body` `text-secondary`, max 2 lines, max 680px. 8px below the title.
+- Two buttons, 32px below the subcopy, 12px apart:
   - Primary "Get an API key": `.dispatch-cta`, `radius-2xl` (16px), `16px 16px` padding.
   - Secondary "Read the docs": ghost, no fill and no border, `text-secondary` to `text-primary` on hover. It must not carry a border, or the two read as equal weight and neither is primary.
+- With the hero video, the hero fills the first screen below the header (`min-h-hero`) and centres the copy and the video together, so the call to action is above the fold at 1280×720. The copy takes `--container-hero-copy`, 480px, and the square video the rest of the row, capped at `--container-hero-video` so it is never taller than the screen. Below `xl` the video stacks under the copy at `--container-hero-video-stacked`.
 - Below: a real code sample or a tight crop of the log table. **Not a hero image, not a floating dashboard mockup at an angle.**
 - **No animation above the fold.**
 
@@ -97,7 +98,7 @@ Opens with a full-bleed `.dispatch-glow` at 160px, then `.dispatch-rule` on top 
 | 480–600 | Single column, 24px gutters | Not supported, notice shown |
 | 600–767 | Two-up cards | Not supported, notice shown |
 | 767–1024 | Two-up cards, 32px gutters | Sidebar expanded, tables scroll horizontally |
-| > 1024 | Full layout, 1200px max | Full layout, fluid content |
+| > 1024 | Full layout, 1200px max; the landing page 1280px with two edges, see `CLAUDE.md` | Full layout, fluid content |
 
 **Tables:** never squeeze columns. Scroll the table horizontally inside its own border, which is what the product does above `lg`. Restructuring a row into a card is the other sanctioned answer and is deliberately not used here - see the mobile scope decision in the root `CLAUDE.md`.
 

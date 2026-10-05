@@ -1,8 +1,9 @@
 import { expect, type Page, test } from '@playwright/test';
 
-// A band this wide all round the video, and its own corners, must be page and nothing else
+// A band this wide all round the video must be page and nothing else
 const RING = 24;
-const CORNER = 12;
+// FRAME_SAFE_USE in the hero stage keeps the plane out of the frame's outer 2.5% on each side, so that band inside the video is page too
+const SAFE_EDGE = 0.025;
 
 type Region = { x: number; y: number; width: number; height: number };
 type Mismatch = { count: number; worst: number };
@@ -58,8 +59,8 @@ test('the hero video blends into the page with no visible box', async ({ page })
 
   // Next's development badge sits at the corner of the viewport and is not part of the page a visitor sees
   await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
-  // centred, so the ring below the video is inside the viewport too; a screenshot never captures past the viewport's edge
-  await video.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+  // at the top, where the hero is the whole first screen and the ring fits it exactly; scrolled, the sticky header lands in the ring
+  await page.evaluate(() => window.scrollTo(0, 0));
   // checked while it plays, because that is what a visitor sees and the poster alone could hide a decoding problem
   await page.waitForFunction(
     () => {
@@ -78,21 +79,13 @@ test('the hero video blends into the page with no visible box', async ({ page })
     width: Math.round(box.width) + 2 * RING,
     height: Math.round(box.height) + 2 * RING,
   };
-  const inner = { x: RING, y: RING, width: clip.width - 2 * RING, height: clip.height - 2 * RING };
+  // the ring and the video's own safe edge together, as one band per side
+  const band = RING + Math.floor(box.width * SAFE_EDGE);
   const regions: Region[] = [
-    { x: 0, y: 0, width: clip.width, height: RING },
-    { x: 0, y: clip.height - RING, width: clip.width, height: RING },
-    { x: 0, y: RING, width: RING, height: inner.height },
-    { x: clip.width - RING, y: RING, width: RING, height: inner.height },
-    { x: inner.x, y: inner.y, width: CORNER, height: CORNER },
-    { x: inner.x + inner.width - CORNER, y: inner.y, width: CORNER, height: CORNER },
-    { x: inner.x, y: inner.y + inner.height - CORNER, width: CORNER, height: CORNER },
-    {
-      x: inner.x + inner.width - CORNER,
-      y: inner.y + inner.height - CORNER,
-      width: CORNER,
-      height: CORNER,
-    },
+    { x: 0, y: 0, width: clip.width, height: band },
+    { x: 0, y: clip.height - band, width: clip.width, height: band },
+    { x: 0, y: band, width: band, height: clip.height - 2 * band },
+    { x: clip.width - band, y: band, width: band, height: clip.height - 2 * band },
   ];
 
   expect(await mismatchesAgainstPage(page, clip, regions)).toEqual({ count: 0, worst: 0 });
