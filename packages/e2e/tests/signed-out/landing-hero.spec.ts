@@ -1,4 +1,5 @@
-import { expect, type Page, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
+import { expect, test } from '../../src/test';
 
 // A band this wide all round the video must be page and nothing else
 const RING = 24;
