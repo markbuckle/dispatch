@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { isFeatureEnabled, WEBHOOKS } from '../../../../lib/flags/is-feature-enabled';
 import { EmptyState } from '../../empty-state';
 import { eventLabels } from '../../event-labels';
 import { getWebhook, listDeliveries } from '../actions';
-import { WebhooksDisabled } from '../webhooks-disabled';
 import { DeliveriesTable } from './deliveries-table';
 
 export const metadata: Metadata = {
@@ -13,8 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default async function WebhookPage({ params }: { params: Promise<{ id: string }> }) {
-  if (!(await isFeatureEnabled(WEBHOOKS))) return <WebhooksDisabled />;
-
   const { id } = await params;
   const webhook = await getWebhook(id);
   if (!webhook) notFound();

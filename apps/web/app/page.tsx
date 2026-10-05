@@ -1,12 +1,8 @@
 import { API_BASE_URL } from '../lib/api-url';
-import { HERO_VIDEO, isFeatureEnabledForVisitors } from '../lib/flags/is-feature-enabled';
 import { FooterWordmark } from './footer-wordmark';
 import { HeaderBorder } from './header-border';
 import { HeroVideo } from './hero/video/hero-video';
 import { Wordmark } from './logo';
-
-// The hero flag is read on the server, so the page is rebuilt this often and a flag change reaches visitors within five minutes
-export const revalidate = 300;
 
 const request = `curl -X POST ${API_BASE_URL}/v1/emails \\
   -H "Authorization: Bearer $DISPATCH_API_KEY" \\
@@ -44,32 +40,7 @@ const heroVideoPlacement = 'mx-auto max-w-hero-video-stacked xl:max-w-hero-video
 const footerLink = 'dispatch-transition text-meta text-text-secondary hover:text-text-primary';
 const overline = 'text-overline text-text-muted uppercase';
 
-export default async function Home() {
-  const hasHeroVideo = await isFeatureEnabledForVisitors(HERO_VIDEO);
-
-  // the paragraph's break suits the full-width hero; beside the video the column is narrow enough to wrap on its own
-  const heroCopy = (
-    <div>
-      <h1 className="dispatch-display-gradient dispatch-display-stretch font-serif text-display-2xl-m lg:text-display-2xl">
-        Email for developers
-      </h1>
-      <p className="mt-2 max-w-reading text-body text-text-secondary">
-        The best way to reach humans instead of spam folders other than Resend.
-        {!hasHeroVideo && <br className="hidden lg:inline" />} A portfolio project to deliver emails
-        like the pros.
-      </p>
-
-      <div className="mt-8 flex flex-wrap items-center gap-3">
-        <a
-          href="/signup"
-          className="dispatch-transition dispatch-cta flex items-center rounded-2xl px-4 py-2 text-body font-medium"
-        >
-          Get an API key
-        </a>
-      </div>
-    </div>
-  );
-
+export default function Home() {
   return (
     <>
       <a
@@ -103,17 +74,28 @@ export default async function Home() {
       </header>
 
       <main id="main">
-        <section
-          className={`mx-auto max-w-marketing-wide px-5 pb-24 lg:px-8 xl:px-22 ${hasHeroVideo ? 'pt-6 xl:pt-0' : 'pt-24 lg:pt-32'}`}
-        >
-          {hasHeroVideo ? (
-            <div className="grid items-center gap-12 xl:min-h-hero xl:grid-cols-hero xl:py-6">
-              {heroCopy}
-              <HeroVideo className={heroVideoPlacement} />
+        <section className="mx-auto max-w-marketing-wide px-5 pt-6 pb-24 lg:px-8 xl:px-22 xl:pt-0">
+          <div className="grid items-center gap-12 xl:min-h-hero xl:grid-cols-hero xl:py-6">
+            <div>
+              <h1 className="dispatch-display-gradient dispatch-display-stretch font-serif text-display-2xl-m lg:text-display-2xl">
+                Email for developers
+              </h1>
+              <p className="mt-2 max-w-reading text-body text-text-secondary">
+                The best way to reach humans instead of spam folders other than Resend. A portfolio
+                project to deliver emails like the pros.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href="/signup"
+                  className="dispatch-transition dispatch-cta flex items-center rounded-2xl px-4 py-2 text-body font-medium"
+                >
+                  Get an API key
+                </a>
+              </div>
             </div>
-          ) : (
-            heroCopy
-          )}
+            <HeroVideo className={heroVideoPlacement} />
+          </div>
 
           <div className="mt-16 grid gap-6 lg:grid-cols-2">
             <div className="flex flex-col overflow-hidden rounded-lg border border-border-subtle bg-surface">

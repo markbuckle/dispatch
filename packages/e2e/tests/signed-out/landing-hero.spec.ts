@@ -51,11 +51,9 @@ async function mismatchesAgainstPage(
   );
 }
 
-// Runs on every preview deploy once the hero-video flag is on; while it is off the old hero has no video to check
 test('the hero video blends into the page with no visible box', async ({ page }) => {
   await page.goto('/');
   const video = page.locator('video[aria-hidden="true"]');
-  test.skip((await video.count()) === 0, 'the hero-video flag is off');
 
   // Next's development badge sits at the corner of the viewport and is not part of the page a visitor sees
   await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });

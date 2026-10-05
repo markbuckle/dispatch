@@ -51,7 +51,7 @@ These are deliberate and should not be revisited without discussion.
 - **The landing page is responsive, the dashboard is desktop-only, and the dashboard says so.** The marketing surface and the auth pages work at 375px, because that is where a link from a phone lands. The dashboard does not: a 252px sidebar and tables running to 6 columns need horizontal room, and the alternatives - a bottom sheet, or restructuring every row into a card - are a second dashboard to build and maintain for an audience that is at a desk. `DesktopNotice` says this on `/login` and `/signup` at narrow widths. It is a viewport query rather than a device check, because the constraint is horizontal room and a narrow desktop window has the same problem. It informs and does not block: it dismisses, it remembers that for the session, and signing in still works.
 - **Request logs are kept for 30 days, and that purge is the only scheduled job in the system.** `purge-request-logs` runs daily at 09:00 UTC and deletes every `request_logs` row older than `REQUEST_LOG_RETENTION_DAYS`, including rows detached from a deleted account. Nothing else is expired: emails, events, deliveries and keys stay until their owner deletes them. It deletes in bounded batches, one Inngest step each, because the table is written on every api request and one unbounded DELETE would hold its locks for the whole run; a run stops at 100 batches and leaves the rest for the next day. A cron only exists once Inngest has synced the deployed app, and an unsynced cron fails by never running, with no error anywhere. If the table keeps growing, check the sync in the Inngest dashboard before debugging the job.
 
-- **Large features ship behind a PostHog flag** across several small PRs merged to `main`, rather than one large PR or a long-lived branch.
+- **Large features ship behind a PostHog flag** across several small PRs merged to `main`, rather than one large PR or a long-lived branch. Once the feature has shipped, the flag comes out of the code, so nothing finished depends on a switch in PostHog.
 
 ## Deploying
 
@@ -89,12 +89,12 @@ Two Vercel projects, both building from this repo. `dispatch` has its root direc
 
 The two SES credential pairs are separate on purpose. `SES_*` manages domain identities and only `apps/web` uses it; `SES_SENDER_*` sends mail and only `apps/api` uses it. Neither app needs the other's pair.
 
-The three PostHog variables are all or nothing. `apps/web/lib/flags/evaluate.ts` builds no client unless all three are present, and every flag then resolves to `false`, which silently hides the compatibility checker and turns `/dashboard/webhooks` into a 404. A shipped feature disappearing is the failure mode, not an error in a log.
+The three PostHog variables are all or nothing. `apps/web/lib/flags/evaluate.ts` builds no client unless all three are present, and every flag then resolves to `false`, which silently hides the compatibility checker. A shipped feature disappearing is the failure mode, not an error in a log.
 
 ### Two that must never be set in a deployed environment
 
 - `INNGEST_DEV=1` points the Inngest client at a local dev server, so a deployed app talks to nothing. It is set in both `.env.local` files, which is exactly why a bulk import of one of those files into a deployed environment is the wrong way to fill these in.
-- `POSTHOG_FLAG_OVERRIDES` bypasses PostHog entirely and pins every flag to whatever the override string says, including the webhooks flag. It is also set in `apps/web/.env.local`.
+- `POSTHOG_FLAG_OVERRIDES` bypasses PostHog entirely and pins every flag to whatever the override string says, including the compatibility checker's. It is also set in `apps/web/.env.local`.
 
 ### Registering with Inngest
 
@@ -135,7 +135,7 @@ What it covers: the landing page and its links to the auth pages, the signed-out
 What it deliberately does not cover:
 - **The send pipeline.** Previews use production's Inngest keys, so a send from a preview runs production's functions rather than the PR's, and a passing test would prove nothing about the change. The pipeline's manual proof is the Phase 13 check: a real send to `bounce@simulator.amazonses.com` through the deployed api, with the bounce arriving over SNS. Repeat that by hand after any change to the send path or SES wiring.
 - **Domains**, because adding one registers a real SES identity in the AWS account.
-- **Webhooks**, which sit behind a flag and deliver asynchronously.
+- **Webhooks**, which deliver asynchronously.
 
 **CI never runs migrations.** A PR that adds a migration fails its e2e run until it is merged and migrated by hand, because the preview's code expects a schema the shared database does not have yet. That is a known limitation, not something to fix by letting CI apply schema changes to production.
 
