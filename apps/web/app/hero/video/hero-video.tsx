@@ -9,7 +9,7 @@ const SOURCES = [
 ];
 const POSTER = '/hero/hero-poster.webp';
 // The render's pixel size, so the box is reserved before anything loads and nothing below it shifts
-const VIDEO_SIZE = 1120;
+const VIDEO_SIZE = 1216;
 
 // Decorative, so the sources wait until the page has loaded and the headline is never competing with a video download
 export function HeroVideo({ className = '' }: { className?: string }) {

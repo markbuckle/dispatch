@@ -16,7 +16,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 ## 2. Non-negotiables, in Dispatch terms
 
 1. **No brand accent colour.** The base is monochrome. Blue `#0090FF` is the focus ring on buttons and links and the info state - a text field focuses with a white glow instead - it is not a brand colour and must never appear as decoration, a gradient, or a hero fill.
-2. **One UI typeface: Inter.** Geist for product display and the wordmark. Commit Mono for anything a developer would copy. Instrument Serif is the marketing hero face, once per page or not at all. Its one product use is `DesktopNotice`, at `display-s-serif`. It is the one token with responsive steps: `display-2xl` on desktop, `display-2xl-m` below `lg`, `display-2xl-s` below `sm`. Size is all that changes - see `foundations/typography.md`.
+2. **One UI typeface: Inter.** Geist for product display and the wordmark. Commit Mono for anything a developer would copy. Instrument Serif is the marketing hero face, once per page or not at all. Its one product use is `DesktopNotice`, at `display-s-serif`. It is the one token with a responsive step: `display-2xl` on desktop, `display-2xl-m` below `lg`. Size is all that changes. Every use of the serif carries `.dispatch-display-stretch`, the one sanctioned distortion in the type system - see `foundations/typography.md` and `DECISIONS.md` §11.
 3. **Dark is the canvas.** `#08080A`. Light mode exists as a mirrored token set for users who ask; never design light-first.
 4. **Sentence case everywhere.** No Title Case. ALL CAPS only in a ≤3-word overline at 12px with +0.06em tracking.
 5. **No hype vocabulary.** Banned: revolutionary, game-changing, 10x, cutting-edge, supercharge, unleash, leverage, transform, synergy, seamless, robust, blazing-fast, AI-powered as a bare adjective.
@@ -35,7 +35,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 | Background | `#08080A` (dark). Marketing sections may use `#0E0E10` for one band, max. |
 | Body size | **16px product**, 16px marketing |
 | Page title, product | **36px** Geist 600, -0.032em |
-| Hero title, marketing | **116px** Instrument Serif 400, -0.02em, `.dispatch-display-gradient`, stepping to 76px below `lg` and 56px below `sm` |
+| Hero title, marketing | **92px** Instrument Serif 400, 1.04, 0 tracking, `.dispatch-display-gradient` + `.dispatch-display-stretch`, stepping to 61px below `lg` |
 | Table row height | **60px**, 20px cell padding, 16px text, 48px header row |
 | Heading case | Sentence case |
 | Primary CTA, product | Light fill `#EDEEF0` on near-black, 9px radius, **42px** tall |
@@ -44,7 +44,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 | Card radius | **12px**. Dialog 12px. Button/input/nav 9px. Marketing CTA 16px. |
 | Sidebar | 252px, `canvas` bg, active item `#16161A` + `#26262A` border, 40px tall, 20px icons |
 | Status pill | Solid fill, no border, no dot, 26px tall, 7px radius, 13.5px |
-| Max content width | 1200px marketing, 680px reading, fluid dashboard |
+| Max content width | Landing page: 1280px, padded 24px for header and footer and 88px for the hero and below from 1024px wide, 32px under it. Other marketing pages 1200px. 680px reading, fluid dashboard |
 | Marketing header | **64px**, sticky, `canvas`, no rule until scrolled |
 | Icon | Monoline, 32-unit grid, 2.25 stroke, 18px rendered |
 | Slide aspect | 16:9, 1920×1080 |

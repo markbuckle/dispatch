@@ -68,7 +68,7 @@ export function DesktopNotice({ surface }: { surface: keyof typeof copy }) {
         <span aria-hidden="true" className="dispatch-rule absolute inset-x-0 top-0 h-px" />
         <div className="relative flex flex-col items-center gap-4 px-6 py-9 text-center">
           <span className="text-overline text-text-secondary uppercase">Best on desktop</span>
-          <DialogTitle className="font-serif text-display-s-serif text-text-primary">
+          <DialogTitle className="dispatch-display-stretch mx-auto origin-center font-serif text-display-s-serif text-text-primary">
             Dispatch&apos;s dashboard is built for your laptop only
           </DialogTitle>
           <DialogDescription className="text-body text-text-secondary">

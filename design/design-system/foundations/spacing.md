@@ -49,7 +49,7 @@ next section
 
 | | |
 |---|---|
-| Marketing max width | 1200px |
+| Marketing max width | 1200px; the landing page uses 1280px with two edges, header and footer at 24px, hero and below at 88px from 1024px wide (32px under it) |
 | Reading max width | 680px |
 | Dialog | 520px |
 | Dashboard content | fluid, 24px page gutter |
