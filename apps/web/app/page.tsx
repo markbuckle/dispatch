@@ -58,7 +58,7 @@ export default function Home() {
           <div className="ml-auto flex items-center gap-2">
             <a
               href="/login"
-              className="dispatch-transition flex h-control-sm items-center whitespace-nowrap rounded-chip px-3 text-body text-text-secondary hover:bg-subtle hover:text-text-primary"
+              className="dispatch-transition flex h-control-sm items-center whitespace-nowrap rounded-chip px-3 text-body text-text-secondary hover:text-text-primary"
             >
               Log in
             </a>

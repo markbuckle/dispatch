@@ -15,6 +15,8 @@
   --dispatch-surface: #0E0E10;
   --dispatch-subtle:  #131315;
   --dispatch-hover:   #16161A;
+  /* A highlighted menu item. A menu already sits on subtle, so it takes the step the sidebar takes over canvas. */
+  --dispatch-menu-highlight: #1E1E22;
 
   /* Borders */
   --dispatch-border-subtle:  #1F2023;
@@ -96,6 +98,7 @@
   --dispatch-surface: #FCFCFD;
   --dispatch-subtle:  #F0F0F3;
   --dispatch-hover:   #E8E8EC;
+  --dispatch-menu-highlight: #E0E0E5;
 
   --dispatch-border-subtle:  #E8E8EC;
   --dispatch-border-default: #D9D9E0;
@@ -137,6 +140,7 @@
   --color-surface: var(--dispatch-surface);
   --color-subtle:  var(--dispatch-subtle);
   --color-hover:   var(--dispatch-hover);
+  --color-menu-highlight: var(--dispatch-menu-highlight);
 
   --color-border-subtle:  var(--dispatch-border-subtle);
   --color-border-default: var(--dispatch-border-default);
