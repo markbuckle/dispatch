@@ -15,6 +15,8 @@
   --dispatch-surface: #0E0E10;
   --dispatch-subtle:  #131315;
   --dispatch-hover:   #16161A;
+  /* A highlighted menu item. A menu already sits on subtle, so it takes the step the sidebar takes over canvas. */
+  --dispatch-menu-highlight: #1E1E22;
 
   /* Borders */
   --dispatch-border-subtle:  #1F2023;
@@ -69,6 +71,9 @@
   /* The grey the auth backdrop fades into at its foot. Decoration only, never a surface or a status. */
   --dispatch-backdrop-lift: #1C1C20;
 
+  /* Selected text. Grey rather than the browser's blue, which the system keeps for focus. Aliases --dispatch-border-strong. */
+  --dispatch-selection: var(--dispatch-border-strong);
+
   /* Hero scene paper: the outside of the folded sheet. Aliases --dispatch-subtle. */
   --dispatch-paper: var(--dispatch-subtle);
   /* Hero scene paper: the inside of the envelope flap. Aliases --dispatch-hover. */
@@ -96,6 +101,7 @@
   --dispatch-surface: #FCFCFD;
   --dispatch-subtle:  #F0F0F3;
   --dispatch-hover:   #E8E8EC;
+  --dispatch-menu-highlight: #E0E0E5;
 
   --dispatch-border-subtle:  #E8E8EC;
   --dispatch-border-default: #D9D9E0;
@@ -137,6 +143,7 @@
   --color-surface: var(--dispatch-surface);
   --color-subtle:  var(--dispatch-subtle);
   --color-hover:   var(--dispatch-hover);
+  --color-menu-highlight: var(--dispatch-menu-highlight);
 
   --color-border-subtle:  var(--dispatch-border-subtle);
   --color-border-default: var(--dispatch-border-default);
@@ -309,6 +316,12 @@ a:hover { color: var(--dispatch-text-primary); }
   box-shadow: var(--dispatch-focus);
 }
 
+/* The colour is set too, because gradient display text is transparent and would select as an empty box. */
+::selection {
+  background: var(--dispatch-selection);
+  color: var(--dispatch-text-primary);
+}
+
 /* Scrollbars must be told they're dark, or the native track paints light. */
 * { scrollbar-color: var(--dispatch-border-default) var(--dispatch-surface); scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -421,6 +434,10 @@ a:hover { color: var(--dispatch-text-primary); }
 /* The monogram's tile: lit from above like the page behind it, so it reads as raised without a shadow. */
 .dispatch-monogram-tile {
   background: linear-gradient(to bottom, var(--dispatch-hover), var(--dispatch-canvas));
+}
+/* The landing page's dashboard picture: runs out into the canvas instead of ending on a hard bottom edge. Alpha only, like the feather below. */
+.dispatch-preview-fade {
+  mask-image: linear-gradient(to bottom, black 55%, transparent);
 }
 /* The landing hero's video: fades to nothing over its outer 8% on every side, a safety net so no frame can ever show a box edge.
    The mask is alpha only, so the colour keywords here are opacity, not colour. */
