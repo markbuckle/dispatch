@@ -56,8 +56,10 @@ test('the hero video blends into the page with no visible box', async ({ page })
   await page.goto('/');
   const video = page.locator('video[aria-hidden="true"]');
 
-  // Next's development badge sits at the corner of the viewport and is not part of the page a visitor sees
-  await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
+  // Next's dev badge and Vercel's preview toolbar are not part of the page a visitor sees, and the toolbar's shadow reaches the ring
+  await page.addStyleTag({
+    content: 'nextjs-portal, vercel-live-feedback { display: none !important; }',
+  });
   // at the top, where the hero is the whole first screen and the ring fits it exactly; scrolled, the sticky header lands in the ring
   await page.evaluate(() => window.scrollTo(0, 0));
   // checked while it plays, because that is what a visitor sees and the poster alone could hide a decoding problem
