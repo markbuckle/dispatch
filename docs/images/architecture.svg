@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 632" width="800" height="632" role="img" aria-label="How a send moves through Dispatch: the developer's app calls the Hono api, which queues the email and returns 202; an Inngest function sends it through AWS SES; SES reports outcomes to an SNS topic, which posts them to the api's /sns/ses route; a second Inngest function records the event and delivers a signed webhook to the developer's endpoint.">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#696E77" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .tag { font: 500 11px Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; letter-spacing: 0.08em; fill: #777B84; }
+      .title { font: 500 16px Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #EDEEF0; }
+      .detail { font: 400 13px Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #B0B4BA; }
+      .edge { font: 400 12.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #9A9DA3; }
+      .lane { font: 500 12px Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; letter-spacing: 0.08em; fill: #9A9DA3; }
+      .node { fill: #0E0E10; stroke: #26262A; }
+      .you { fill: #131315; stroke: #3D3D43; }
+      .line { fill: none; stroke: #696E77; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="799" height="631" rx="16" fill="#08080A" stroke="#1F2023"/>
+
+  <text class="lane" x="48" y="46">SEND</text>
+  <text class="lane" x="456" y="46">REPORT BACK</text>
+
+  <!-- left column: the send, top to bottom -->
+  <rect class="you" x="48.5" y="68.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="68" y="94">DEVELOPER</text>
+  <text class="title" x="68" y="120">Developer's app</text>
+  <text class="detail" x="68" y="140">calls the API with its key</text>
+
+  <rect class="node" x="48.5" y="212.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="68" y="238">CONTROL PLANE</text>
+  <text class="title" x="68" y="264">Hono api</text>
+  <text class="detail" x="68" y="284">validate, rate limit, queue</text>
+
+  <rect class="node" x="48.5" y="356.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="68" y="382">DATA PLANE</text>
+  <text class="title" x="68" y="408">Inngest send-email</text>
+  <text class="detail" x="68" y="428">render and send, retried per step</text>
+
+  <rect class="node" x="48.5" y="500.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="68" y="526">AWS</text>
+  <text class="title" x="68" y="552">SES</text>
+  <text class="detail" x="68" y="572">sends, then reports each outcome</text>
+
+  <!-- right column: the report back, bottom to top -->
+  <rect class="node" x="456.5" y="500.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="476" y="526">AWS</text>
+  <text class="title" x="476" y="552">SNS topic</text>
+  <text class="detail" x="476" y="572">delivery, bounce, complaint</text>
+
+  <rect class="node" x="456.5" y="356.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="476" y="382">CONTROL PLANE</text>
+  <text class="title" x="476" y="408">Hono api, /sns/ses</text>
+  <text class="detail" x="476" y="428">verify the signature, return 200</text>
+
+  <rect class="node" x="456.5" y="212.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="476" y="238">DATA PLANE</text>
+  <text class="title" x="476" y="264">Inngest record-ses-event</text>
+  <text class="detail" x="476" y="284">store the event, move status on</text>
+
+  <rect class="you" x="456.5" y="68.5" width="295" height="87" rx="12"/>
+  <text class="tag" x="476" y="94">DEVELOPER</text>
+  <text class="title" x="476" y="120">Developer's endpoint</text>
+  <text class="detail" x="476" y="140">signed, retried with backoff</text>
+
+  <!-- send edges -->
+  <path class="line" d="M176 157 V210" marker-end="url(#arrow)"/>
+  <text class="edge" x="166" y="188" text-anchor="end">POST /v1/emails</text>
+  <path class="line" d="M216 210 V157" marker-end="url(#arrow)"/>
+  <text class="edge" x="226" y="188">202 Accepted</text>
+
+  <path class="line" d="M196 301 V354" marker-end="url(#arrow)"/>
+  <text class="edge" x="208" y="332">event</text>
+
+  <path class="line" d="M196 445 V498" marker-end="url(#arrow)"/>
+  <text class="edge" x="208" y="476">SendEmail</text>
+
+  <!-- the turn at the bottom -->
+  <path class="line" d="M345 544 H454" marker-end="url(#arrow)"/>
+  <text class="edge" x="400" y="534" text-anchor="middle">events</text>
+
+  <!-- report edges -->
+  <path class="line" d="M604 498 V445" marker-end="url(#arrow)"/>
+  <text class="edge" x="616" y="476">signed POST</text>
+
+  <path class="line" d="M604 354 V301" marker-end="url(#arrow)"/>
+  <text class="edge" x="616" y="332">event</text>
+
+  <path class="line" d="M604 210 V157" marker-end="url(#arrow)"/>
+  <text class="edge" x="616" y="188">signed webhook</text>
+</svg>

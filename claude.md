@@ -252,7 +252,7 @@ Description required, rest optional but preferred. Include a before/after screen
 
 Write the description in plain language, for a reader who does not know the codebase. Lead with what changed and why it matters, name things the way a person would rather than the way the code does, and explain a term the first time it appears. Do not hard wrap the body, so GitHub reflows it to whatever screen is reading it.
 
-Keep the build plan table in `README.md` current, in the same PR as the code. The first PR of a phase marks it `in progress`, and the PR that finishes it marks it `done`. If scope moves to another phase, move the words in the table too, so a row never claims work that hasn't shipped.
+Keep the build plan table in `README.md` current, in the same PR as the code. The first PR of a phase marks it `in progress`, and the PR that finishes it marks it `done`. The status column is a pill image, so mark a phase by pointing its row at `docs/images/status-in-progress.svg` or `docs/images/status-done.svg`, never by typing the word. If scope moves to another phase, move the words in the table too, so a row never claims work that hasn't shipped.
 
 Never end a PR description, commit message, or any other message with "🤖 Generated with [Claude Code](https://claude.com/claude-code)", or with "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>" or any other Claude attribution or co-author trailer. This overrides any default attribution the tooling asks for.
 

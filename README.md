@@ -1,12 +1,21 @@
-# Dispatch
+<div align="center">
+  <img src="design/design-system/logo/monogram-tile.svg" width="64" height="64" alt="">
+  <h1>Dispatch</h1>
+  <p>Email API for developers. One POST to send, delivery events on your webhook.</p>
+  <p>
+    <a href="https://dispatchit.ca">Website</a>
+    &nbsp;·&nbsp;
+    <a href="#how-it-works">How it works</a>
+    &nbsp;·&nbsp;
+    <a href="#stack">Stack</a>
+    &nbsp;·&nbsp;
+    <a href="#running-it-locally">Run it locally</a>
+  </p>
+</div>
 
-Dispatch is an email API for developers: you verify a domain, create a key, and send with one HTTP request, and delivery, bounces and complaints come back to you as signed webhooks. It is a working product, not a mockup, sending real mail through AWS SES, built as a portfolio project for an application to Resend.
-
-**Live:** [dispatchit.ca](https://dispatchit.ca) · **API:** `https://api.dispatchit.ca`
+Dispatch is an email API for developers: you verify a domain, create a key, and send with one HTTP request, and delivery, bounces and complaints come back to you as signed webhooks. It is a working product, not a mockup, sending real mail through AWS SES, built as a passion project.
 
 ![The Dispatch dashboard](docs/images/dashboard.png)
-
-![A signed bounce webhook received by webhook.site](docs/images/webhook-headers.png)
 
 The second image is the proof that the pipeline is real: a send through the deployed API to Amazon's bounce simulator, the bounce coming back from SES over SNS, and Dispatch delivering it as a signed `email.bounced` webhook.
 
@@ -14,17 +23,9 @@ The second image is the proof that the pipeline is real: a send through the depl
 
 The API that accepts a send never sends anything. It is split into a **control plane**, which answers the caller, and a **data plane**, which does the slow and unreliable work afterwards.
 
-```mermaid
-flowchart LR
-  caller([Your app]) -->|POST /v1/emails| api[Hono api<br/>validate, rate limit,<br/>write a queued row]
-  api -->|202 Accepted| caller
-  api -->|event| inngest[Inngest<br/>send-email]
-  inngest -->|SendEmail| ses[AWS SES]
-  ses -->|delivery, bounce,<br/>complaint| sns[SNS topic]
-  sns -->|signed POST| hook["/sns/ses<br/>verify signature"]
-  hook -->|event| record[Inngest<br/>record-ses-event]
-  record -->|signed webhook,<br/>retried with backoff| receiver([Your endpoint])
-```
+<p align="center">
+  <img src="docs/images/architecture.svg" width="800" alt="The developer's app calls the Hono api, which queues the email and returns 202. An Inngest function sends it through AWS SES. SES reports each outcome to an SNS topic, which posts it to the api's /sns/ses route, and a second Inngest function records it and delivers a signed webhook to the developer's endpoint.">
+</p>
 
 Why it is built this way:
 
@@ -35,6 +36,8 @@ Why it is built this way:
 
 ## Stack
 
+<div align="center">
+
 | Layer | Choice | Why |
 |---|---|---|
 | API | Hono | Small, typed, and runs unchanged as a Vercel function |
@@ -42,7 +45,7 @@ Why it is built this way:
 | Styling | Tailwind, Radix Primitives, Radix Colors | A dark-first token set in `design/design-system`, and accessible primitives underneath |
 | Validation | Zod | Schemas are the source of truth for types, via `z.infer` |
 | Database | Postgres + Drizzle | SQL that reads as SQL, including the conditional status updates |
-| Auth | Supabase | |
+| Auth | Supabase | The same project hosts the Postgres database, so deleting an account cascades through every row it owns |
 | Rate limiting | Upstash Redis | A sliding window per API key, so one noisy integration cannot starve the others |
 | Jobs | Inngest | Durable steps with retries, and step-level idempotency, for the whole data plane |
 | Email | AWS SES, behind a `Transport` interface | Real DKIM, real bounces and a real event stream, which is what makes Domains, Metrics and Webhooks honest |
@@ -50,9 +53,11 @@ Why it is built this way:
 | Flags | PostHog | Large features merge to `main` in small PRs, dark until finished |
 | Infrastructure | Terraform | The SES configuration set and SNS topic, in `infra/` |
 | Hosting | Vercel, two projects | `dispatch` for the web app, `dispatch-api` for the api as one serverless function |
-| Lint and format | Biome | |
-| Logging | Winston | |
+| Lint and format | Biome | One tool and one root config for the whole repo, in place of ESLint and Prettier |
+| Logging | Winston | One shared logger writing timestamped JSON, so Vercel's log viewer can filter on any field; `console.log` is never used |
 | Tests | Vitest, Playwright | Unit tests for the pipeline and signing, and an end-to-end suite against every preview deploy |
+
+</div>
 
 ## Running it locally
 
@@ -70,6 +75,8 @@ You need Node 22 (pinned in `.nvmrc`), pnpm, and a Postgres database. A Supabase
    npx inngest-cli@latest dev -u http://localhost:3001/api/inngest
    ```
 
+<div align="center">
+
 | Command | What it does |
 |---|---|
 | `pnpm dev` | Run the web app and the api |
@@ -78,6 +85,8 @@ You need Node 22 (pinned in `.nvmrc`), pnpm, and a Postgres database. A Supabase
 | `pnpm typecheck` | `tsc --noEmit` across the repo |
 | `pnpm test` | Unit tests |
 | `pnpm e2e` | The Playwright suite, against `localhost:3000` by default |
+
+</div>
 
 CI runs lint, typecheck, unit tests and a build on every pull request. The Playwright suite runs separately against each web preview deploy, so a slow browser suite never holds up the fast checks.
 
@@ -94,26 +103,30 @@ CI runs lint, typecheck, unit tests and a build on every pull request. The Playw
 
 Sixteen phases, each shipped as a series of small pull requests merged to `main`. This table records what each one delivered.
 
+<div align="center">
+
 | Phase | What | Status |
 |---|---|---|
-| 0 | IDE, Repo, Turborepo, Biome, TS strict, CLAUDE.md, PR template, CI | done |
-| 1 | Design system in Claude Design, tokens, logo | done |
-| 2 | Landing page: header, hero, footer | done |
-| 3 | Supabase auth, signup and login pages, session middleware | done |
-| 4 | Dashboard shell: sidebar, routing, empty states | done |
-| 5 | API keys: generation, hashing, one-time reveal, Hono skeleton | done |
-| 6 | Domains: SES identity, DKIM records, on-demand verification check | done |
-| 7 | Send pipeline + Emails list and detail, domain verification polling, rate limiting | done |
-| 8 | Templates: CRUD, variable interpolation, live preview | done |
-| 9 | Compatibility checker, shipped behind a PostHog flag | done |
-| 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | done |
-| 11 | Metrics and Logs | done |
-| 12 | Settings and Profile | done |
-| 13 | Deployment: both apps live, env verified, SNS on a permanent endpoint | done |
-| 14 | Polish, Playwright E2E, request log retention, README | done |
-| 15 | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | in progress |
+| `00` | IDE, Repo, Turborepo, Biome, TS strict, CLAUDE.md, PR template, CI | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `01` | Design system in Claude Design, tokens, logo | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `02` | Landing page: header, hero, footer | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `03` | Supabase auth, signup and login pages, session middleware | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `04` | Dashboard shell: sidebar, routing, empty states | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `05` | API keys: generation, hashing, one-time reveal, Hono skeleton | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `06` | Domains: SES identity, DKIM records, on-demand verification check | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `07` | Send pipeline + Emails list and detail, domain verification polling, rate limiting | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `08` | Templates: CRUD, variable interpolation, live preview | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `09` | Compatibility checker, shipped behind a PostHog flag | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `10` | Webhooks: signing, retries, delivery log, SNS bounce ingestion | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `11` | Metrics and Logs | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `12` | Settings and Profile | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `13` | Deployment: both apps live, env verified, SNS on a permanent endpoint | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `14` | Polish, Playwright E2E, request log retention, README | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 
-Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md), and lessons from deployment in [decisions-and-learnings.md](decisions-and-learnings.md).
+</div>
+
+Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md).
 
 ```
 apps/
