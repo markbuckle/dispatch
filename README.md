@@ -1,8 +1,19 @@
-# Dispatch
+<div align="center">
+  <img src="design/design-system/logo/monogram-tile.svg" width="64" height="64" alt="">
+  <h1>Dispatch</h1>
+  <p>Email API for developers. One POST to send, delivery events on your webhook.</p>
+  <p>
+    <a href="https://dispatchit.ca">Website</a>
+    &nbsp;·&nbsp;
+    <a href="#how-it-works">How it works</a>
+    &nbsp;·&nbsp;
+    <a href="#stack">Stack</a>
+    &nbsp;·&nbsp;
+    <a href="#running-it-locally">Run it locally</a>
+  </p>
+</div>
 
 Dispatch is an email API for developers: you verify a domain, create a key, and send with one HTTP request, and delivery, bounces and complaints come back to you as signed webhooks. It is a working product, not a mockup, sending real mail through AWS SES, built as a portfolio project for an application to Resend.
-
-**Live:** [dispatchit.ca](https://dispatchit.ca) · **API:** `https://api.dispatchit.ca`
 
 ![The Dispatch dashboard](docs/images/dashboard.png)
 
@@ -14,17 +25,9 @@ The second image is the proof that the pipeline is real: a send through the depl
 
 The API that accepts a send never sends anything. It is split into a **control plane**, which answers the caller, and a **data plane**, which does the slow and unreliable work afterwards.
 
-```mermaid
-flowchart LR
-  caller([Your app]) -->|POST /v1/emails| api[Hono api<br/>validate, rate limit,<br/>write a queued row]
-  api -->|202 Accepted| caller
-  api -->|event| inngest[Inngest<br/>send-email]
-  inngest -->|SendEmail| ses[AWS SES]
-  ses -->|delivery, bounce,<br/>complaint| sns[SNS topic]
-  sns -->|signed POST| hook["/sns/ses<br/>verify signature"]
-  hook -->|event| record[Inngest<br/>record-ses-event]
-  record -->|signed webhook,<br/>retried with backoff| receiver([Your endpoint])
-```
+<p align="center">
+  <img src="docs/images/architecture.svg" width="800" alt="The developer's app calls the Hono api, which queues the email and returns 202. An Inngest function sends it through AWS SES. SES reports each outcome to an SNS topic, which posts it to the api's /sns/ses route, and a second Inngest function records it and delivers a signed webhook to the developer's endpoint.">
+</p>
 
 Why it is built this way:
 
