@@ -13,11 +13,9 @@
   </p>
 </div>
 
-Dispatch is an email API for developers: you verify a domain, create a key, and send with one HTTP request, and delivery, bounces and complaints come back to you as signed webhooks. It is a working product, not a mockup, sending real mail through AWS SES, built as a portfolio project for an application to Resend.
+Dispatch is an email API for developers: you verify a domain, create a key, and send with one HTTP request, and delivery, bounces and complaints come back to you as signed webhooks. It is a working product, not a mockup, sending real mail through AWS SES, built as a passion project.
 
 ![The Dispatch dashboard](docs/images/dashboard.png)
-
-![A signed bounce webhook received by webhook.site](docs/images/webhook-headers.png)
 
 The second image is the proof that the pipeline is real: a send through the deployed API to Amazon's bounce simulator, the bounce coming back from SES over SNS, and Dispatch delivering it as a signed `email.bounced` webhook.
 
@@ -124,11 +122,11 @@ Sixteen phases, each shipped as a series of small pull requests merged to `main`
 | `12` | Settings and Profile | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 | `13` | Deployment: both apps live, env verified, SNS on a permanent endpoint | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 | `14` | Polish, Playwright E2E, request log retention, README | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
-| `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-in-progress.svg" alt="In progress" height="22"> |
+| `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-in-progress.svg" alt="Done" height="22"> |
 
 </div>
 
-Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md), and lessons from deployment in [decisions-and-learnings.md](decisions-and-learnings.md).
+Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md).
 
 ```
 apps/
