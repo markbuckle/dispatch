@@ -5,14 +5,14 @@ import Link from 'next/link';
 import { signOut } from './profile/actions';
 
 const menuItem =
-  'dispatch-transition flex h-control-sm w-full cursor-default items-center rounded-md px-2.5 text-body text-text-secondary outline-none select-none data-[highlighted]:bg-hover data-[highlighted]:text-text-primary';
+  'dispatch-transition flex h-control-sm w-full cursor-default items-center rounded-md px-2.5 text-body text-text-secondary outline-none select-none focus-visible:shadow-none data-[highlighted]:bg-menu-highlight data-[highlighted]:text-text-primary';
 
 export function ProfileMenu({ displayName, email }: { displayName: string | null; email: string }) {
   const label = displayName ?? email;
 
   return (
     <RadixMenu.Root>
-      <RadixMenu.Trigger className="dispatch-transition flex h-control w-full items-center gap-2 rounded-md border border-transparent px-3 text-left outline-none hover:border-border-default hover:bg-hover focus-visible:shadow-focus data-[state=open]:border-border-default data-[state=open]:bg-hover">
+      <RadixMenu.Trigger className="dispatch-transition flex h-control w-full items-center gap-2 rounded-md px-3 text-left outline-none hover:bg-subtle focus-visible:bg-subtle focus-visible:shadow-none data-[state=open]:bg-subtle">
         <span className="flex size-6 shrink-0 items-center justify-center rounded-chip border border-border-default bg-neutral-bg text-caption text-text-primary">
           {label.charAt(0).toUpperCase()}
         </span>
@@ -23,7 +23,7 @@ export function ProfileMenu({ displayName, email }: { displayName: string | null
         <RadixMenu.Content
           align="start"
           sideOffset={4}
-          className="dispatch-menu-enter z-50 min-w-menu rounded-lg border border-border-strong bg-subtle p-1 shadow-overlay"
+          className="dispatch-menu-enter z-50 w-(--radix-dropdown-menu-trigger-width) rounded-lg border border-border-strong bg-subtle p-1 shadow-overlay"
         >
           {/* the trigger already shows the email until a name is set, and repeating it there would say nothing */}
           {displayName && (

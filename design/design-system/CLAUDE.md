@@ -15,7 +15,7 @@ Dispatch is an **email API for developers**. The audience is technical, impatien
 
 ## 2. Non-negotiables, in Dispatch terms
 
-1. **No brand accent colour.** The base is monochrome. Blue `#0090FF` is the focus ring on buttons and links and the info state - a text field focuses with a white glow instead - it is not a brand colour and must never appear as decoration, a gradient, or a hero fill.
+1. **No brand accent colour.** The base is monochrome. Blue `#0090FF` is the focus ring on buttons and links and the info state - a text field focuses with a white glow instead, and the sidebar profile trigger with the same `subtle` fill a sidebar nav item takes on hover, because Radix returns focus to it each time its menu closes and a ring there read as noise - it is not a brand colour and must never appear as decoration, a gradient, or a hero fill.
 2. **One UI typeface: Inter.** Geist for product display and the wordmark. Commit Mono for anything a developer would copy. Instrument Serif is the marketing hero face, once per page or not at all. Its one product use is `DesktopNotice`, at `display-s-serif`. It is the one token with a responsive step: `display-2xl` on desktop, `display-2xl-m` below `lg`. Size is all that changes. Every use of the serif carries `.dispatch-display-stretch`, the one sanctioned distortion in the type system - see `foundations/typography.md` and `DECISIONS.md` §11.
 3. **Dark is the canvas.** `#08080A`. Light mode exists as a mirrored token set for users who ask; never design light-first.
 4. **Sentence case everywhere.** No Title Case. ALL CAPS only in a ≤3-word overline at 12px with +0.06em tracking.
