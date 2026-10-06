@@ -1,44 +1,12 @@
-import { API_BASE_URL } from '../lib/api-url';
+import { DashboardPreview } from './dashboard-preview';
 import { FooterWordmark } from './footer-wordmark';
 import { HeaderBorder } from './header-border';
 import { HeroVideo } from './hero/video/hero-video';
 import { Wordmark } from './logo';
 
-const request = `curl -X POST ${API_BASE_URL}/v1/emails \\
-  -H "Authorization: Bearer $DISPATCH_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "from": "receipts@yourdomain.com",
-    "to": "someone@example.com",
-    "subject": "Your receipt",
-    "html": "<p>Thanks for your order.</p>"
-  }'`;
-
-const events = [
-  {
-    at: '14:02:37.104',
-    iso: '2026-09-06T14:02:37.104Z',
-    name: 'queued',
-    detail: 'eml_2n4x8kqf',
-  },
-  {
-    at: '14:02:37.298',
-    iso: '2026-09-06T14:02:37.298Z',
-    name: 'sent',
-    detail: 'mx1.example.com',
-  },
-  {
-    at: '14:02:39.611',
-    iso: '2026-09-06T14:02:39.611Z',
-    name: 'delivered',
-    detail: '250 2.0.0 OK',
-  },
-];
-
 // Under xl the copy column would leave the video too narrow to read, so it stacks below instead
 const heroVideoPlacement = 'mx-auto max-w-hero-video-stacked xl:max-w-hero-video';
 const footerLink = 'dispatch-transition text-meta text-text-secondary hover:text-text-primary';
-const overline = 'text-overline text-text-muted uppercase';
 
 export default function Home() {
   return (
@@ -97,57 +65,7 @@ export default function Home() {
             <HeroVideo className={heroVideoPlacement} />
           </div>
 
-          <div className="mt-16 grid gap-6 lg:grid-cols-2">
-            <div className="flex flex-col overflow-hidden rounded-lg border border-border-subtle bg-surface">
-              <div
-                className={`flex h-12 shrink-0 items-center border-border-subtle border-b bg-subtle px-5 ${overline}`}
-              >
-                Request
-              </div>
-              <pre className="flex-1 overflow-x-auto px-5 py-5 font-mono text-mono text-text-secondary">
-                {request}
-              </pre>
-              <div className="flex h-12 shrink-0 items-center gap-3 border-border-subtle border-t px-5">
-                <span className={overline}>Response</span>
-                <code className="font-mono text-mono text-text-primary tabular-nums">202</code>
-                <code className="truncate font-mono text-mono text-text-secondary">
-                  {'{"id": "eml_2n4x8kqf", "status": "queued"}'}
-                </code>
-              </div>
-            </div>
-
-            <div className="flex flex-col overflow-hidden rounded-lg border border-border-subtle bg-surface">
-              <div className="flex h-12 shrink-0 items-center justify-between border-border-subtle border-b bg-subtle px-5">
-                <span className={overline}>Delivery timeline</span>
-                <span className="flex h-pill items-center rounded-chip bg-success-bg px-3 text-pill text-success-fg">
-                  Delivered
-                </span>
-              </div>
-              <ol className="flex flex-1 flex-col justify-center gap-8 overflow-x-auto px-5 py-5">
-                {events.map((event) => (
-                  <li key={event.iso} className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                    <time
-                      dateTime={event.iso}
-                      className="font-mono text-mono text-text-muted tabular-nums"
-                    >
-                      {event.at}
-                    </time>
-                    <span className="w-20 shrink-0 text-meta text-text-primary">{event.name}</span>
-                    <code className="font-mono text-mono text-text-secondary">{event.detail}</code>
-                  </li>
-                ))}
-              </ol>
-              <div className="flex h-12 shrink-0 items-center gap-3 border-border-subtle border-t px-5">
-                <span className={overline}>Webhook</span>
-                <code className="font-mono text-mono text-text-secondary">
-                  POST /hooks/dispatch
-                </code>
-                <code className="ml-auto font-mono text-mono text-text-primary tabular-nums">
-                  200
-                </code>
-              </div>
-            </div>
-          </div>
+          <DashboardPreview className="mt-16" />
         </section>
       </main>
 

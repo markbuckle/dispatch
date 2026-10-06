@@ -426,6 +426,10 @@ a:hover { color: var(--dispatch-text-primary); }
 .dispatch-monogram-tile {
   background: linear-gradient(to bottom, var(--dispatch-hover), var(--dispatch-canvas));
 }
+/* The landing page's dashboard picture: runs out into the canvas instead of ending on a hard bottom edge. Alpha only, like the feather below. */
+.dispatch-preview-fade {
+  mask-image: linear-gradient(to bottom, black 55%, transparent);
+}
 /* The landing hero's video: fades to nothing over its outer 8% on every side, a safety net so no frame can ever show a box edge.
    The mask is alpha only, so the colour keywords here are opacity, not colour. */
 .dispatch-video-feather {

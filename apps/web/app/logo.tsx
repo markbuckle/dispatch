@@ -1,7 +1,7 @@
 export const wordmarkViewBox = '0 0 1513 323';
 
 // The wordmark's own D, so the monogram can never drift from the letter it is cut from
-const monogramPath =
+export const monogramPath =
   'M243.539 131.5C243.539 61.0837 182.65 4 107.539 4H3.53906L36.0293 70H106.539V70.0156C107.038 70.0057 107.538 70 108.039 70C145.318 70 175.539 97.5345 175.539 131.5C175.539 165.466 145.318 193 108.039 193C107.538 193 107.038 192.993 106.539 192.983V193H92.5898L120.742 258.402C189.657 252.178 243.539 197.74 243.539 131.5Z';
 
 export function Monogram() {
