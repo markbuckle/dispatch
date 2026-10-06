@@ -45,7 +45,7 @@ Why it is built this way:
 | Styling | Tailwind, Radix Primitives, Radix Colors | A dark-first token set in `design/design-system`, and accessible primitives underneath |
 | Validation | Zod | Schemas are the source of truth for types, via `z.infer` |
 | Database | Postgres + Drizzle | SQL that reads as SQL, including the conditional status updates |
-| Auth | Supabase | |
+| Auth | Supabase | The same project hosts the Postgres database, so deleting an account cascades through every row it owns |
 | Rate limiting | Upstash Redis | A sliding window per API key, so one noisy integration cannot starve the others |
 | Jobs | Inngest | Durable steps with retries, and step-level idempotency, for the whole data plane |
 | Email | AWS SES, behind a `Transport` interface | Real DKIM, real bounces and a real event stream, which is what makes Domains, Metrics and Webhooks honest |
@@ -53,8 +53,8 @@ Why it is built this way:
 | Flags | PostHog | Large features merge to `main` in small PRs, dark until finished |
 | Infrastructure | Terraform | The SES configuration set and SNS topic, in `infra/` |
 | Hosting | Vercel, two projects | `dispatch` for the web app, `dispatch-api` for the api as one serverless function |
-| Lint and format | Biome | |
-| Logging | Winston | |
+| Lint and format | Biome | One tool and one root config for the whole repo, in place of ESLint and Prettier |
+| Logging | Winston | One shared logger writing timestamped JSON, so Vercel's log viewer can filter on any field; `console.log` is never used |
 | Tests | Vitest, Playwright | Unit tests for the pipeline and signing, and an end-to-end suite against every preview deploy |
 
 </div>
