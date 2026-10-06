@@ -38,6 +38,8 @@ Why it is built this way:
 
 ## Stack
 
+<div align="center">
+
 | Layer | Choice | Why |
 |---|---|---|
 | API | Hono | Small, typed, and runs unchanged as a Vercel function |
@@ -57,6 +59,8 @@ Why it is built this way:
 | Logging | Winston | |
 | Tests | Vitest, Playwright | Unit tests for the pipeline and signing, and an end-to-end suite against every preview deploy |
 
+</div>
+
 ## Running it locally
 
 You need Node 22 (pinned in `.nvmrc`), pnpm, and a Postgres database. A Supabase project provides both the database and auth.
@@ -73,6 +77,8 @@ You need Node 22 (pinned in `.nvmrc`), pnpm, and a Postgres database. A Supabase
    npx inngest-cli@latest dev -u http://localhost:3001/api/inngest
    ```
 
+<div align="center">
+
 | Command | What it does |
 |---|---|
 | `pnpm dev` | Run the web app and the api |
@@ -81,6 +87,8 @@ You need Node 22 (pinned in `.nvmrc`), pnpm, and a Postgres database. A Supabase
 | `pnpm typecheck` | `tsc --noEmit` across the repo |
 | `pnpm test` | Unit tests |
 | `pnpm e2e` | The Playwright suite, against `localhost:3000` by default |
+
+</div>
 
 CI runs lint, typecheck, unit tests and a build on every pull request. The Playwright suite runs separately against each web preview deploy, so a slow browser suite never holds up the fast checks.
 
@@ -97,24 +105,28 @@ CI runs lint, typecheck, unit tests and a build on every pull request. The Playw
 
 Sixteen phases, each shipped as a series of small pull requests merged to `main`. This table records what each one delivered.
 
+<div align="center">
+
 | Phase | What | Status |
 |---|---|---|
-| 0 | IDE, Repo, Turborepo, Biome, TS strict, CLAUDE.md, PR template, CI | done |
-| 1 | Design system in Claude Design, tokens, logo | done |
-| 2 | Landing page: header, hero, footer | done |
-| 3 | Supabase auth, signup and login pages, session middleware | done |
-| 4 | Dashboard shell: sidebar, routing, empty states | done |
-| 5 | API keys: generation, hashing, one-time reveal, Hono skeleton | done |
-| 6 | Domains: SES identity, DKIM records, on-demand verification check | done |
-| 7 | Send pipeline + Emails list and detail, domain verification polling, rate limiting | done |
-| 8 | Templates: CRUD, variable interpolation, live preview | done |
-| 9 | Compatibility checker, shipped behind a PostHog flag | done |
-| 10 | Webhooks: signing, retries, delivery log, SNS bounce ingestion | done |
-| 11 | Metrics and Logs | done |
-| 12 | Settings and Profile | done |
-| 13 | Deployment: both apps live, env verified, SNS on a permanent endpoint | done |
-| 14 | Polish, Playwright E2E, request log retention, README | done |
-| 15 | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | in progress |
+| `00` | IDE, Repo, Turborepo, Biome, TS strict, CLAUDE.md, PR template, CI | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `01` | Design system in Claude Design, tokens, logo | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `02` | Landing page: header, hero, footer | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `03` | Supabase auth, signup and login pages, session middleware | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `04` | Dashboard shell: sidebar, routing, empty states | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `05` | API keys: generation, hashing, one-time reveal, Hono skeleton | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `06` | Domains: SES identity, DKIM records, on-demand verification check | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `07` | Send pipeline + Emails list and detail, domain verification polling, rate limiting | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `08` | Templates: CRUD, variable interpolation, live preview | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `09` | Compatibility checker, shipped behind a PostHog flag | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `10` | Webhooks: signing, retries, delivery log, SNS bounce ingestion | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `11` | Metrics and Logs | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `12` | Settings and Profile | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `13` | Deployment: both apps live, env verified, SNS on a permanent endpoint | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `14` | Polish, Playwright E2E, request log retention, README | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-in-progress.svg" alt="In progress" height="22"> |
+
+</div>
 
 Engineering rules live in [CLAUDE.md](CLAUDE.md), design rules in [design/design-system/CLAUDE.md](design/design-system/CLAUDE.md), and lessons from deployment in [decisions-and-learnings.md](decisions-and-learnings.md).
 
