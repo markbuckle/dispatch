@@ -71,6 +71,9 @@
   /* The grey the auth backdrop fades into at its foot. Decoration only, never a surface or a status. */
   --dispatch-backdrop-lift: #1C1C20;
 
+  /* Selected text. Grey rather than the browser's blue, which the system keeps for focus. Aliases --dispatch-border-strong. */
+  --dispatch-selection: var(--dispatch-border-strong);
+
   /* Hero scene paper: the outside of the folded sheet. Aliases --dispatch-subtle. */
   --dispatch-paper: var(--dispatch-subtle);
   /* Hero scene paper: the inside of the envelope flap. Aliases --dispatch-hover. */
@@ -311,6 +314,12 @@ a:hover { color: var(--dispatch-text-primary); }
 :focus-visible {
   outline: none;
   box-shadow: var(--dispatch-focus);
+}
+
+/* The colour is set too, because gradient display text is transparent and would select as an empty box. */
+::selection {
+  background: var(--dispatch-selection);
+  color: var(--dispatch-text-primary);
 }
 
 /* Scrollbars must be told they're dark, or the native track paints light. */
