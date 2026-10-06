@@ -122,7 +122,7 @@ Sixteen phases, each shipped as a series of small pull requests merged to `main`
 | `12` | Settings and Profile | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 | `13` | Deployment: both apps live, env verified, SNS on a permanent endpoint | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 | `14` | Polish, Playwright E2E, request log retention, README | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
-| `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-in-progress.svg" alt="Done" height="22"> |
+| `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 
 </div>
 
