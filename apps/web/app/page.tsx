@@ -4,8 +4,11 @@ import { HeaderBorder } from './header-border';
 import { HeroVideo } from './hero/video/hero-video';
 import { Wordmark } from './logo';
 
-// Under xl the copy column would leave the video too narrow to read, so it stacks below instead
-const heroVideoPlacement = 'mx-auto max-w-hero-video-stacked xl:max-w-hero-video';
+// Under xl the copy column would leave the video too narrow to read, so it stacks above instead, first thing on a phone's screen
+const heroVideoPlacement =
+  'order-first mx-auto max-w-hero-video-phone lg:max-w-hero-video-stacked xl:order-none xl:max-w-hero-video';
+// The loop's envelope never enters the frame's top 15% or bottom 23%, so on a phone that empty band tucks into the padding
+const heroVideoPhoneSpacing = '-mt-10 -mb-12 lg:my-0';
 const footerLink = 'dispatch-transition text-meta text-text-secondary hover:text-text-primary';
 
 export default function Home() {
@@ -62,7 +65,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <HeroVideo className={heroVideoPlacement} />
+            <HeroVideo className={`${heroVideoPlacement} ${heroVideoPhoneSpacing}`} />
           </div>
 
           <DashboardPreview className="mt-16" />

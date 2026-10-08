@@ -29,6 +29,8 @@ const CONTENT_RIGHT = VIEW_WIDTH - 24;
 const FILTERS_TOP = 149;
 const TABLE_TOP = 209;
 const SELECT_WIDTH = 240;
+// Under lg the whole page shrinks its text past reading, so a phone gets the sidebar and the To column, cut before Status
+const CROPPED_WIDTH = 600;
 
 const columns = { to: CONTENT_LEFT + 20, status: 820, subject: 960, created: 1330 };
 
@@ -98,75 +100,82 @@ const pillFills: Record<StatusTone, { background: string; label: string }> = {
 
 // A picture of the Emails page rather than a screenshot, so it stays sharp at any width and follows the tokens
 export function DashboardPreview({ className = '' }: { className?: string }) {
+  return (
+    <div className={`dispatch-preview-fade ${className}`}>
+      <PreviewFrame width={CROPPED_WIDTH} className="lg:hidden" />
+      <PreviewFrame width={VIEW_WIDTH} className="hidden lg:inline" />
+    </div>
+  );
+}
+
+function PreviewFrame({ width, className }: { width: number; className: string }) {
   const id = useId();
 
   return (
-    <div className={`dispatch-preview-fade ${className}`}>
-      <svg
-        viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
-        className="h-auto w-full"
-        role="img"
-        aria-label="The Dispatch dashboard's Emails page, listing recent sends with their delivery status"
-      >
-        <defs>
-          <clipPath id={`${id}-frame`}>
-            <rect width={VIEW_WIDTH} height={VIEW_HEIGHT} rx="16" />
-          </clipPath>
-          {/* lit from above like the page behind it, so the frame reads as raised without a shadow */}
-          <linearGradient
-            id={`${id}-edge`}
-            x1="0"
-            y1="0"
-            x2="0"
-            y2={VIEW_HEIGHT}
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop style={{ stopColor: 'var(--dispatch-border-strong)' }} />
-            <stop offset="0.5" style={{ stopColor: 'var(--dispatch-border-subtle)' }} />
-          </linearGradient>
-          <linearGradient id={`${id}-tile`} x1="0" y1="0" x2="0" y2="1">
-            <stop style={{ stopColor: 'var(--dispatch-hover)' }} />
-            <stop offset="1" style={{ stopColor: 'var(--dispatch-canvas)' }} />
-          </linearGradient>
-        </defs>
+    <svg
+      viewBox={`0 0 ${width} ${VIEW_HEIGHT}`}
+      className={`h-auto w-full ${className}`}
+      role="img"
+      aria-label="The Dispatch dashboard's Emails page, listing recent sends with their delivery status"
+    >
+      <defs>
+        <clipPath id={`${id}-frame`}>
+          <rect width={width} height={VIEW_HEIGHT} rx="16" />
+        </clipPath>
+        {/* lit from above like the page behind it, so the frame reads as raised without a shadow */}
+        <linearGradient
+          id={`${id}-edge`}
+          x1="0"
+          y1="0"
+          x2="0"
+          y2={VIEW_HEIGHT}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop style={{ stopColor: 'var(--dispatch-border-strong)' }} />
+          <stop offset="0.5" style={{ stopColor: 'var(--dispatch-border-subtle)' }} />
+        </linearGradient>
+        <linearGradient id={`${id}-tile`} x1="0" y1="0" x2="0" y2="1">
+          <stop style={{ stopColor: 'var(--dispatch-hover)' }} />
+          <stop offset="1" style={{ stopColor: 'var(--dispatch-canvas)' }} />
+        </linearGradient>
+      </defs>
 
-        <g clipPath={`url(#${id}-frame)`} className="text-body">
-          <rect width={VIEW_WIDTH} height={VIEW_HEIGHT} className="fill-canvas" />
+      <g clipPath={`url(#${id}-frame)`} className="text-body">
+        <rect width={VIEW_WIDTH} height={VIEW_HEIGHT} className="fill-canvas" />
 
-          <Sidebar tileFill={`url(#${id}-tile)`} />
+        <Sidebar tileFill={`url(#${id}-tile)`} />
 
-          <line
-            x1={SIDEBAR_WIDTH}
-            y1={TOP_BAR_HEIGHT}
-            x2={VIEW_WIDTH}
-            y2={TOP_BAR_HEIGHT}
-            className="stroke-border-subtle"
-          />
-
-          <text
-            x={CONTENT_LEFT}
-            y={TOP_BAR_HEIGHT + 45}
-            dominantBaseline="central"
-            className="fill-text-primary font-display text-h1"
-          >
-            Emails
-          </text>
-
-          <Filters />
-          <Table />
-        </g>
-
-        <rect
-          x="0.5"
-          y="0.5"
-          width={VIEW_WIDTH - 1}
-          height={VIEW_HEIGHT - 1}
-          rx="15.5"
-          fill="none"
-          stroke={`url(#${id}-edge)`}
+        <line
+          x1={SIDEBAR_WIDTH}
+          y1={TOP_BAR_HEIGHT}
+          x2={VIEW_WIDTH}
+          y2={TOP_BAR_HEIGHT}
+          className="stroke-border-subtle"
         />
-      </svg>
-    </div>
+
+        <text
+          x={CONTENT_LEFT}
+          y={TOP_BAR_HEIGHT + 45}
+          dominantBaseline="central"
+          className="fill-text-primary font-display text-h1"
+        >
+          Emails
+        </text>
+
+        <Filters />
+        <Table />
+      </g>
+
+      <rect
+        x="0.5"
+        y="0.5"
+        width={width - 1}
+        height={VIEW_HEIGHT - 1}
+        rx="15.5"
+        fill="none"
+        stroke={`url(#${id}-edge)`}
+      />
+    </svg>
   );
 }
 
