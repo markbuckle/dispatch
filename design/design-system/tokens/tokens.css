@@ -86,6 +86,10 @@
   /* How far .dispatch-display-stretch widens Instrument Serif. Not a colour, so the light theme inherits it. */
   --dispatch-display-stretch: 1.2;
 
+  /* The footer wordmark spotlight's two mask radii, stepped down below lg with the wordmark itself */
+  --dispatch-spotlight-radius: 320px;
+  --dispatch-spotlight-hotspot-radius: 110px;
+
   /* Elevation - edges, not shadows */
   --dispatch-ring:    inset 0 0 0 1px rgba(255,255,255,0.03);
   --dispatch-overlay: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
@@ -265,8 +269,10 @@
   --container-email:     600px;
   /* the floor components/DropdownMenu.tsx sets, so a short menu is not narrower than its trigger reads */
   --container-menu:      180px;
-  /* the landing hero's video once it stacks under the copy below lg: big enough to read the fold, small enough not to push the code cards off screen */
+  /* the landing hero's video once it stacks above the copy, from lg up to xl: big enough to read the fold, small enough not to push the code cards off screen */
   --container-hero-video-stacked: 360px;
+  /* on a phone the video stacks above the copy, sized so the envelope reads about as large as the reference's cube and leaves the headline above the fold */
+  --container-hero-video-phone: 280px;
   /* the reference's copy column: wide enough for "developers" at display-2xl, narrow enough to leave the video most of the row */
   --container-hero-copy: 480px;
   /* beside the copy the video is square, so it is capped at the hero's height less its 24px padding top and bottom, never taller than the screen */
@@ -368,8 +374,8 @@ a:hover { color: var(--dispatch-text-primary); }
    The script sets --spotlight-x and --spotlight-y in px from the element's top left. The glow widths and
    blurs are in apps/web/app/footer-wordmark.tsx, because an SVG filter cannot read a custom property. */
 .dispatch-spotlight {
-  -webkit-mask-image: radial-gradient(320px circle at var(--spotlight-x) var(--spotlight-y), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
-  mask-image: radial-gradient(320px circle at var(--spotlight-x) var(--spotlight-y), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
+  -webkit-mask-image: radial-gradient(var(--dispatch-spotlight-radius) circle at var(--spotlight-x) var(--spotlight-y), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
+  mask-image: radial-gradient(var(--dispatch-spotlight-radius) circle at var(--spotlight-x) var(--spotlight-y), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
   pointer-events: none;
 }
 .dispatch-spotlight-edge path {
@@ -384,8 +390,16 @@ a:hover { color: var(--dispatch-text-primary); }
 }
 /* A tighter, brighter band inside the edge right under the cursor, on top of the wider falloff. */
 .dispatch-spotlight-hotspot {
-  -webkit-mask-image: radial-gradient(110px circle at var(--spotlight-x) var(--spotlight-y), black, transparent);
-  mask-image: radial-gradient(110px circle at var(--spotlight-x) var(--spotlight-y), black, transparent);
+  -webkit-mask-image: radial-gradient(var(--dispatch-spotlight-hotspot-radius) circle at var(--spotlight-x) var(--spotlight-y), black, transparent);
+  mask-image: radial-gradient(var(--dispatch-spotlight-hotspot-radius) circle at var(--spotlight-x) var(--spotlight-y), black, transparent);
+}
+/* Below lg the wordmark is about 335px wide, so the desktop radii would light all of it at once.
+   These keep the light at the same share of the letters it covers on desktop. */
+@media (width < 767px) {
+  :root {
+    --dispatch-spotlight-radius: 96px;
+    --dispatch-spotlight-hotspot-radius: 36px;
+  }
 }
 .dispatch-spotlight-hotspot path {
   fill: none;

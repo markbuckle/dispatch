@@ -93,9 +93,9 @@ One counter-intuitive rule: **stroke thickens as the glyph shrinks** - 2.25 at d
 
 ## 9. The footer wordmark lights up
 
-The logo rules used to ban a glow, an outline and animation, and the marketing rules allowed three glow and gradient devices. The large wordmark above the landing page footer needed all of them, so both were loosened for it. Near the cursor its letters gain a crisp 1px `text-primary` outline, a faint fill and a blurred glow that stays inside each letter, all inside a 320px circle that follows the mouse and is brightest at its centre, and the light fades in and out over 500ms ease-out (`.dispatch-transition-spotlight`), the one duration outside 120/200. At 200ms it snapped on; at 500ms it reads as the letters catching the light. Away from the cursor it is a flat `subtle` fill. The class is `.dispatch-spotlight` in `tokens/tokens.css`, the fourth marketing device.
+The logo rules used to ban a glow, an outline and animation, and the marketing rules allowed three glow and gradient devices. The large wordmark above the landing page footer needed all of them, so both were loosened for it. Near the cursor its letters gain a crisp 1px `text-primary` outline, a faint fill and a blurred glow that stays inside each letter, all inside a 320px circle, 96px below `lg` where the wordmark is a quarter the width, that follows the mouse and is brightest at its centre, and the light fades in and out over 500ms ease-out (`.dispatch-transition-spotlight`), the one duration outside 120/200. At 200ms it snapped on; at 500ms it reads as the letters catching the light. Away from the cursor it is a flat `subtle` fill. The class is `.dispatch-spotlight` in `tokens/tokens.css`, the fourth marketing device.
 
-It is decoration: the header already names the site, so the wordmark is hidden from screen readers, and touch input leaves it flat because a tap has no hover to follow. The exception covers this one wordmark. Every other use of the logo stays flat and still.
+It is decoration: the header already names the site, so the wordmark is hidden from screen readers, and on touch the light sits under the finger and follows a horizontal drag, so a phone gets the same effect a mouse does. The exception covers this one wordmark. Every other use of the logo stays flat and still.
 
 ## 10. Sidebar icons move on hover
 

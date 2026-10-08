@@ -25,18 +25,17 @@ export function FooterWordmark() {
   return (
     <div aria-hidden="true" className="px-5 pt-24 lg:px-8">
       {/* 244 of the drawing's 323 units, so the footer rule cuts through the lowercase letters */}
+      {/* pan-y keeps a vertical swipe scrolling the page, while a horizontal one drags the light across the letters */}
       <div
-        className="relative aspect-1513/244 overflow-hidden"
+        className="relative aspect-1513/244 touch-pan-y overflow-hidden"
         onPointerEnter={(event) => {
-          // a tap has no hover to follow, so touch leaves the wordmark flat
-          if (event.pointerType !== 'mouse') return;
           moveSpotlight(event);
           setIsLit(true);
         }}
-        onPointerMove={(event) => {
-          if (event.pointerType === 'mouse') moveSpotlight(event);
-        }}
+        onPointerMove={moveSpotlight}
         onPointerLeave={() => setIsLit(false)}
+        // the browser takes a vertical swipe over to scroll and never sends a leave, so the light would stay on
+        onPointerCancel={() => setIsLit(false)}
       >
         <Wordmark className="w-full text-subtle" />
         <div
