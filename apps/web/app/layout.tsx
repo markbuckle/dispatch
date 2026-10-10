@@ -20,6 +20,8 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: 'Dispatch',
   description: 'Email API for developers. One POST to send, delivery events on your webhook.',
+  // iOS Safari wraps any address it finds in a link, and inside an svg that link swallows the text entirely
+  formatDetection: { email: false },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
