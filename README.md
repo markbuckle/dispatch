@@ -98,10 +98,11 @@ CI runs lint, typecheck, unit tests and a build on every pull request. The Playw
 - **The end-to-end suite covers the UI paths only.** It proves the landing page, login, API keys, templates and the 404 page work on a real deploy. The send pipeline is verified by hand instead, because previews share production's Inngest keys, so a send from a preview would run production's functions rather than the change under test.
 - **Previews share one Supabase project with production.** Every end-to-end run works inside its own throwaway account and deletes it afterwards. CI never runs migrations, so a pull request that adds one fails its end-to-end run until it is merged and migrated by hand.
 - **Auth email still goes through Resend.** Supabase's default SMTP is rate-limited and not for production, so Resend carried sign-up and password reset mail from the start. Moving it onto Dispatch's own SES pipeline is the one swap still owed.
+- **There is no read-only API key yet.** Reading emails, domains and templates through the API needs a full access key, and a full access key can also send. So anything given read access, a script or an agent, can send email as you. The MCP server PR owes a read-only key, because which key to hand an agent should be your choice whatever the agent can do.
 
 ## How it was built
 
-Sixteen phases, each shipped as a series of small pull requests merged to `main`. This table records what each one delivered.
+Seventeen phases, each shipped as a series of small pull requests merged to `main`. This table records what each one delivered.
 
 <div align="center">
 
@@ -123,6 +124,7 @@ Sixteen phases, each shipped as a series of small pull requests merged to `main`
 | `13` | Deployment: both apps live, env verified, SNS on a permanent endpoint | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 | `14` | Polish, Playwright E2E, request log retention, README | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
 | `15` | UI Polish: Landing page, Auth Pages, Dashboard, three.js mp4 | <img src="docs/images/status-done.svg" alt="Done" height="22"> |
+| `16` | MCP server: paginated read API for emails, domains and templates, then the server on top | <img src="docs/images/status-in-progress.svg" alt="In progress" height="22"> |
 
 </div>
 

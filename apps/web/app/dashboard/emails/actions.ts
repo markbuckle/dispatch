@@ -1,5 +1,6 @@
 'use server';
 
+import { emailRangeStart } from '@dispatch/core/email-ranges';
 import {
   type Email,
   type EmailSummary,
@@ -9,10 +10,10 @@ import {
 } from '@dispatch/db';
 import { z } from 'zod';
 import { requireUserId } from '../../../lib/supabase/require-user-id';
-import { dateRanges } from './date-ranges';
 import { type EmailFilters, emailFiltersSchema } from './email-filters';
 
-const DAY_MS = 86_400_000;
+// capped rather than paginated, so a busy account sees its newest 100 and nothing older
+const LIST_LIMIT = 100;
 
 export async function listEmails(
   filters: EmailFilters,
@@ -20,9 +21,13 @@ export async function listEmails(
   // a server action is a public endpoint, so the filters are checked again whoever called it
   const { status, range } = emailFiltersSchema.parse(filters);
   const userId = await requireUserId();
-  const since = new Date(Date.now() - dateRanges[range].days * DAY_MS);
+  const since = emailRangeStart(range, Date.now());
 
-  const emails = await listEmailsForUser(userId, { status, since });
+  const { rows: emails } = await listEmailsForUser(
+    userId,
+    { status, since },
+    { limit: LIST_LIMIT },
+  );
   const hasAnyEmail = emails.length > 0 || (await hasAnyEmailForUser(userId));
 
   return { emails, hasAnyEmail };

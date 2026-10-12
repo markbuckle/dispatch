@@ -5,6 +5,9 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./api": "./src/api/index.ts",
+    "./dkim-records": "./src/domains/dkim-records.ts",
+    "./email-ranges": "./src/email/ranges.ts",
     "./inngest": "./src/inngest/index.ts",
     "./templates": "./src/templates/render.ts"
   },

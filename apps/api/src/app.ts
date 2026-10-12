@@ -8,9 +8,11 @@ import {
 } from '@dispatch/core/inngest';
 import { Hono } from 'hono';
 import { serve } from 'inngest/hono';
+import { domains } from './domains';
 import { emails } from './emails';
 import { requestLogger } from './request-logger';
 import { sns } from './sns';
+import { templates } from './templates';
 
 export const app = new Hono();
 
@@ -20,6 +22,8 @@ app.use('*', requestLogger);
 app.get('/health', (context) => context.json({ status: 'ok' }));
 
 app.route('/v1/emails', emails);
+app.route('/v1/domains', domains);
+app.route('/v1/templates', templates);
 
 // SES event notifications, authenticated by their SNS signature rather than by an api key
 app.route('/sns', sns);
