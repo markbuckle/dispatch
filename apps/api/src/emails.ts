@@ -1,5 +1,6 @@
+import { senderDomain } from '@dispatch/core';
 import { emailSendQueued, inngest } from '@dispatch/core/inngest';
-import { insertEmail, markEmailFailed } from '@dispatch/db';
+import { hasVerifiedDomainForUser, insertEmail, markEmailFailed } from '@dispatch/db';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { type AuthVariables, authenticate } from './authenticate';
@@ -46,8 +47,15 @@ emails.post('/', authenticate, rateLimit, async (context) => {
     return context.json({ message }, 400);
   }
 
+  const userId = context.get('userId');
+  const domain = senderDomain(parsed.data.from);
+  // SES signs for any identity the sending user may use and knows nothing of accounts, so ownership is checked here or nowhere
+  if (!(await hasVerifiedDomainForUser(domain, userId))) {
+    return context.json({ message: `Verify ${domain} under Domains before sending from it.` }, 403);
+  }
+
   const email = await insertEmail({
-    userId: context.get('userId'),
+    userId,
     ...parsed.data,
     status: 'queued',
   });

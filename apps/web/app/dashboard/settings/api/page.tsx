@@ -52,6 +52,10 @@ export default function ApiSettingsPage() {
             {sendRequest}
           </pre>
         </div>
+        <p className="text-caption text-text-muted">
+          The from address has to be on a domain you've verified under Domains, or the send returns
+          403. A subdomain needs adding in its own right.
+        </p>
       </section>
     </div>
   );

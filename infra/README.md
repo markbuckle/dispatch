@@ -61,6 +61,11 @@ Grant this before setting the environment variable, not after. In between, sendi
 broken, and the error names a resource the send does not obviously use, which makes it
 slow to recognise.
 
+Keep `Resource` to Dispatch's own identities until CLAUDE.md says otherwise. It is the
+only thing SES itself does to stop one account sending as another's domain. Widening it to
+`identity/*`, which the first customer domain needs, leaves the api's sender check as the
+only boundary between accounts, and CLAUDE.md lists what has to be in place first.
+
 ## Applying
 
 Terraform authenticates as whatever the AWS CLI's credential chain resolves to, which is
