@@ -1,23 +1,30 @@
-import { and, desc, eq, gte, inArray, sql } from 'drizzle-orm';
+import { and, eq, gte, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type EmailStatus, statusesBehind } from '../schema/email-status-rank';
 import { type Email, emails, type NewEmail } from '../schema/emails';
+import {
+  type Page,
+  type PageRequest,
+  pageCursor,
+  pageLimit,
+  pageOrder,
+  settlePage,
+} from './pagination';
 
-// the table shows four columns, and selecting the row would carry every body across the wire
-export type EmailSummary = Pick<Email, 'id' | 'to' | 'subject' | 'status' | 'createdAt'>;
-
-// capped rather than paginated, so a busy account sees its newest 100 and nothing older
-const LIST_LIMIT = 100;
+// a list never needs the bodies, and selecting the row would carry every one across the wire
+export type EmailSummary = Pick<Email, 'id' | 'from' | 'to' | 'subject' | 'status' | 'createdAt'>;
 
 export type EmailListFilters = { status?: EmailStatus; since?: Date };
 
 export async function listEmailsForUser(
   userId: string,
   { status, since }: EmailListFilters,
-): Promise<EmailSummary[]> {
-  return getDb()
+  page: PageRequest,
+): Promise<Page<EmailSummary>> {
+  const rows = await getDb()
     .select({
       id: emails.id,
+      from: emails.from,
       to: emails.to,
       subject: emails.subject,
       status: emails.status,
@@ -29,10 +36,13 @@ export async function listEmailsForUser(
         eq(emails.userId, userId),
         status ? eq(emails.status, status) : undefined,
         since ? gte(emails.createdAt, since) : undefined,
+        pageCursor(emails, userId, page),
       ),
     )
-    .orderBy(desc(emails.createdAt))
-    .limit(LIST_LIMIT);
+    .orderBy(...pageOrder(emails, page))
+    .limit(pageLimit(page));
+
+  return settlePage(emails, userId, page, rows);
 }
 
 // an empty filtered list cannot tell a quiet fortnight from an account that has never sent

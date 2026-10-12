@@ -1,6 +1,14 @@
 import { and, desc, eq, inArray, sql } from 'drizzle-orm';
 import { getDb } from '../client';
 import { type Domain, domains, type NewDomain } from '../schema/domains';
+import {
+  type Page,
+  type PageRequest,
+  pageCursor,
+  pageLimit,
+  pageOrder,
+  settlePage,
+} from './pagination';
 
 // verified and failed are terminal; the rest can still change without anyone asking again
 const UNSETTLED: Domain['status'][] = ['not_started', 'pending', 'temporary_failure'];
@@ -22,6 +30,28 @@ export async function listDomainsForUser(userId: string): Promise<Domain[]> {
     .from(domains)
     .where(eq(domains.userId, userId))
     .orderBy(desc(domains.createdAt));
+}
+
+// the DNS records belong to one domain's detail, so a list leaves the tokens behind
+export type DomainSummary = Pick<Domain, 'id' | 'name' | 'status' | 'createdAt'>;
+
+export async function listDomainPageForUser(
+  userId: string,
+  page: PageRequest,
+): Promise<Page<DomainSummary>> {
+  const rows = await getDb()
+    .select({
+      id: domains.id,
+      name: domains.name,
+      status: domains.status,
+      createdAt: domains.createdAt,
+    })
+    .from(domains)
+    .where(and(eq(domains.userId, userId), pageCursor(domains, userId, page)))
+    .orderBy(...pageOrder(domains, page))
+    .limit(pageLimit(page));
+
+  return settlePage(domains, userId, page, rows);
 }
 
 // the owner is part of every match, so a guessed id from another account finds nothing

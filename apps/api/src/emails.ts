@@ -1,9 +1,12 @@
+import { emailFiltersQuerySchema, toApiEmail, toApiEmailSummary } from '@dispatch/core/api';
+import { emailRangeStart } from '@dispatch/core/email-ranges';
 import { emailSendQueued, inngest } from '@dispatch/core/inngest';
-import { insertEmail, markEmailFailed } from '@dispatch/db';
+import { findEmailForUser, insertEmail, listEmailsForUser, markEmailFailed } from '@dispatch/db';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { type AuthVariables, authenticate } from './authenticate';
 import { rateLimit } from './rate-limit';
+import { firstIssue, parseId, respondWithPage } from './reads';
 
 // SES accepts at most 50 recipients on a single send
 const MAX_RECIPIENTS = 50;
@@ -34,7 +37,7 @@ const sendEmailSchema = z
 export const emails = new Hono<{ Variables: AuthVariables }>();
 
 // limited after authenticating, so an unauthenticated caller cannot spend a key's budget
-emails.post('/', authenticate, rateLimit, async (context) => {
+emails.post('/', authenticate('send'), rateLimit, async (context) => {
   const body = await context.req.json().catch(() => undefined);
   if (body === undefined) {
     return context.json({ message: 'Send a JSON body.' }, 400);
@@ -63,4 +66,32 @@ emails.post('/', authenticate, rateLimit, async (context) => {
   }
 
   return context.json({ id: email.id, status: 'queued' }, 202);
+});
+
+emails.get('/', authenticate('read'), rateLimit, async (context) => {
+  const filters = emailFiltersQuerySchema.safeParse(context.req.query());
+  if (!filters.success) {
+    return context.json({ message: firstIssue(filters.error) }, 400);
+  }
+
+  const { status, range } = filters.data;
+  // no range means no time limit, where the dashboard defaults to 15 days, so paging through history is never cut short
+  const since = range === undefined ? undefined : emailRangeStart(range, Date.now());
+  const userId = context.get('userId');
+
+  return respondWithPage(
+    context,
+    (page) => listEmailsForUser(userId, { status, since }, page),
+    toApiEmailSummary,
+  );
+});
+
+emails.get('/:id', authenticate('read'), rateLimit, async (context) => {
+  const id = parseId(context.req.param('id'));
+  const email = id === undefined ? undefined : await findEmailForUser(id, context.get('userId'));
+  if (!email) {
+    return context.json({ message: 'There is no email with that id.' }, 404);
+  }
+
+  return context.json(toApiEmail(email));
 });

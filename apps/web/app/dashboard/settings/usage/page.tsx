@@ -25,9 +25,9 @@ export default async function UsagePage() {
         <div className="flex flex-col gap-1.5 rounded-lg border border-border-default p-5">
           <p className="text-body text-text-primary">10 requests per 10 seconds</p>
           <p className="text-caption text-text-muted">
-            Counted per API key, not per account, so one integration cannot starve the others. Over
-            the limit, POST /v1/emails returns 429 with a Retry-After header. There is no monthly
-            cap.
+            Counted per API key, not per account, so one integration cannot starve the others. Sends
+            and reads share the budget. Over the limit, any request returns 429 with a Retry-After
+            header. There is no monthly cap.
           </p>
         </div>
       </section>

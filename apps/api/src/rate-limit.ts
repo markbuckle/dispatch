@@ -16,7 +16,8 @@ function getLimiter(): Ratelimit {
       redis: Redis.fromEnv(),
       // sliding, because two adjacent fixed windows would let double the limit through in a moment
       limiter: Ratelimit.slidingWindow(LIMIT, WINDOW),
-      prefix: 'dispatch:send',
+      // one budget for every request a key makes, reads included, the way Resend counts
+      prefix: 'dispatch:api',
     });
   }
   return limiter;

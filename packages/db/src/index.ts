@@ -4,6 +4,8 @@ export * from './queries/domains';
 export * from './queries/email-events';
 export * from './queries/emails';
 export * from './queries/metrics';
+// the query builders stay inside the package; a caller only ever needs a page's shape and its one error
+export { type Page, type PageRequest, UnknownCursorError } from './queries/pagination';
 export * from './queries/request-logs';
 export * from './queries/templates';
 export * from './queries/usage';
