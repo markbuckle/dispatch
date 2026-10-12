@@ -34,6 +34,16 @@ export async function findDomainForUser(id: string, userId: string): Promise<Dom
   return domain;
 }
 
+// owner and status are both in the match, so another account's verified domain answers the same as an unknown one
+export async function hasVerifiedDomainForUser(name: string, userId: string): Promise<boolean> {
+  const [domain] = await getDb()
+    .select({ id: domains.id })
+    .from(domains)
+    .where(and(eq(domains.name, name), eq(domains.userId, userId), eq(domains.status, 'verified')));
+
+  return domain !== undefined;
+}
+
 export async function insertDomain(values: NewDomain): Promise<Domain> {
   const [domain] = await getDb().insert(domains).values(values).returning();
   if (!domain) throw new Error(`Insert returned no row for ${values.name}`);
