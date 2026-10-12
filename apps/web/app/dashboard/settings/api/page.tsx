@@ -178,6 +178,10 @@ export default function ApiSettingsPage() {
       <section className="flex flex-col gap-4">
         <h2 className="text-meta font-medium text-text-secondary">Sending an email</h2>
         <CodeBlock language="shell" value={sendRequest} label="curl command" />
+        <p className="text-caption text-text-muted">
+          The from address has to be on a domain you've verified under Domains, or the send returns
+          403. A subdomain needs adding in its own right.
+        </p>
       </section>
 
       <section className="flex flex-col gap-4">
