@@ -55,20 +55,22 @@ export function HeroSpline({ className = '' }: { className?: string }) {
   }, []);
 
   // The runtime sizes its canvas to the scene's authored 1080px; the stylesheet classes below hold it to the box and this matches the render buffer to it
-  const fit = useCallback(() => {
+  const fitToBox = useCallback(() => {
     const element = box.current;
     if (!element || !app.current) return;
-    const side = Math.round(element.clientWidth * Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
+    const side = Math.round(
+      element.clientWidth * Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO),
+    );
     if (side > 0) app.current.setSize(side, side);
   }, []);
 
   useEffect(() => {
     const element = box.current;
     if (!element || !mounted) return;
-    const observer = new ResizeObserver(fit);
+    const observer = new ResizeObserver(fitToBox);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [mounted, fit]);
+  }, [mounted, fitToBox]);
 
   return (
     <div
@@ -84,7 +86,7 @@ export function HeroSpline({ className = '' }: { className?: string }) {
             style={{ width: '100%', height: '100%' }}
             onLoad={(spline) => {
               app.current = spline;
-              fit();
+              fitToBox();
             }}
           />
         </Suspense>
